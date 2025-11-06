@@ -37,9 +37,8 @@ export default function CheolsanSOSLanding() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(circle_at_70%_0,rgba(59,130,246,0.05),transparent_40%)]" />
         
-        {/* ✅ 중앙 정렬 적용된 컨테이너 */}
+        {/* 중앙 정렬 적용 */}
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 items-center">
-
           <div className="md:pr-8">
             <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight md:text-5xl">
               철산·광명 생활수리 <span className="text-amber-600">긴급 출동</span> 연결
@@ -83,7 +82,7 @@ export default function CheolsanSOSLanding() {
             </div>
           </div>
 
-          {/* ✅ 카드 오른쪽 정렬 보정 */}
+          {/* 오른쪽 카드 살짝 우측 정렬 */}
           <div className="md:ml-auto">
             <div className="relative mx-auto max-w-md overflow-hidden rounded-2xl border bg-white p-4 shadow-sm md:max-w-none">
               <div className="rounded-xl bg-gray-100 p-4">
@@ -115,9 +114,6 @@ export default function CheolsanSOSLanding() {
 
         </div>
       </section>
-
-      {/* --- 이하 내용 그대로 유지 (이용방법 / 가능 작업 / 지역 / 정책 / FAQ / Footer) --- */}
-      {/* 그대로 두면 됨, 삭제 금지 */}
 
       {/* How it works */}
       <section id="how" className="border-t bg-white">
@@ -263,11 +259,11 @@ export default function CheolsanSOSLanding() {
             <div className="text-lg font-bold">철산SOS</div>
             <div className="mt-1 text-sm text-gray-500">생활출동 연결 플랫폼 · 고객과 기사 연결 서비스</div>
           </div>
-          <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-500">
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
               <li>상호: 철산SOS </li>
-              <li>사업자등록번호: 338-46-01315 </li>
+              <li>사업자등록번호: 000-00-00000 (발급진행중)</li>
               <li>대표: 김현성</li>
               <li>연락: 카카오채널 문의</li>
               <li>주소: 경기도 광명시 철산동 </li>
