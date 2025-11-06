@@ -169,7 +169,7 @@ export default function CheolsanSOSLanding() {
       <section id="areas" className="border-t bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
           <h2 className="text-2xl font-extrabold md:text-3xl">지원 지역</h2>
-          <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산</p>
+          <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 · 가산</p>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["철산", "광명", "구로", "독산", "철산역 인근", "광명사거리", "구로디지털", "가산/독산 경계"].map((a, i) => (
               <div key={i} className="rounded-xl border bg-gray-50 px-4 py-3 text-center">
