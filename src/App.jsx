@@ -37,8 +37,7 @@ export default function CheolsanSOSLanding() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(circle_at_70%_0,rgba(59,130,246,0.05),transparent_40%)]" />
-        {/* 정렬 보정: items-center 로 중앙 정렬, 불필요한 justify-items 제거 */}
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 items-center">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 justify-items-center md:justify-items-stretch">
           <div className="md:pr-8">
             <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight md:text-5xl">
               철산·광명 생활수리 <span className="text-amber-600">긴급 출동</span> 연결
@@ -113,21 +112,6 @@ export default function CheolsanSOSLanding() {
         </div>
       </section>
 
-      {/* Intro (신뢰/전문 소개 섹션) — Hero 아래, How 위 */}
-      <section id="intro" className="bg-white border-t">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-14 text-center">
-          <h2 className="text-2xl font-extrabold md:text-3xl">철산SOS는 이렇게 운영됩니다</h2>
-          <p className="mt-6 text-base md:text-lg text-gray-700 leading-7 max-w-3xl mx-auto">
-            철산SOS는 <b>지역 생활 수리 전문가 네트워크 기반의 연결 중개 플랫폼</b>입니다.
-            고객님의 요청 정보를 확인한 뒤, <b>가장 가까운 기사님</b>을 빠르게 연결하여
-            현장에서 즉시 조치가 가능하도록 돕습니다. <br /><br />
-            당사는 <b>연결(중개) 서비스 제공자</b>로서, 실제 작업 진행, 비용 산정, 결제 및 A/S는
-            <b> 작업을 수행한 기사님과 고객 간 직접 계약</b>으로 이루어집니다.
-            작업 전 <b>최종 비용 및 작업 범위 확인</b>은 고객님께서 반드시 진행해주셔야 합니다.
-          </p>
-        </div>
-      </section>
-
       {/* How it works */}
       <section id="how" className="border-t bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
@@ -178,7 +162,7 @@ export default function CheolsanSOSLanding() {
       <section id="areas" className="border-t bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
           <h2 className="text-2xl font-extrabold md:text-3xl">지원 지역</h2>
-        <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 (시범 운영 후 순차 확대)</p>
+          <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 (시범 운영 후 순차 확대)</p>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["철산", "광명", "구로", "독산", "철산역 인근", "광명사거리", "구로디지털", "가산/독산 경계"].map((a, i) => (
               <div key={i} className="rounded-xl border bg-gray-50 px-4 py-3 text-center">
@@ -277,10 +261,10 @@ export default function CheolsanSOSLanding() {
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
               <li>상호: 철산SOS </li>
-              <li>사업자등록번호: 000-00-00000 (발급진행중)</li>
-              <li>대표: 김현성</li>
+              <li>사업자등록번호: 000-00-00000 (발급진행중)</li> 
+              <li>대표: 김현성</li> 
               <li>연락: 카카오채널 문의</li>
-              <li>주소: 경기도 광명시 (예시)</li>
+              <li>주소: 경기도 광명시 철산동 </li>
             </ul>
           </div>
         </div>
@@ -291,3 +275,4 @@ export default function CheolsanSOSLanding() {
     </main>
   );
 }
+
