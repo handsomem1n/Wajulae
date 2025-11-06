@@ -169,7 +169,7 @@ export default function CheolsanSOSLanding() {
       <section id="areas" className="border-t bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
           <h2 className="text-2xl font-extrabold md:text-3xl">지원 지역</h2>
-          <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 (시범 운영 후 순차 확대)</p>
+          <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 · 가산</p>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["철산", "광명", "구로", "독산", "철산역 인근", "광명사거리", "구로디지털", "가산/독산 경계"].map((a, i) => (
               <div key={i} className="rounded-xl border bg-gray-50 px-4 py-3 text-center">
@@ -270,7 +270,7 @@ export default function CheolsanSOSLanding() {
               <li>사업자등록번호: 338-46-01315 </li>
               <li>대표: 김현성</li>
               <li>연락: 카카오채널 문의</li>
-              <li>주소: 경기도 광명시 </li>
+              <li>주소: 경기도 광명시 철산동 </li>
             </ul>
           </div>
         </div>
