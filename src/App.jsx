@@ -44,9 +44,6 @@ export default function CheolsanSOSLanding() {
             <p className="mt-4 text-base text-gray-600 md:text-lg leading-relaxed">
               변기막힘, 누수, 보일러, 전기, 잠금해제, 문 개방 등<br className="hidden md:block" />
               <b>가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.<br />
-              저희는 <b>중개 서비스</b>로,<br className="hidden md:block" />
-              작업과 결제는 기사님과 고객이 직거래하며,<br />
-              저희는 건당 수수료만 정산받습니다.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href={KAKAO_CHAT_LINK} target="_blank" rel="noreferrer" className="rounded-2xl bg-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-amber-600">카카오채널로 문의하기</a>
