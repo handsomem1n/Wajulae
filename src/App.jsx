@@ -260,7 +260,7 @@ export default function CheolsanSOSLanding() {
           <div className="text-sm text-gray-500">
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
-              <li>상호: 철산SOS (예시)</li>
+              <li>상호: 철산SOS </li>
               <li>사업자등록번호: 000-00-00000 (발급진행중)</li> 
               <li>대표: 김현성</li> 
               <li>연락: 카카오채널 문의</li>
