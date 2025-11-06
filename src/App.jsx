@@ -1,6 +1,5 @@
 import React from "react";
 
-// 카카오 채널 채팅 URL만 실제 값으로 유지/교체
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
 export default function CheolsanSOSLanding() {
@@ -37,7 +36,10 @@ export default function CheolsanSOSLanding() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(circle_at_70%_0,rgba(59,130,246,0.05),transparent_40%)]" />
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 justify-items-center md:justify-items-stretch">
+        
+        {/* ✅ 중앙 정렬 적용된 컨테이너 */}
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 items-center">
+
           <div className="md:pr-8">
             <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight md:text-5xl">
               철산·광명 생활수리 <span className="text-amber-600">긴급 출동</span> 연결
@@ -81,7 +83,8 @@ export default function CheolsanSOSLanding() {
             </div>
           </div>
 
-          <div>
+          {/* ✅ 카드 오른쪽 정렬 보정 */}
+          <div className="md:ml-auto">
             <div className="relative mx-auto max-w-md overflow-hidden rounded-2xl border bg-white p-4 shadow-sm md:max-w-none">
               <div className="rounded-xl bg-gray-100 p-4">
                 <div className="text-sm font-semibold text-gray-700">빠른 접수 예시</div>
@@ -109,8 +112,12 @@ export default function CheolsanSOSLanding() {
               </div>
             </div>
           </div>
+
         </div>
       </section>
+
+      {/* --- 이하 내용 그대로 유지 (이용방법 / 가능 작업 / 지역 / 정책 / FAQ / Footer) --- */}
+      {/* 그대로 두면 됨, 삭제 금지 */}
 
       {/* How it works */}
       <section id="how" className="border-t bg-white">
@@ -220,14 +227,13 @@ export default function CheolsanSOSLanding() {
         </div>
       </section>
 
-      {/* Disclaimer (legal note) */}
+      {/* Disclaimer */}
       <section className="border-t bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-8 py-10">
           <p className="text-xs leading-6 text-gray-500">
             본 사이트는 수리 업체를 직접 운영하지 않으며, 지역 기사님과 고객을 연결하는 <b>연결(중개) 플랫폼</b>입니다.
             실제 작업의 품질, 비용, 일정, A/S 등 모든 사항은 <b>작업을 수행하는 기사님 또는 업체</b>와 고객 간의 협의·계약에 따라
             진행됩니다. 본 사이트는 작업 과정에서 발생할 수 있는 손해, 분쟁, 사고 등에 대해 법적 책임을 부담하지 않습니다.
-            (정확한 비용은 현장 상태에 따라 기사님이 확정 안내합니다.)
           </p>
         </div>
       </section>
@@ -261,8 +267,8 @@ export default function CheolsanSOSLanding() {
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
               <li>상호: 철산SOS </li>
-              <li>사업자등록번호: 000-00-00000 (발급진행중)</li> 
-              <li>대표: 김현성</li> 
+              <li>사업자등록번호: 000-00-00000 (발급진행중)</li>
+              <li>대표: 김현성</li>
               <li>연락: 카카오채널 문의</li>
               <li>주소: 경기도 광명시 철산동 </li>
             </ul>
@@ -275,4 +281,3 @@ export default function CheolsanSOSLanding() {
     </main>
   );
 }
-
