@@ -24,8 +24,7 @@ function PolicyModal({ open, onClose, title, children }) {
 }
 
 export default function WajulleLanding() {
-  // 문자열('terms' | 'privacy' | 'refund' | 'liability') 또는 null
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(null); // 'terms' | 'privacy' | 'refund' | 'liability' | null
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
@@ -181,8 +180,9 @@ export default function WajulleLanding() {
               </li>
             ))}
           </ol>
+          {/* 본문에선 간단 고지 한 줄만 */}
           <div className="mt-6 text-xs text-gray-500">
-            * 연결 중개 + 대금 보관/정산 서비스입니다. 시공 품질·A/S 책임은 작업을 수행한 기사님에게 있습니다.
+            * 와줄래는 고객과 기사님을 연결하고 결제를 보호하는 중개·정산 플랫폼입니다. 시공 품질 및 A/S 책임은 작업을 수행한 기사님에게 있습니다. 자세한 내용은 아래 약관·정책을 확인해 주세요.
           </div>
         </div>
       </section>
@@ -217,11 +217,12 @@ export default function WajulleLanding() {
         </div>
       </section>
 
-      {/* Policy & Disclaimer */}
+      {/* Policy (축소 버전) */}
       <section id="policy" className="border-t bg-gray-50">
         <div className="w-full px-6 py-16 md:px-8">
-          <h2 className="text-2xl font-extrabold md:text-3xl">정책 / 책임 고지</h2>
+          <h2 className="text-2xl font-extrabold md:text-3xl">정책 안내</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {/* 운영 정책만 카드로 유지 */}
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
               <h3 className="text-lg font-semibold">운영 정책</h3>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-700">
@@ -230,15 +231,18 @@ export default function WajulleLanding() {
                 <li>전화번호 비공개 접수 (카카오채널 중심)</li>
               </ul>
             </div>
-            <div className="rounded-2xl border bg-white p-5 shadow-sm">
-              <h3 className="text-lg font-semibold">책임 고지</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                와줄래는 지역 생활수리 기사님과 고객을 연결하는 중개 플랫폼이며, 고객이 결제한 작업비를 안전하게 보관하고 작업 완료 확인 후 기사님께 정산하는 ‘대금 보관 및 정산 대행 서비스(에스크로 유사)’를 제공합니다. 
-                작업의 실제 제공 주체는 개별 기사님으로, 시공 품질·A/S·손해배상 등 시공 관련 책임은 기사님에게 있으며, 고객과 기사님 사이에서 실제 계약이 성립합니다. 
-                와줄래는 시공 행위 및 결과에 대한 직접적 책임을 부담하지 않으며, 대금 보관/정산 절차 내에서의 조정·중재 역할을 수행합니다. 
-                결제 계좌: 카카오뱅크 3333-20-7345246 (예금주: 와줄래).
-              </p>
-            </div>
+            {/* 두 번째 큰 책임고지 카드는 제거 */}
+          </div>
+          {/* 정책 자세히 보기 링크 */}
+          <div className="mt-4 text-xs text-gray-500">
+            자세한 약관 및 정책은 아래 링크에서 확인하실 수 있습니다.{" "}
+            <button className="underline" onClick={() => setOpen("terms")}>이용약관</button>
+            {" · "}
+            <button className="underline" onClick={() => setOpen("privacy")}>개인정보처리방침</button>
+            {" · "}
+            <button className="underline" onClick={() => setOpen("refund")}>환불 및 정산 정책</button>
+            {" · "}
+            <button className="underline" onClick={() => setOpen("liability")}>책임고지</button>
           </div>
         </div>
       </section>
