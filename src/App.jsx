@@ -166,7 +166,7 @@ export default function WajulleLanding() {
                     {[
                       "카카오채널에서 주소/증상/사진 전송",
                       "사전 견적 범위 안내 후 기사 매칭",
-                      "기사님 방문·작업·결제 (와줄래 선입금 후 정산)",
+                      "기사님 방문·작업·결제 (고객 ↔ 기사 직접 결제)",
                     ][i]}
                   </div>
                 </div>
@@ -174,15 +174,14 @@ export default function WajulleLanding() {
                   {[
                     "전화번호 공개 없이 안전하게 접수합니다.",
                     "가장 가까운 지역 기사님을 연결해드립니다.",
-                    "결제는 와줄래 계좌로 선입금되며, 작업 완료 확인 후 기사님께 정산됩니다.",
+                    "결제와 영수증/환불/AS 관련 사항은 기사님과 직접 협의·처리됩니다.",
                   ][i]}
                 </p>
               </li>
             ))}
           </ol>
-          {/* 본문에선 간단 고지 한 줄만 */}
           <div className="mt-6 text-xs text-gray-500">
-            * 와줄래는 고객과 기사님을 연결하고 결제를 보호하는 중개·정산 플랫폼입니다. 시공 품질 및 A/S 책임은 작업을 수행한 기사님에게 있습니다. 자세한 내용은 아래 약관·정책을 확인해 주세요.
+            * 와줄래는 지역 기사와 고객을 연결하는 <b>중개 플랫폼</b>입니다. 작업 품질·A/S·금액·환불 등 시공 관련 책임은 작업을 수행한 기사님에게 있으며, 회사는 결제·대금 보관 및 정산에 관여하지 않습니다.
           </div>
         </div>
       </section>
@@ -191,7 +190,7 @@ export default function WajulleLanding() {
       <section id="services" className="border-t bg-gray-50">
         <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">가능 작업</h2>
-          <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["변기 막힘", "배관 누수", "보일러", "전기", "잠금해제", "문 개방", "싱크대/배수", "욕실/배관"].map((label, idx) => (
               <div key={idx} className="rounded-xl border bg-white px-4 py-3 text-center shadow-sm">
                 {label}
@@ -222,7 +221,6 @@ export default function WajulleLanding() {
         <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">정책 안내</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {/* 운영 정책만 카드로 유지 */}
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
               <h3 className="text-lg font-semibold">운영 정책</h3>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-700">
@@ -231,16 +229,12 @@ export default function WajulleLanding() {
                 <li>전화번호 비공개 접수 (카카오채널 중심)</li>
               </ul>
             </div>
-            {/* 두 번째 큰 책임고지 카드는 제거 */}
           </div>
-          {/* 정책 자세히 보기 링크 */}
           <div className="mt-4 text-xs text-gray-500">
             자세한 약관 및 정책은 아래 링크에서 확인하실 수 있습니다.{" "}
             <button className="underline" onClick={() => setOpen("terms")}>이용약관</button>
             {" · "}
             <button className="underline" onClick={() => setOpen("privacy")}>개인정보처리방침</button>
-            {" · "}
-            <button className="underline" onClick={() => setOpen("refund")}>환불 및 정산 정책</button>
             {" · "}
             <button className="underline" onClick={() => setOpen("liability")}>책임고지</button>
           </div>
@@ -253,10 +247,10 @@ export default function WajulleLanding() {
           <h2 className="text-2xl font-extrabold md:text-3xl">자주 묻는 질문</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
-              { q: "결제는 어디에 하나요?", a: "작업 확정 후 와줄래 계좌(카카오뱅크 3333-20-7345246, 예금주: 와줄래)로 선입금하시면, 작업 완료 확인 후 기사님께 정산됩니다." },
-              { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가 표와 현장 변수에 따라 확정됩니다." },
+              { q: "결제는 어디에 하나요?", a: "작업 확정 후 현장에서 또는 기사님 안내 계좌로 직접 결제합니다. 와줄래는 결제‧정산에 관여하지 않습니다." },
+              { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가표와 현장 변수에 따라 기사님이 최종 확정합니다." },
               { q: "내 전화번호가 노출되나요?", a: "아니요. 카카오채널 채팅으로 안전하게 접수되며, 필요한 경우에 한해 기사님과 연결됩니다." },
-              { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다. 와줄래는 중개 및 대금 보관/정산 역할을 하며, 분쟁 시 조정 지원을 제공합니다." },
+              { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다. 와줄래는 중개 플랫폼으로서 기사 재연결 등 조정을 도와드릴 수 있습니다." },
             ].map((item, idx) => (
               <div key={idx} className="rounded-2xl border bg-gray-50 p-5 shadow-sm">
                 <div className="font-semibold">Q. {item.q}</div>
@@ -304,7 +298,6 @@ export default function WajulleLanding() {
             <div className="mt-3 text-[11px] text-gray-400">
               <button className="mx-2 hover:underline" onClick={() => setOpen("terms")}>이용약관</button>|
               <button className="mx-2 hover:underline" onClick={() => setOpen("privacy")}>개인정보처리방침</button>|
-              <button className="mx-2 hover:underline" onClick={() => setOpen("refund")}>환불 및 정산 정책</button>|
               <button className="mx-2 hover:underline" onClick={() => setOpen("liability")}>책임고지</button>
             </div>
           </div>
@@ -314,7 +307,7 @@ export default function WajulleLanding() {
         </div>
       </footer>
 
-      {/* ===== Modals: Terms / Privacy / Refund / Liability ===== */}
+      {/* ===== Modals: Terms / Privacy / Liability ===== */}
       <PolicyModal
         open={open === "terms"}
         onClose={() => setOpen(null)}
@@ -322,28 +315,28 @@ export default function WajulleLanding() {
       >
         <p><b>최종 업데이트</b>: 2025-11-07</p>
         <h4>제1조 (목적)</h4>
-        <p>본 약관은 와줄래(이하 “회사”)가 제공하는 생활수리 연결 및 대금 보관·정산 대행 서비스의 이용과 관련하여 회사와 이용자 간 권리·의무 및 책임사항을 정함을 목적으로 합니다.</p>
+        <p>본 약관은 와줄래(이하 “회사”)가 제공하는 생활수리 연결 중개 서비스의 이용과 관련하여 회사와 이용자 간 권리·의무 및 책임사항을 정함을 목적으로 합니다.</p>
         <h4>제2조 (정의)</h4>
         <ul>
-          <li>“플랫폼”이란 고객과 지역 기사(사업자)를 연결하는 중개 서비스입니다.</li>
+          <li>“플랫폼”은 고객과 지역 기사(사업자)를 연결하는 중개 서비스입니다.</li>
           <li>“고객”은 수리를 의뢰하는 자, “기사”는 수리를 수행하는 자를 말합니다.</li>
         </ul>
         <h4>제3조 (약관의 효력 및 변경)</h4>
         <p>회사는 약관을 웹사이트에 게시하며, 관계 법령에 따라 변경할 수 있습니다. 변경 시 사전 공지합니다.</p>
         <h4>제4조 (서비스의 내용)</h4>
         <ol>
-          <li>고객과 기사 간 연결 중개</li>
-          <li>고객 대금의 임시 보관 및 작업 완료 확인 후 기사 정산</li>
-          <li>분쟁 발생 시 조정·중재 지원(법적 판단·강제력은 없음)</li>
+          <li>고객 문의 접수 및 기사 매칭</li>
+          <li>가격 안내(범위) 및 일정 조율 지원</li>
+          <li>고객과 기사 간 직접 계약·결제 진행을 위한 정보 전달</li>
         </ol>
         <h4>제5조 (계약 주체 및 책임)</h4>
-        <p>실제 수리·시공 계약의 당사자는 고객과 기사입니다. 시공 품질·A/S·손해배상 등 시공 관련 책임은 기사에게 있습니다. 회사는 중개 및 대금 보관·정산 대행에 한정된 역할을 수행합니다.</p>
-        <h4>제6조 (이용요금 및 결제)</h4>
-        <p>고객은 회사가 안내한 계좌로 선입금하며, 회사는 완료 확인 후 기사에게 정산합니다. 현장 변수 발생 시 사전 고지·동의 절차를 거칩니다.</p>
+        <p>실제 수리·시공 계약의 당사자는 고객과 기사입니다. 시공 품질·A/S·금액·환불 등 시공 관련 책임은 기사에게 있습니다. 회사는 결제·대금 보관 및 정산에 관여하지 않습니다.</p>
+        <h4>제6조 (이용요금)</h4>
+        <p>회사는 중개 서비스에 대한 수수료를 기사에게 청구·정산할 수 있습니다. 고객은 기사에게 직접 결제합니다.</p>
         <h4>제7조 (취소·환불)</h4>
-        <p>현장 출동 전 취소는 전액 환불, 출동 후 취소는 출동비·진단비 공제 후 환불, 작업 개시 후 취소는 작업 진행률에 따라 공제 후 환불합니다. 상세 기준은 “환불 및 정산 정책”을 따릅니다.</p>
+        <p>취소·환불은 고객과 기사 간 합의로 처리되며, 회사는 중개자로서 필요한 정보 제공 및 조정을 지원할 수 있습니다.</p>
         <h4>제8조 (분쟁 해결)</h4>
-        <p>분쟁은 우선 당사자 간 협의로 해결하며, 회사는 객관 자료를 바탕으로 조정합니다. 필요 시 관할 법원은 회사 주소지 관할로 합니다.</p>
+        <p>분쟁은 우선 당사자 간 협의로 해결하며, 회사는 객관 자료를 바탕으로 조정할 수 있습니다. 관할 법원은 회사 주소지 관할로 합니다.</p>
         <h4>제9조 (기타)</h4>
         <p>사업자 정보: 상호 와줄래 / 대표 김현성 / 주소 경기도 안산시 상록구 광덕산1로 / 연락 카카오채널.</p>
       </PolicyModal>
@@ -365,12 +358,12 @@ export default function WajulleLanding() {
         <h4>3. 이용 목적</h4>
         <ul>
           <li>의뢰 접수, 기사 매칭, 출동 안내</li>
-          <li>대금 보관·정산, 민원/분쟁 대응, 서비스 품질관리</li>
+          <li>민원/분쟁 대응, 서비스 품질관리</li>
         </ul>
         <h4>4. 보관 기간</h4>
-        <p>이용 목적 달성 시 지체 없이 파기하되, 관련 법령(전자상거래 등)에서 정한 기간 동안 보관할 수 있습니다(거래기록 5년 등).</p>
+        <p>이용 목적 달성 시 지체 없이 파기하되, 관련 법령에서 정한 기간 동안 보관할 수 있습니다(거래기록 5년 등).</p>
         <h4>5. 처리 위탁 및 제3자 제공</h4>
-        <p>출동 수행을 위해 고객의 최소 정보를 기사에게 제공할 수 있습니다. 결제/정산, 메시징 등 운영상 필요한 경우 국내외 클라우드·메시징 사업자에 처리를 위탁할 수 있으며, 위탁 시 수탁자, 위탁업무, 보유기간 등을 고지합니다.</p>
+        <p>출동 수행을 위해 고객의 최소 정보를 기사에게 제공할 수 있습니다. 메시징·클라우드 등 운영상 필요한 경우 수탁자에게 처리를 위탁할 수 있으며, 위탁 시 수탁자, 위탁업무, 보유기간 등을 고지합니다.</p>
         <h4>6. 이용자 권리</h4>
         <p>열람/정정/삭제/처리정지 요구 및 동의 철회가 가능합니다. 카카오채널을 통해 접수해 주세요.</p>
         <h4>7. 보호 조치</h4>
@@ -382,38 +375,17 @@ export default function WajulleLanding() {
       </PolicyModal>
 
       <PolicyModal
-        open={open === "refund"}
-        onClose={() => setOpen(null)}
-        title="환불 및 정산 정책 (와줄래)"
-      >
-        <p><b>최종 업데이트</b>: 2025-11-07</p>
-        <h4>1. 결제 및 보관</h4>
-        <p>고객은 회사 안내 계좌로 선입금하며, 회사는 작업 완료 확인 후 기사에게 정산합니다.</p>
-        <h4>2. 취소·환불 기준</h4>
-        <ul>
-          <li><b>출동 전</b> 고객 취소: 전액 환불</li>
-          <li><b>출동 후</b> 현장 진단만 진행: 출동비/진단비 공제 후 환불</li>
-          <li><b>작업 개시 후</b>: 진행률·사용 자재·소요 시간 등을 반영해 공제 후 환불 또는 미환불</li>
-          <li>천재지변·접근 불가 등 불가항력 사유는 예외적으로 조정 가능</li>
-        </ul>
-        <h4>3. 견적 및 추가 비용</h4>
-        <p>사전 고지된 범위를 초과하는 현장 변수가 확인될 경우, 고객 동의하에 추가 비용이 발생할 수 있습니다.</p>
-        <h4>4. 분쟁 처리</h4>
-        <p>증빙(사진, 대화기록, 진단서 등)을 바탕으로 회사가 중재하며, 최종 법적 판단은 사법기관에 따릅니다.</p>
-      </PolicyModal>
-
-      <PolicyModal
         open={open === "liability"}
         onClose={() => setOpen(null)}
         title="책임 범위 고지 (와줄래)"
       >
         <p><b>최종 업데이트</b>: 2025-11-07</p>
         <h4>1. 서비스 성격</h4>
-        <p>와줄래는 고객과 기사 간 연결 및 대금 보관·정산 대행을 제공하는 <b>중개 플랫폼</b>입니다.</p>
+        <p>와줄래는 고객과 기사 간 연결을 제공하는 <b>중개 플랫폼</b>입니다.</p>
         <h4>2. 시공 책임</h4>
-        <p>수리·시공의 실제 제공 주체는 기사이며, 시공 품질·A/S·손해배상 등 시공 관련 책임은 기사에게 있습니다.</p>
+        <p>수리·시공의 실제 제공 주체는 기사이며, 시공 품질·A/S·금액·환불 등 시공 관련 책임은 기사에게 있습니다.</p>
         <h4>3. 회사의 역할</h4>
-        <p>회사는 대금 보관·정산과 분쟁 조정 지원 역할을 수행하나, 시공 행위 자체에 대한 직접적 책임은 부담하지 않습니다.</p>
+        <p>회사는 중개 과정에서 정보 제공 및 조정을 지원하나, 결제·대금 보관 및 정산에는 관여하지 않습니다.</p>
         <h4>4. 관할</h4>
         <p>분쟁 발생 시 회사 주소지 관할 법원을 합의 관할로 합니다.</p>
       </PolicyModal>
