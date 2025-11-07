@@ -9,9 +9,11 @@ export default function CheolsanSOSLanding() {
       <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-8">
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500 font-bold text-white shadow-sm">S</span>
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500 font-bold text-white shadow-sm">
+              S
+            </span>
             <div className="leading-tight">
-              <div className="text-lg font-bold">철산SOS</div>
+              <div className="text-lg font-bold">와줄래</div>
               <div className="text-xs text-gray-500">생활출동 연결 플랫폼</div>
             </div>
           </div>
@@ -36,14 +38,14 @@ export default function CheolsanSOSLanding() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(circle_at_70%_0,rgba(59,130,246,0.05),transparent_40%)]" />
-        
-        {/* 중앙 정렬 적용 */}
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24 items-center">
+
+        {/* 중앙 정렬 + 양 컬럼 꽉 차게 */}
+        <div className="mx-auto grid max-w-6xl items-stretch justify-items-stretch gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24">
           <div className="md:pr-8">
             <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight md:text-5xl">
               철산·광명 생활수리 <span className="text-amber-600">긴급 출동</span> 연결
             </h1>
-            <p className="mt-4 text-base text-gray-600 md:text-lg leading-relaxed">
+            <p className="mt-4 text-base leading-relaxed text-gray-600 md:text-lg">
               변기막힘, 누수, 보일러, 전기, 잠금해제, 문 개방 등
               <br className="hidden md:block" />
               <b>가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.
@@ -82,9 +84,9 @@ export default function CheolsanSOSLanding() {
             </div>
           </div>
 
-          {/* 오른쪽 카드 살짝 우측 정렬 */}
-          <div className="md:ml-auto">
-            <div className="relative mx-auto max-w-md overflow-hidden rounded-2xl border bg-white p-4 shadow-sm md:max-w-none">
+          {/* 오른쪽 카드: 컬럼 폭 꽉 채우기 */}
+          <div>
+            <div className="relative w-full overflow-hidden rounded-2xl border bg-white p-4 shadow-sm">
               <div className="rounded-xl bg-gray-100 p-4">
                 <div className="text-sm font-semibold text-gray-700">빠른 접수 예시</div>
                 <div className="mt-3 grid gap-2 text-sm">
@@ -111,13 +113,12 @@ export default function CheolsanSOSLanding() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* How it works */}
       <section id="how" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">이용 방법</h2>
           <ol className="mt-6 grid gap-4 md:grid-cols-3">
             {[1, 2, 3].map((n, i) => (
@@ -130,7 +131,7 @@ export default function CheolsanSOSLanding() {
                     {[
                       "카카오채널에서 주소/증상/사진 전송",
                       "사전 견적 범위 안내 후 기사 매칭",
-                      "기사님 방문·작업·결제 (철산SOS 선입금 후 정산)"
+                      "기사님 방문·작업·결제 (와줄래 선입금 후 정산)",
                     ][i]}
                   </div>
                 </div>
@@ -138,7 +139,7 @@ export default function CheolsanSOSLanding() {
                   {[
                     "전화번호 공개 없이 안전하게 접수합니다.",
                     "가장 가까운 지역 기사님을 연결해드립니다.",
-                    "결제는 철산SOS 계좌로 선입금되며, 작업 완료 확인 후 기사님께 정산됩니다."
+                    "결제는 와줄래 계좌로 선입금되며, 작업 완료 확인 후 기사님께 정산됩니다.",
                   ][i]}
                 </p>
               </li>
@@ -152,7 +153,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Services */}
       <section id="services" className="border-t bg-gray-50">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">가능 작업</h2>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["변기 막힘", "배관 누수", "보일러", "전기", "잠금해제", "문 개방", "싱크대/배수", "욕실/배관"].map((label, idx) => (
@@ -167,7 +168,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Areas */}
       <section id="areas" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">지원 지역</h2>
           <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 · 가산</p>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
@@ -182,7 +183,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Policy & Disclaimer */}
       <section id="policy" className="border-t bg-gray-50">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">정책 / 책임 고지</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
@@ -196,10 +197,10 @@ export default function CheolsanSOSLanding() {
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
               <h3 className="text-lg font-semibold">책임 고지</h3>
               <p className="mt-3 text-sm leading-6 text-gray-700">
-                철산SOS는 지역 생활수리 기사님과 고객을 연결하는 중개 플랫폼이며, 고객이 결제한 작업비를 안전하게 보관하고 작업 완료 확인 후 기사님께 정산하는 ‘대금 보관 및 정산 대행 서비스(에스크로 유사)’를 제공합니다. 
+                와줄래는 지역 생활수리 기사님과 고객을 연결하는 중개 플랫폼이며, 고객이 결제한 작업비를 안전하게 보관하고 작업 완료 확인 후 기사님께 정산하는 ‘대금 보관 및 정산 대행 서비스(에스크로 유사)’를 제공합니다. 
                 작업의 실제 제공 주체는 개별 기사님으로, 시공 품질·A/S·손해배상 등 시공 관련 책임은 기사님에게 있으며, 고객과 기사님 사이에서 실제 계약이 성립합니다. 
-                철산SOS는 시공 행위 및 결과에 대한 직접적 책임을 부담하지 않으며, 대금 보관/정산 절차 내에서의 조정·중재 역할을 수행합니다. 
-                결제 계좌: 카카오뱅크 3333-20-7345246 (예금주: 철산SOS).
+                와줄래는 시공 행위 및 결과에 대한 직접적 책임을 부담하지 않으며, 대금 보관/정산 절차 내에서의 조정·중재 역할을 수행합니다. 
+                결제 계좌: 카카오뱅크 3333-20-7345246 (예금주: 와줄래).
               </p>
             </div>
           </div>
@@ -208,14 +209,14 @@ export default function CheolsanSOSLanding() {
 
       {/* FAQ */}
       <section id="faq" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-16">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">자주 묻는 질문</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
-              { q: "결제는 어디에 하나요?", a: "작업 확정 후 철산SOS 계좌(카카오뱅크 3333-20-7345246, 예금주: 철산SOS)로 선입금하시면, 작업 완료 확인 후 기사님께 정산됩니다." },
+              { q: "결제는 어디에 하나요?", a: "작업 확정 후 와줄래 계좌(카카오뱅크 3333-20-7345246, 예금주: 와줄래)로 선입금하시면, 작업 완료 확인 후 기사님께 정산됩니다." },
               { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가 표와 현장 변수에 따라 확정됩니다. 최종 금액은 작업 확정 시 안내드립니다." },
               { q: "내 전화번호가 노출되나요?", a: "아니요. 카카오채널 채팅으로 안전하게 접수되며, 필요한 경우에 한해 기사님과 연결됩니다." },
-              { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다. 철산SOS는 중개 및 대금 보관/정산 역할을 하며, 분쟁 시 조정 지원을 제공합니다." },
+              { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다. 와줄래는 중개 및 대금 보관/정산 역할을 하며, 분쟁 시 조정 지원을 제공합니다." },
             ].map((item, idx) => (
               <div key={idx} className="rounded-2xl border bg-gray-50 p-5 shadow-sm">
                 <div className="font-semibold">Q. {item.q}</div>
@@ -226,21 +227,9 @@ export default function CheolsanSOSLanding() {
         </div>
       </section>
 
-      {/* Disclaimer */}
-      <section className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 md:px-8 py-10">
-          <p className="text-xs leading-6 text-gray-500">
-            본 사이트는 시공 업체를 직접 운영하지 않으며, 지역 기사님과 고객을 연결하는 <b>중개 플랫폼</b>입니다. 
-            고객 결제는 <b>철산SOS 명의 계좌로 선입금</b>되어 <b>대금 보관 및 정산</b> 목적으로만 사용되며, 작업 완료 확인 후 기사님께 정산됩니다. 
-            시공의 품질, 일정, A/S 및 시공으로 인한 손해에 대한 책임은 <b>작업을 수행한 기사님 또는 업체</b>에게 있습니다. 
-            철산SOS는 시공 결과에 대한 직접적 법적 책임을 부담하지 않으며, 결제 보관/정산 및 분쟁 조정 범위 내에서 역할을 수행합니다.
-          </p>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="border-t bg-amber-50">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 md:px-8 py-14 text-center">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-14 text-center md:px-8">
           <h3 className="text-xl font-extrabold md:text-2xl">지금 바로 가까운 기사님 연결 받기</h3>
           <p className="max-w-2xl text-sm text-gray-700">
             주소 · 증상 · 사진 1~2장만 보내주세요. 빠르면 10~20분 내 출동 안내가 가능합니다.
@@ -258,15 +247,15 @@ export default function CheolsanSOSLanding() {
 
       {/* Footer */}
       <footer className="border-t bg-white">
-        <div className="mx-auto grid max-w-6xl gap-6 px-6 md:px-8 py-10 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-10 md:grid-cols-2 md:px-8">
           <div>
-            <div className="text-lg font-bold">철산SOS</div>
+            <div className="text-lg font-bold">와줄래</div>
             <div className="mt-1 text-sm text-gray-500">생활출동 연결 플랫폼 · 고객과 기사 연결 서비스</div>
           </div>
-        <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500">
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
-              <li>상호: 철산SOS </li>
+              <li>상호: 와줄래 </li>
               <li>사업자등록번호: 338-46-01315 </li>
               <li>대표: 김현성</li>
               <li>연락: 카카오채널 문의</li>
