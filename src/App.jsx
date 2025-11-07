@@ -46,7 +46,7 @@ export default function WajulleLanding() {
             <p className="mt-4 text-base leading-relaxed text-gray-600 md:text-lg">
               변기막힘, 누수, 보일러, 전기, 잠금해제, 문 개방 등
               <br className="hidden md:block" />
-              <b> 가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.
+              <b>가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -66,22 +66,21 @@ export default function WajulleLanding() {
               </a>
             </div>
 
-            {/* 수정된 부분 👇 */}
-            <div className="mt-6 grid max-w-lg grid-cols-3 gap-4 text-center text-sm">
-              <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">10~20분</div>
-                <div className="mt-1 text-gray-600 whitespace-nowrap">평균 출동 안내</div>
+            {/* ✅ 수정된 통계 카드 */}
+            <div className="mt-6 grid max-w-lg grid-cols-3 gap-4 text-sm">
+              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
+                <div className="text-2xl font-bold text-amber-600">10~20분</div>
+                <div className="mt-1 text-gray-600">평균 출동 안내</div>
               </div>
-              <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">사전견적</div>
-                <div className="mt-1 text-gray-600 whitespace-nowrap">고정 단가 정책</div>
+              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
+                <div className="text-2xl font-bold text-amber-600">사전견적</div>
+                <div className="mt-1 text-gray-600">고정 단가 정책</div>
               </div>
-              <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">동네기사</div>
-                <div className="mt-1 text-gray-600 whitespace-nowrap">실명·리뷰 기반</div>
+              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
+                <div className="text-2xl font-bold text-amber-600">동네기사</div>
+                <div className="mt-1 text-gray-600">실명·리뷰 기반</div>
               </div>
             </div>
-            {/* 수정 끝 */}
           </div>
 
           {/* Right Card */}
@@ -116,6 +115,7 @@ export default function WajulleLanding() {
         </div>
       </section>
 
+      {/* 이하 동일 — 변경 없음 */}
       {/* How it works */}
       <section id="how" className="border-t bg-white">
         <div className="w-full px-6 py-16 md:px-8">
