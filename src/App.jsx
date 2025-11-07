@@ -2,17 +2,7 @@ import React, { useState } from "react";
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-function PolicyModal({
-  open,
-  onClose,
-  title,
-  children,
-}: {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-}) {
+function PolicyModal({ open, onClose, title, children }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
@@ -27,16 +17,15 @@ function PolicyModal({
             닫기
           </button>
         </div>
-        <div className="prose prose-sm max-w-none text-gray-800">
-          {children}
-        </div>
+        <div className="prose prose-sm max-w-none text-gray-800">{children}</div>
       </div>
     </div>
   );
 }
 
 export default function WajulleLanding() {
-  const [open, setOpen] = useState<null | "terms" | "privacy" | "refund" | "liability">(null);
+  // 문자열('terms' | 'privacy' | 'refund' | 'liability') 또는 null
+  const [open, setOpen] = useState(null);
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
@@ -202,7 +191,7 @@ export default function WajulleLanding() {
       <section id="services" className="border-t bg-gray-50">
         <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">가능 작업</h2>
-        <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["변기 막힘", "배관 누수", "보일러", "전기", "잠금해제", "문 개방", "싱크대/배수", "욕실/배관"].map((label, idx) => (
               <div key={idx} className="rounded-xl border bg-white px-4 py-3 text-center shadow-sm">
                 {label}
