@@ -46,7 +46,7 @@ export default function WajulleLanding() {
             <p className="mt-4 text-base leading-relaxed text-gray-600 md:text-lg">
               변기막힘, 누수, 보일러, 전기, 잠금해제, 문 개방 등
               <br className="hidden md:block" />
-              <b>가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.
+              <b> 가장 가까운 지역 기사님</b>을 빠르게 연결해드립니다.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
