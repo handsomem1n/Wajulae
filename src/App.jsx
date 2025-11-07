@@ -66,19 +66,31 @@ export default function WajulleLanding() {
               </a>
             </div>
 
-            {/* ✅ 수정된 통계 카드 */}
-            <div className="mt-6 grid max-w-lg grid-cols-3 gap-4 text-sm">
-              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
-                <div className="text-2xl font-bold text-amber-600">10~20분</div>
-                <div className="mt-1 text-gray-600">평균 출동 안내</div>
+            {/* ✅ 최종 통계 카드: 글자 간격 타이트 + 중앙정렬 + 동일 높이 + 모바일 최적화 */}
+            <div className="mt-6 grid max-w-lg grid-cols-3 gap-3 text-center">
+              <div className="rounded-2xl bg-white p-3 sm:p-4 shadow-sm flex flex-col items-center justify-center min-h-[90px]">
+                <div className="text-lg sm:text-2xl font-extrabold text-amber-600 leading-tight tracking-tight">
+                  10~20분
+                </div>
+                <div className="mt-0.5 text-[11px] sm:text-xs text-gray-600 leading-tight">
+                  평균 출동 안내
+                </div>
               </div>
-              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
-                <div className="text-2xl font-bold text-amber-600">사전견적</div>
-                <div className="mt-1 text-gray-600">고정 단가 정책</div>
+              <div className="rounded-2xl bg-white p-3 sm:p-4 shadow-sm flex flex-col items-center justify-center min-h-[90px]">
+                <div className="text-lg sm:text-2xl font-extrabold text-amber-600 leading-tight tracking-tight">
+                  사전견적
+                </div>
+                <div className="mt-0.5 text-[11px] sm:text-xs text-gray-600 leading-tight">
+                  고정 단가 정책
+                </div>
               </div>
-              <div className="rounded-2xl bg-white p-4 shadow-sm flex flex-col items-center text-center">
-                <div className="text-2xl font-bold text-amber-600">동네기사</div>
-                <div className="mt-1 text-gray-600">실명·리뷰 기반</div>
+              <div className="rounded-2xl bg-white p-3 sm:p-4 shadow-sm flex flex-col items-center justify-center min-h-[90px]">
+                <div className="text-lg sm:text-2xl font-extrabold text-amber-600 leading-tight tracking-tight">
+                  동네기사
+                </div>
+                <div className="mt-0.5 text-[11px] sm:text-xs text-gray-600 leading-tight">
+                  실명·리뷰 기반
+                </div>
               </div>
             </div>
           </div>
@@ -115,7 +127,6 @@ export default function WajulleLanding() {
         </div>
       </section>
 
-      {/* 이하 동일 — 변경 없음 */}
       {/* How it works */}
       <section id="how" className="border-t bg-white">
         <div className="w-full px-6 py-16 md:px-8">
@@ -214,7 +225,7 @@ export default function WajulleLanding() {
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
               { q: "결제는 어디에 하나요?", a: "작업 확정 후 와줄래 계좌(카카오뱅크 3333-20-7345246, 예금주: 와줄래)로 선입금하시면, 작업 완료 확인 후 기사님께 정산됩니다." },
-              { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가 표와 현장 변수에 따라 확정됩니다. 최종 금액은 작업 확정 시 안내드립니다." },
+              { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가 표와 현장 변수에 따라 확정됩니다." },
               { q: "내 전화번호가 노출되나요?", a: "아니요. 카카오채널 채팅으로 안전하게 접수되며, 필요한 경우에 한해 기사님과 연결됩니다." },
               { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다. 와줄래는 중개 및 대금 보관/정산 역할을 하며, 분쟁 시 조정 지원을 제공합니다." },
             ].map((item, idx) => (
