@@ -66,23 +66,25 @@ export default function WajulleLanding() {
               </a>
             </div>
 
+            {/* 수정된 부분 👇 */}
             <div className="mt-6 grid max-w-lg grid-cols-3 gap-4 text-center text-sm">
               <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600">10~20분</div>
-                <div className="mt-1 text-gray-600">평균 출동 안내</div>
+                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">10~20분</div>
+                <div className="mt-1 text-gray-600 whitespace-nowrap">평균 출동 안내</div>
               </div>
               <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600">사전견적</div>
-                <div className="mt-1 text-gray-600">고정 단가 정책</div>
+                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">사전견적</div>
+                <div className="mt-1 text-gray-600 whitespace-nowrap">고정 단가 정책</div>
               </div>
               <div className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="text-2xl font-bold text-amber-600">동네기사</div>
-                <div className="mt-1 text-gray-600">실명·리뷰 기반</div>
+                <div className="text-2xl font-bold text-amber-600 whitespace-nowrap">동네기사</div>
+                <div className="mt-1 text-gray-600 whitespace-nowrap">실명·리뷰 기반</div>
               </div>
             </div>
+            {/* 수정 끝 */}
           </div>
 
-          {/* Right Card (full column width) */}
+          {/* Right Card */}
           <div>
             <div className="relative w-full overflow-hidden rounded-2xl border bg-white p-4 shadow-sm">
               <div className="rounded-xl bg-gray-100 p-4">
