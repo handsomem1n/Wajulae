@@ -2,15 +2,15 @@ import React from "react";
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-export default function CheolsanSOSLanding() {
+export default function WajulleLanding() {
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
       {/* Top Bar */}
       <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-8">
+        <div className="flex w-full items-center justify-between px-6 py-3 md:px-8">
           <div className="flex items-center gap-2">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500 font-bold text-white shadow-sm">
-              S
+              와
             </span>
             <div className="leading-tight">
               <div className="text-lg font-bold">와줄래</div>
@@ -38,9 +38,7 @@ export default function CheolsanSOSLanding() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(circle_at_70%_0,rgba(59,130,246,0.05),transparent_40%)]" />
-
-        {/* 중앙 정렬 + 양 컬럼 꽉 차게 */}
-        <div className="mx-auto grid max-w-6xl items-stretch justify-items-stretch gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24">
+        <div className="grid w-full items-stretch justify-items-stretch gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24">
           <div className="md:pr-8">
             <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight md:text-5xl">
               철산·광명 생활수리 <span className="text-amber-600">긴급 출동</span> 연결
@@ -84,7 +82,7 @@ export default function CheolsanSOSLanding() {
             </div>
           </div>
 
-          {/* 오른쪽 카드: 컬럼 폭 꽉 채우기 */}
+          {/* Right Card (full column width) */}
           <div>
             <div className="relative w-full overflow-hidden rounded-2xl border bg-white p-4 shadow-sm">
               <div className="rounded-xl bg-gray-100 p-4">
@@ -118,7 +116,7 @@ export default function CheolsanSOSLanding() {
 
       {/* How it works */}
       <section id="how" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+        <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">이용 방법</h2>
           <ol className="mt-6 grid gap-4 md:grid-cols-3">
             {[1, 2, 3].map((n, i) => (
@@ -153,7 +151,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Services */}
       <section id="services" className="border-t bg-gray-50">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+        <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">가능 작업</h2>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
             {["변기 막힘", "배관 누수", "보일러", "전기", "잠금해제", "문 개방", "싱크대/배수", "욕실/배관"].map((label, idx) => (
@@ -168,7 +166,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Areas */}
       <section id="areas" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+        <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">지원 지역</h2>
           <p className="mt-3 text-sm text-gray-600">철산 · 광명 · 구로 · 독산 · 가산</p>
           <div className="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 md:grid-cols-4">
@@ -183,7 +181,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Policy & Disclaimer */}
       <section id="policy" className="border-t bg-gray-50">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+        <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">정책 / 책임 고지</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
@@ -209,9 +207,9 @@ export default function CheolsanSOSLanding() {
 
       {/* FAQ */}
       <section id="faq" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+        <div className="w-full px-6 py-16 md:px-8">
           <h2 className="text-2xl font-extrabold md:text-3xl">자주 묻는 질문</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
               { q: "결제는 어디에 하나요?", a: "작업 확정 후 와줄래 계좌(카카오뱅크 3333-20-7345246, 예금주: 와줄래)로 선입금하시면, 작업 완료 확인 후 기사님께 정산됩니다." },
               { q: "가격은 어떻게 되나요?", a: "사진/주소/증상을 확인 후 대략적인 범위를 먼저 안내드리고, 고정 단가 표와 현장 변수에 따라 확정됩니다. 최종 금액은 작업 확정 시 안내드립니다." },
@@ -229,7 +227,7 @@ export default function CheolsanSOSLanding() {
 
       {/* CTA */}
       <section className="border-t bg-amber-50">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-14 text-center md:px-8">
+        <div className="flex w-full flex-col items-center gap-4 px-6 py-14 text-center md:px-8">
           <h3 className="text-xl font-extrabold md:text-2xl">지금 바로 가까운 기사님 연결 받기</h3>
           <p className="max-w-2xl text-sm text-gray-700">
             주소 · 증상 · 사진 1~2장만 보내주세요. 빠르면 10~20분 내 출동 안내가 가능합니다.
@@ -247,7 +245,7 @@ export default function CheolsanSOSLanding() {
 
       {/* Footer */}
       <footer className="border-t bg-white">
-        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-10 md:grid-cols-2 md:px-8">
+        <div className="grid w-full gap-6 px-6 py-10 md:grid-cols-2 md:px-8">
           <div>
             <div className="text-lg font-bold">와줄래</div>
             <div className="mt-1 text-sm text-gray-500">생활출동 연결 플랫폼 · 고객과 기사 연결 서비스</div>
@@ -255,16 +253,16 @@ export default function CheolsanSOSLanding() {
           <div className="text-sm text-gray-500">
             <div className="font-semibold">사업자 정보</div>
             <ul className="mt-2 space-y-1">
-              <li>상호: 와줄래 </li>
-              <li>사업자등록번호: 338-46-01315 </li>
+              <li>상호: 와줄래</li>
+              <li>사업자등록번호: 338-46-01315</li>
               <li>대표: 김현성</li>
               <li>연락: 카카오채널 문의</li>
-              <li>주소: 경기도 광명시 철산동 </li>
+              <li>주소: 경기도 광명시 철산동</li>
             </ul>
           </div>
         </div>
         <div className="border-t py-6 text-center text-xs text-gray-400">
-          © {new Date().getFullYear()} CheolsanSOS. All rights reserved.
+          © {new Date().getFullYear()} Wajulle. All rights reserved.
         </div>
       </footer>
     </main>
