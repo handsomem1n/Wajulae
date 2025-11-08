@@ -469,7 +469,7 @@ export default function App() {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 긴급 생활 수리</h1>
-              <p className="mt-3 text-neutral-600 max-w-lg">사전 안내된 정찰제 비용으로 진행됩니다.</p>
+              <p className="mt-3 text-neutral-600 max-w-lg">참고용 표준가 제공</p>
               <button
                 type="button"
                 onClick={() => setCurrentPage("pricing")}
