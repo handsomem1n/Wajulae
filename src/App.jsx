@@ -225,11 +225,11 @@ export default function App() {
                 표준 가격
               </p>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
-                투명한 표준 견적,
-                <span className="block">믿을 수 있는 집수리 플랫폼</span>
+                동네 기사님 바로 연결
+                <span className="block">철산·광명·구로·가산 긴급 수리</span>
               </h1>
               <p className="mt-4 text-neutral-600 text-base sm:text-lg max-w-xl">
-                클릭 몇 번으로 집수리를 신청하고, 전문가의 방문 점검 후 표준화된 견적을 받아 보세요. 불필요한 추가 비용 없이 간단하고 빠르게.
+                빠르게 찾아가 해결합니다. 사전 안내된 정찰제 비용으로 부담 없이 진행됩니다.
               </p>
               <div className="mt-6 flex gap-3">
                 <a
