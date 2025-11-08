@@ -19,12 +19,29 @@ const CATEGORY_LABELS: Record<string, string> = {
   space: "공간",
 };
 
+// ---------- 타입 ----------
+type CaseDetail = {
+  content: string;   // 시공내역
+  price: string;     // 비용
+  labor: string;     // 공임비
+  material: string;  // 제품비용
+};
+
+type CaseItem = {
+  id: string;
+  title: string;
+  category: keyof typeof CATEGORY_LABELS | string;
+  summary: string;
+  detail: CaseDetail;   // <<— 한 케이스의 상세를 묶어서 관리
+};
+
 // ---------- Shared UI ----------
 function TopBar() {
   return (
     <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-3 md:px-8">
         <Link to="/" className="flex items-center gap-2">
+          {/* 별 아이콘/장식 없음 */}
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500 font-bold text-white shadow-sm">
             와
           </span>
@@ -110,21 +127,69 @@ function HomeInfoPage() {
   return <Landing />;
 }
 
-// ---------- CASES DATA (area/time 제거) ----------
-const CASES = [
-  { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
-  { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
-  { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
-  // 필요 시 계속 추가 (title, category, summary만 채우고 detail은 빈 문자열로 두면 됩니다)
+// ---------- 케이스 데이터 ----------
+// 필요한 항목마다 detail 안에 시공내역/비용/공임비/제품비용을 직접 기입하세요.
+const CASES: CaseItem[] = [
+  {
+    id: "intercom-replace-01",
+    title: "인터폰 교체",
+    category: "door",
+    summary: "노후 인터폰을 신형으로 교체하여 통화/문열림 기능 개선.",
+    detail: {
+      content:
+        "기존 아날로그 인터폰 철거 → 배선 점검 및 신형 호환 확인 → 벽부/거치대 재설치 → 신형 인터폰 본체 고정 및 테스트(통화/호출/문열림) → 마감.",
+      price: "120,000원 ~ 180,000원",
+      labor: "80,000원",
+      material: "인터폰 본체 40,000원 ~ 100,000원",
+    },
+  },
+  {
+    id: "door-floor-hinge-01",
+    title: "현관문 플로어 힌지 교체",
+    category: "door",
+    summary: "플로어힌지(도어클로저) 누유/소음/닫힘불량 교체 시공.",
+    detail: {
+      content:
+        "문 분리 및 고정 → 바닥 매립형 힌지 커버 해체 → 기존 플로어힌지 철거 → 바닥 레벨링/몰탈 보수 → 신형 힌지 매립 설치 및 수평/개폐각 조정 → 문 재설치 → 속도/닫힘력 세팅 → 마감.",
+      price: "200,000원 ~ 350,000원",
+      labor: "150,000원 ~ 220,000원",
+      material: "플로어힌지 50,000원 ~ 130,000원",
+    },
+  },
+  {
+    id: "k-sink-faucet-01",
+    title: "싱크대 수전 교체",
+    category: "kitchen",
+    summary: "누수/노후 수전 신품 교체. (예시 데이터)",
+    detail: {
+      content: "",
+      price: "",
+      labor: "",
+      material: "",
+    },
+  },
+  {
+    id: "bath-fan-01",
+    title: "욕실 환풍기 교체",
+    category: "bath",
+    summary: "소음/흡기저하 환풍기 교체. (예시 데이터)",
+    detail: {
+      content: "",
+      price: "",
+      labor: "",
+      material: "",
+    },
+  },
 ];
 
 // ---------- Card ----------
-function CaseCard({ item }: { item: any }) {
-  const categoryLabel = CATEGORY_LABELS[item.category] || item.category;
-  const hasPrice = !!(item.price && String(item.price).trim());
+function CaseCard({ item }: { item: CaseItem }) {
+  const categoryLabel = CATEGORY_LABELS[item.category] || String(item.category);
+  const hasPrice = !!(item.detail?.price && String(item.detail.price).trim());
+
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-      {/* 상단 얇은 악센트 바 */}
+      {/* 상단 얇은 악센트 바 (별 아이콘 없음) */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
 
       <div className="flex items-center justify-between">
@@ -132,8 +197,15 @@ function CaseCard({ item }: { item: any }) {
           {categoryLabel}
         </span>
 
-        <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + (hasPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
-          {hasPrice ? `비용 ${item.price}` : "비용 입력 전"}
+        <span
+          className={
+            "inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " +
+            (hasPrice
+              ? "bg-amber-100 text-amber-800 ring-amber-200"
+              : "bg-gray-50 text-gray-500 ring-gray-200")
+          }
+        >
+          {hasPrice ? `비용 ${item.detail.price}` : "비용 입력 전"}
         </span>
       </div>
 
@@ -268,10 +340,10 @@ function CaseDetailPage() {
   }
 
   const detailRows = [
-    { label: "시공내역", value: data.content || "" },
-    { label: "비용", value: data.price || "" },
-    { label: "공임비", value: data.labor || "" },
-    { label: "제품비용", value: data.material || "" },
+    { label: "시공내역", value: data.detail.content || "" },
+    { label: "비용", value: data.detail.price || "" },
+    { label: "공임비", value: data.detail.labor || "" },
+    { label: "제품비용", value: data.detail.material || "" },
   ];
 
   return (
@@ -298,7 +370,7 @@ function CaseDetailPage() {
               {detailRows.map((r, i) => (
                 <div key={i} className="rounded-xl border bg-amber-50/40 p-3 ring-1 ring-amber-100">
                   <dt className="text-xs font-semibold text-amber-700">{r.label}</dt>
-                  <dd className="mt-1 text-gray-900">{r.value || " "}</dd>
+                  <dd className="mt-1 text-gray-900 whitespace-pre-line">{r.value || " "}</dd>
                 </div>
               ))}
             </dl>
@@ -353,8 +425,8 @@ function FAQPage() {
         </div>
       </section>
 
-      <section>
-        <div className="mx-auto grid w-full max-w-7xl gap-4 px-6 py-10 md:grid-cols-2 md:px-8">
+        <section>
+        <div className="mx-auto grid w/full max-w-7xl gap-4 px-6 py-10 md:grid-cols-2 md:px-8">
           {items.map((it, idx) => (
             <div key={idx} className="rounded-2xl border bg-white p-5 shadow-sm ring-1 ring-amber-100">
               <div className="font-semibold">Q. {it.q}</div>
