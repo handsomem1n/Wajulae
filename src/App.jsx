@@ -47,9 +47,7 @@ const SearchIcon = () => (
   </svg>
 );
 
-/* ─────────────────────────────
-   약관/법적 고지/개인정보 모달 (그대로 유지)
-   ───────────────────────────── */
+/* 약관/법적 고지/개인정보 모달 */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -103,9 +101,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   );
 }
 
-/* ─────────────────────────────
-   문서 섹션 분리 (읽기 쉬움)
-   ───────────────────────────── */
+/* 문서 섹션 */
 const TOS = ({ setActiveTab }) => (
   <article className="space-y-4">
     <p className="text-xs text-neutral-500">시행일: 2025-11-09 · 와줄래(“회사”)</p>
@@ -337,9 +333,6 @@ export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
   const [currentPage, setCurrentPage] = useState(null);
 
-  // 모바일 메뉴 상태
-  const [mobileOpen, setMobileOpen] = useState(false);
-
   // 법적 문서 모달 상태
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
@@ -355,8 +348,11 @@ export default function App() {
     }
   };
 
+  // 이미지 버튼 경로(필요 시 교체)
+  const HERO_SHORTCUT_IMG = "/assets/hero-search.png"; // 프로젝트에서 실제 경로로 변경하세요
+
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 [--primary:#00c7ae] overflow-x-hidden">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -389,118 +385,79 @@ export default function App() {
               </a>
             ))}
           </nav>
-          {/* 모바일 메뉴 버튼 */}
-          <button className="md:hidden px-3 py-2 rounded-lg ring-1 ring-neutral-300" onClick={() => setMobileOpen(true)}>메뉴</button>
         </div>
       </header>
 
-      {/* 모바일 메뉴 드로워 */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[70] bg-black/40" onClick={() => setMobileOpen(false)}>
-          <div className="absolute right-0 top-0 bottom-0 w-64 bg-white shadow-xl p-4" onClick={(e)=>e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <strong>와줄래</strong>
-              <button className="px-2 py-1 ring-1 ring-neutral-200 rounded" onClick={() => setMobileOpen(false)}>닫기</button>
-            </div>
-            <ul className="space-y-2">
-              {NAV.map((item)=> (
-                <li key={item.id}>
-                  <button
-                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-neutral-100"
-                    onClick={(e)=>{ setMobileOpen(false); handleNavClick(item)(e); }}
-                  >{item.label}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {/* 히어로 (homeco.kr 유사: 좌측 카피/검색, 우측 카테고리 타일) */}
+      {/* 히어로 – 심플 랜딩: 표준 견적 바로가기 하나만 */}
       <section id="hero" className="relative overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            {/* 좌측: 타이틀/검색/칩 (기존 텍스트 유지) */}
-            <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                동네 기사님 바로 연결
-                <span className="block text-neutral-700 mt-1">철산·광명·구로·가산 긴급 생활 수리</span>
-              </h1>
-              <form
-                onSubmit={(e)=>e.preventDefault()}
-                className="mt-6 flex items-center gap-2 p-2 rounded-2xl bg-white shadow-[0_6px_24px_rgba(0,0,0,0.06)] ring-1 ring-neutral-200"
-              >
-                <span className="ml-2 text-neutral-500"><SearchIcon/></span>
-                <input className="flex-1 px-2 py-2 outline-none" placeholder="어떤 수리가 필요하세요? 예: 콘센트 교체" />
-                <button className="px-4 py-2 rounded-xl bg-primary text-white font-semibold">견적 받기</button>
-              </form>
-              <div className="mt-4 flex flex-wrap gap-2 text-sm">
-                {["전기","수전/배관","문/잠금","타일","환풍/후드","기타"].map((x)=> (
-                  <button key={x} className="px-3 py-1.5 rounded-full bg-white ring-1 ring-neutral-200 hover:ring-primary/40 hover:text-primary transition">{x}</button>
-                ))}
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3 text-sm text-neutral-700">
-                <div className="inline-flex items-center gap-2"><Check/> 표준 가격제</div>
-                <div className="inline-flex items-center gap-2"><Check/> 지역 집중 운영</div>
-              </div>
-              {/* CTA 버튼 */}
-              <div className="mt-5 flex flex-wrap gap-2">
-                <button onClick={()=>setCurrentPage('pricing')} className="px-4 py-2 rounded-xl bg-primary text-white font-semibold">표준 견적 보기</button>
-                <button onClick={()=>{ document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}); }} className="px-4 py-2 rounded-xl ring-1 ring-neutral-300">문의하기</button>
-              </div>
-            </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
+          {/* 왼쪽 심플 메시지 */}
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">사전 안내된 정찰제 비용으로 진행됩니다.</h1>
+            <p className="mt-3 text-neutral-600 max-w-lg">철산·광명·구로·가산 긴급 생활 수리</p>
+            <button
+              type="button"
+              onClick={() => setCurrentPage("pricing")}
+              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-white font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
+            >
+              표준 견적 바로가기 <ArrowRight />
+            </button>
+          </div>
 
-            {/* 우측: "이거 두 개"(샘플 이미지/스켈레톤) 제거 → 홈코 유사 카테고리 타일 */}
-            <div className="relative overflow-hidden">
-              <div className="absolute inset-0 bg-primary/10 rounded-[2rem] blur-2xl" aria-hidden />
-              <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5">
-                <h3 className="font-bold text-lg">어떤 도움이 필요하세요?</h3>
-                <p className="text-sm text-neutral-500 mt-1">원하는 항목을 누르면 바로 상담을 시작해요.</p>
-                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {[
-                    {label:"전등 교체", icon:"💡"},
-                    {label:"콘센트/스위치", icon:"🔌"},
-                    {label:"수전/배관", icon:"🚿"},
-                    {label:"문/경첩/도어락", icon:"🚪"},
-                    {label:"타일/실리콘", icon:"🧱"},
-                    {label:"환풍기/후드", icon:"🌀"},
-                  ].map((it) => (
-                    <button key={it.label} className="group h-28 rounded-2xl ring-1 ring-neutral-200 hover:ring-primary/40 hover:shadow-md bg-neutral-50 p-4 text-left flex flex-col justify-between">
-                      <span className="text-2xl" aria-hidden>{it.icon}</span>
-                      <span className="font-semibold group-hover:text-primary">{it.label}</span>
-                    </button>
-                  ))}
+          {/* 오른쪽 카테고리 박스 (클릭 비활성화) */}
+          <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5 select-none cursor-default">
+            <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+            <p className="text-sm text-neutral-500 mt-1 text-center lg:text-left">항목은 예시이며 현재는 선택 동작이 없습니다.</p>
+            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[
+                {label:"전등 교체", icon:"💡"},
+                {label:"콘센트/스위치", icon:"🔌"},
+                {label:"수전/배관", icon:"🚿"},
+                {label:"문/경첩/도어락", icon:"🚪"},
+                {label:"타일/실리콘", icon:"🧱"},
+                {label:"환풍기/후드", icon:"🌀"},
+              ].map((it) => (
+                <div
+                  key={it.label}
+                  className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between cursor-default select-none"
+                >
+                  <span className="text-2xl" aria-hidden>{it.icon}</span>
+                  <span className="font-semibold">{it.label}</span>
                 </div>
-                <div className="mt-4 text-xs text-neutral-500">* 사진이 있으면 상담이 더 빨라요</div>
-              </div>
+              ))}
             </div>
+            <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
           </div>
         </div>
       </section>
 
       {/* 오버레이 페이지들 (구성 동일) */}
       {currentPage && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] overflow-y-auto bg-white">
-          <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-              <div className="flex items-center gap-2 font-semibold">
-                <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
-                <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch">
+          <div className="absolute inset-0 bg-white" />
+          <div className="relative w-full h-full overflow-y-auto">
+            <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+                <div className="flex items-center gap-2 font-semibold">
+                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
+                  <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
+                </div>
+                {/* ⬇️ 우측 상단 버튼을 좌측 "메인으로"와 동일 스타일로 */}
+                <button
+                  className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400"
+                  onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
+                  aria-label="와줄래 홈으로"
+                >
+                  와줄래 홈
+                </button>
               </div>
-              <a
-                href="#hero"
-                onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
-                className="text-sm underline underline-offset-4"
-              >
-                와줄래 홈
-              </a>
             </div>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            {currentPage === "pricing" && <SectionPricing />}
-            {currentPage === "faq"     && <SectionFAQ />}
-            {currentPage === "contact" && <SectionContact />}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+              {currentPage === "pricing" && <SectionPricing />}
+              {currentPage === "faq"     && <SectionFAQ />}
+              {currentPage === "contact" && <SectionContact />}
+            </div>
           </div>
         </div>
       )}
@@ -509,8 +466,8 @@ export default function App() {
       <div className="border-t border-neutral-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-sm text-neutral-600">
-            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: [제2025-서울-0000호]</span>
-            <div className="text-xs text-neutral-400">주소: [서울시 ___구 ___로 ___] · 대표: [성명] · 대표번호: [02-000-0000]</div>
+            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
+            <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
           </div>
           <nav className="flex items-center gap-3 text-sm">
             <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }}>이용약관</button>
@@ -537,6 +494,6 @@ function className(...v){return v.filter(Boolean).join(' ')}
    :root { --primary:#00c7ae }
    .bg-primary{ background:var(--primary) }
    .text-primary{ color:var(--primary) }
-   .ring-primary\/40{ --tw-ring-color: color-mix(in oklab, var(--primary) 40%, transparent);}
+   .ring-primary\/40{ --tw-ring-color: color-mix(in oklab, var(--primary) 40%, transparent);} 
    .focus\:ring-primary\/30:focus{ --tw-ring-color: color-mix(in oklab, var(--primary) 30%, transparent);} 
 */
