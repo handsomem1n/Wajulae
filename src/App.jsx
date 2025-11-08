@@ -64,19 +64,20 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   }, [open, onClose]);
 
   const TabButton = ({ id, children }) => (
-    <button
-      onClick={() => setActiveTab(id)}
-      className={
-        "px-3 py-2 rounded-full text-sm font-semibold transition " +
-        (activeTab === id
-          ? "bg-primary text-white shadow"
-          : "text-neutral-700 hover:bg-neutral-100")
-      }
-      aria-pressed={activeTab === id}
-    >
-      {children}
-    </button>
-  );
+  <button
+    onClick={() => setActiveTab(id)}
+    className={
+      "px-3 py-2 rounded-full text-sm font-semibold transition " +
+      (activeTab === id
+        ? "bg-primary text-neutral-900 shadow font-bold" // ✅ 글자색 변경
+        : "text-neutral-700 hover:bg-neutral-100")
+    }
+    aria-pressed={activeTab === id}
+  >
+    {children}
+  </button>
+);
+
 
   if (!open) return null;
   return (
