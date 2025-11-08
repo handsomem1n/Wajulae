@@ -223,11 +223,12 @@ export default function App() {
               </p>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
                 동네 기사님 바로 연결
-                <span className="block">철산·광명·구로·가산 긴급 수리</span>
+                <span className="block">철산·광명·구로·가산 긴급 생활 수리</span>
               </h1>
-              <p className="mt-4 text-neutral-600 text-base sm:text-lg max-w-xl">
-                빠르게 찾아가 해결합니다. 사전 안내된 정찰제 비용으로 부담 없이 진행됩니다.
-              </p>
+           <p className="mt-4 text-neutral-600 text-base sm:text-lg max-w-xl">
+  비용은 사전에 안내드린 <span className="font-semibold text-neutral-700">정찰제</span>를 적용해 걱정 없이 진행하세요
+</p>
+
               <div className="mt-6 flex gap-3">
                 <a
                   href="#pricing"
