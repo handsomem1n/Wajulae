@@ -1,12 +1,13 @@
+// src/App.js
 import React, { useEffect, useState } from "react";
 
-// ✅ 리브랜딩 및 동작 변경
-// - 브랜드명: "와줄래"
-// - "시공 사례" → "가능 견적"으로 변경
-// - 네비: "서비스 소개" 클릭 시 로고(좌상단) 클릭과 동일하게 #hero로 이동
-// - 그 외(특장점/진행 절차/표준 견적/가능 견적/FAQ/문의)는 "다음 페이지"(풀스크린 오버레이)로 열람
-// - "간편 견적 보기" 버튼 및 견적 계산기 모달 제거
-// - 텍스트/색/이미지 전부 신규 제작(합법적 유사)
+/* 리브랜딩/동작
+ - 브랜드명: "와줄래"
+ - "시공 사례" → "가능 견적"
+ - "서비스 소개" 클릭 시 로고와 동일하게 #hero로 스크롤
+ - 나머지(특장점/진행 절차/표준 견적/가능 견적/FAQ/문의)는 전체 화면 오버레이로 표시
+ - "간편 견적 보기" 제거 (이미 반영됨)
+*/
 
 const NAV = [
   { id: "about", label: "서비스 소개", type: "scroll" }, // #hero로 스크롤
@@ -40,18 +41,24 @@ function useScrollSpy(ids) {
 }
 
 const Check = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5"><path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
+    <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
+  </svg>
 );
 
 const ArrowRight = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5"><path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z"/></svg>
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
+    <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
+  </svg>
 );
 
 const Play = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
+    <path fill="currentColor" d="M8 5v14l11-7z" />
+  </svg>
 );
 
-// 섹션 컴포넌트들 — 오버레이 페이지에서도 재사용
+/* 섹션들 */
 function SectionFeatures() {
   return (
     <section id="features" className="py-16 bg-white">
@@ -68,7 +75,7 @@ function SectionFeatures() {
           ].map((f) => (
             <div key={f.title} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
               <div className="w-10 h-10 rounded-xl bg-white border border-neutral-200 flex items-center justify-center mb-4">
-                <Check/>
+                <Check />
               </div>
               <p className="font-semibold">{f.title}</p>
               <p className="text-neutral-600 text-sm mt-1">{f.desc}</p>
@@ -93,7 +100,9 @@ function SectionProcess() {
             { n: 4, t: "시공/검수", d: "체크리스트 기반 시공·품질 보증" },
           ].map((s) => (
             <li key={s.n} className="relative rounded-2xl border border-neutral-200 bg-white p-6">
-              <span className="absolute -top-3 -left-3 w-10 h-10 rounded-2xl bg-neutral-900 text-white font-bold inline-flex items-center justify-center">{s.n}</span>
+              <span className="absolute -top-3 -left-3 w-10 h-10 rounded-2xl bg-neutral-900 text-white font-bold inline-flex items-center justify-center">
+                {s.n}
+              </span>
               <p className="font-semibold mt-4">{s.t}</p>
               <p className="text-neutral-600 text-sm mt-1">{s.d}</p>
             </li>
@@ -116,11 +125,11 @@ function SectionPricing() {
             { t: "벽지 보수", p: "₩70,000~", d: "면적·오염 상태에 따라 변동" },
           ].map((c) => (
             <div key={c.t} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6 flex flex-col">
-              <div className="aspect-video rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-4"/>
+              <div className="aspect-video rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-4" />
               <p className="font-semibold">{c.t}</p>
               <p className="text-2xl font-extrabold mt-1">{c.p}</p>
               <p className="text-neutral-600 text-sm mt-1">{c.d}</p>
-              <div className="mt-auto pt-4"/>
+              <div className="mt-auto pt-4" />
             </div>
           ))}
         </div>
@@ -140,7 +149,7 @@ function SectionPossible() {
         <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <article key={i} className="group rounded-2xl border border-neutral-200 overflow-hidden bg-white">
-              <div className="aspect-[4/3] bg-neutral-100 group-hover:opacity-90 transition"/>
+              <div className="aspect-[4/3] bg-neutral-100 group-hover:opacity-90 transition" />
               <div className="p-5">
                 <h3 className="font-semibold">작업 항목 #{i + 1}</h3>
                 <p className="text-sm text-neutral-600 mt-1">가능한 작업/조건 요약</p>
@@ -184,14 +193,14 @@ function SectionContact() {
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold">간편 문의</h2>
             <p className="mt-2 text-neutral-600">필수 정보만 빠르게 남겨 주세요. 상담원이 연락드립니다.</p>
-            <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e)=> e.preventDefault()}>
+            <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">이름</span>
-                <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="홍길동"/>
+                <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="홍길동" />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">연락처</span>
-                <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="010-0000-0000"/>
+                <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="010-0000-0000" />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">요청 항목</span>
@@ -205,10 +214,10 @@ function SectionContact() {
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">상세 설명</span>
-                <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="상태/사진 링크 등"/>
+                <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" placeholder="상태/사진 링크 등" />
               </label>
               <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90">
-                접수하기 <ArrowRight/>
+                접수하기 <ArrowRight />
               </button>
               <p className="text-xs text-neutral-500">접수 시 개인정보 처리에 동의한 것으로 간주됩니다. (예: 연락처·주소 등 상담 목적 사용)</p>
             </form>
@@ -217,9 +226,18 @@ function SectionContact() {
             <div className="rounded-3xl border border-neutral-200 p-6 bg-white">
               <h3 className="font-semibold">고객 약속</h3>
               <ul className="mt-4 space-y-2 text-neutral-700">
-                <li className="flex items-start gap-2"><Check/><span>숨겨진 비용 없이 사전 고지된 표준 견적</span></li>
-                <li className="flex items-start gap-2"><Check/><span>전문가 무료 방문 점검</span></li>
-                <li className="flex items-start gap-2"><Check/><span>시공 품질 보증 및 사후 케어</span></li>
+                <li className="flex items-start gap-2">
+                  <Check />
+                  <span>숨겨진 비용 없이 사전 고지된 표준 견적</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check />
+                  <span>전문가 무료 방문 점검</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check />
+                  <span>시공 품질 보증 및 사후 케어</span>
+                </li>
               </ul>
               <div className="mt-6 grid grid-cols-3 gap-4 text-center">
                 {[
@@ -244,13 +262,16 @@ function SectionContact() {
   );
 }
 
-export default function WajulleLanding() {
+/* === 앱 루트 ===
+   JS 프로젝트에서 바로 쓰기 위해 컴포넌트명을 App으로 export 합니다.
+   (Vite/CRA 기본 엔트리에서 <App/>을 그리므로 추가 변경 불필요)
+*/
+export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
-  const [currentPage, setCurrentPage] = useState(null as null | string);
+  const [currentPage, setCurrentPage] = useState(null); // ← TS 표기 제거
 
-  const handleNavClick = (item: { id: string; type: "scroll" | "page" }) => (e: React.MouseEvent) => {
+  const handleNavClick = (item) => (e) => {
     if (item.type === "scroll") {
-      // 서비스 소개 → 로고 클릭과 동일 (#hero)
       e.preventDefault();
       document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
       setCurrentPage(null);
@@ -265,8 +286,19 @@ export default function WajulleLanding() {
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a href="#hero" className="flex items-center gap-2 font-semibold text-lg" aria-label="홈" onClick={(e)=>{e.preventDefault(); document.getElementById("hero")?.scrollIntoView({behavior:"smooth"}); setCurrentPage(null);}}>
-            <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-cyan-400 text-white">W</span>
+          <a
+            href="#hero"
+            className="flex items-center gap-2 font-semibold text-lg"
+            aria-label="홈"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              setCurrentPage(null);
+            }}
+          >
+            <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-cyan-400 text-white">
+              W
+            </span>
             <span>와줄래</span>
           </a>
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
@@ -288,12 +320,12 @@ export default function WajulleLanding() {
 
       {/* 히어로 */}
       <section id="hero" className="relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-white"/>
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-white" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div>
               <p className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white border border-neutral-200 text-neutral-700 mb-4">
-                <Check/> 표준 가격 & 무료 현장 점검
+                <Check /> 표준 가격 & 무료 현장 점검
               </p>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
                 투명한 표준 견적,
@@ -303,27 +335,48 @@ export default function WajulleLanding() {
                 클릭 몇 번으로 집수리를 신청하고, 전문가의 무료 방문 점검 후 표준화된 견적을 받아 보세요. 불필요한 추가 비용 없이 간단하고 빠르게.
               </p>
               <div className="mt-6 flex gap-3">
-                <a href="#pricing" onClick={(e)=>{e.preventDefault(); setCurrentPage("pricing");}} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90 focus:ring-2 focus:ring-neutral-900/20">
-                  표준 견적 보기 <ArrowRight/>
+                <a
+                  href="#pricing"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage("pricing");
+                  }}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90 focus:ring-2 focus:ring-neutral-900/20"
+                >
+                  표준 견적 보기 <ArrowRight />
                 </a>
-                <a href="#about" onClick={(e)=>{e.preventDefault(); document.getElementById("hero")?.scrollIntoView({behavior:"smooth"}); setCurrentPage(null);}} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-neutral-200 font-semibold text-neutral-800 hover:bg-neutral-50">
-                  소개 영상 <Play/>
+                <a
+                  href="#about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                    setCurrentPage(null);
+                  }}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-neutral-200 font-semibold text-neutral-800 hover:bg-neutral-50"
+                >
+                  소개 영상 <Play />
                 </a>
               </div>
               <div className="mt-6 flex flex-wrap gap-4 text-sm text-neutral-600">
-                <span className="inline-flex items-center gap-2"><Check/> 출장비 무료</span>
-                <span className="inline-flex items-center gap-2"><Check/> 표준 가격제</span>
-                <span className="inline-flex items-center gap-2"><Check/> 시공 품질 보증</span>
+                <span className="inline-flex items-center gap-2">
+                  <Check /> 출장비 무료
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Check /> 표준 가격제
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Check /> 시공 품질 보증
+                </span>
               </div>
             </div>
             <div className="relative lg:h-[480px]">
-              <div className="absolute -inset-8 bg-gradient-to-tr from-sky-200/40 to-cyan-100/40 rounded-[2rem] blur-2xl" aria-hidden/>
+              <div className="absolute -inset-8 bg-gradient-to-tr from-sky-200/40 to-cyan-100/40 rounded-[2rem] blur-2xl" aria-hidden />
               <div className="relative aspect-[4/3] lg:absolute lg:inset-0 rounded-3xl border border-neutral-200 bg-white shadow-xl p-4 grid grid-cols-2 gap-4">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="rounded-2xl border border-neutral-200 bg-neutral-50/60 p-3 flex flex-col gap-2">
-                    <div className="h-28 rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100"/>
-                    <div className="h-3 w-2/3 rounded bg-neutral-200"/>
-                    <div className="h-3 w-1/2 rounded bg-neutral-200"/>
+                    <div className="h-28 rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100" />
+                    <div className="h-3 w-2/3 rounded bg-neutral-200" />
+                    <div className="h-3 w-1/2 rounded bg-neutral-200" />
                   </div>
                 ))}
               </div>
@@ -332,73 +385,47 @@ export default function WajulleLanding() {
         </div>
       </section>
 
-      {/* 서비스 소개(설명) — 메인 페이지에만 표시 */}
-      <section id="about" className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
-            <div className="lg:col-span-7">
-              <h2 className="text-2xl sm:text-3xl font-bold">집수리를 더 쉽고, 합리적으로</h2>
-              <p className="mt-4 text-neutral-600 leading-relaxed">
-                누구나 예측 가능한 가격으로, 어디서든 동일한 품질의 시공을 받는 세상을 목표로 합니다. 내부 표준 프로세스를 기반으로 접수·상담·시공까지 한 번에 처리합니다.
-              </p>
-              <ul className="mt-6 grid sm:grid-cols-2 gap-4">
-                {[
-                  { t: "표준 견적", d: "작업 항목·난이도별 가격 가이드 제공" },
-                  { t: "무료 점검", d: "전문가 방문 후 상태 진단 및 옵션 제안" },
-                  { t: "품질 보증", d: "시공 완료 후 AS 보증 및 사후 케어" },
-                  { t: "간편 신청", d: "모바일 1분 신청으로 빠른 접수" },
-                ].map((f) => (
-                  <li key={f.t} className="p-4 rounded-2xl border border-neutral-200 bg-white flex items-start gap-3">
-                    <div className="mt-1"><Check/></div>
-                    <div>
-                      <p className="font-semibold">{f.t}</p>
-                      <p className="text-neutral-600 text-sm">{f.d}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="lg:col-span-5">
-              <div className="aspect-video rounded-3xl bg-neutral-100 border border-neutral-200 flex items-center justify-center">
-                <button className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90">
-                  <Play/> 브랜드 소개 영상 보기(플레이스홀더)
-                </button>
-              </div>
-              <p className="mt-4 text-xs text-neutral-500">※ 실제 영상/사진/로고 미삽입 — 합법적 유사 제작</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 메인 내 섹션들 */}
+      <SectionFeatures />
+      <SectionProcess />
+      <SectionPricing />
+      <SectionPossible />
+      <SectionFAQ />
+      <SectionContact />
 
-      {/* 다른 섹션들은 기본 페이지에서도 노출(SEO), 네비 클릭 시 오버레이로 단독 보기 */}
-      <SectionFeatures/>
-      <SectionProcess/>
-      <SectionPricing/>
-      <SectionPossible/>
-      <SectionFAQ/>
-      <SectionContact/>
-
-      {/* 풀스크린 오버레이 페이지 */}
+      {/* 풀스크린 오버레이(“다음 페이지”) */}
       {currentPage && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch">
-          <div className="absolute inset-0 bg-white"/>
+          <div className="absolute inset-0 bg-white" />
           <div className="relative w-full h-full overflow-y-auto">
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-lg border" onClick={()=> setCurrentPage(null)}>← 메인으로</button>
-                  <span className="text-neutral-500 text-sm">{NAV.find(n=>n.id===currentPage)?.label}</span>
+                  <button className="px-3 py-1 rounded-lg border" onClick={() => setCurrentPage(null)}>
+                    ← 메인으로
+                  </button>
+                  <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
-                <a href="#hero" onClick={(e)=>{e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({behavior:"smooth"});}} className="text-sm underline underline-offset-4">와줄래 홈</a>
+                <a
+                  href="#hero"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(null);
+                    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="text-sm underline underline-offset-4"
+                >
+                  와줄래 홈
+                </a>
               </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-              {currentPage === "features" && <SectionFeatures/>}
-              {currentPage === "process" && <SectionProcess/>}
-              {currentPage === "pricing" && <SectionPricing/>}
-              {currentPage === "possible" && <SectionPossible/>}
-              {currentPage === "faq" && <SectionFAQ/>}
-              {currentPage === "contact" && <SectionContact/>}
+              {currentPage === "features" && <SectionFeatures />}
+              {currentPage === "process" && <SectionProcess />}
+              {currentPage === "pricing" && <SectionPricing />}
+              {currentPage === "possible" && <SectionPossible />}
+              {currentPage === "faq" && <SectionFAQ />}
+              {currentPage === "contact" && <SectionContact />}
             </div>
           </div>
         </div>
