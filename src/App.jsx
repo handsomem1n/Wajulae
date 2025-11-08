@@ -197,7 +197,7 @@ const Privacy = () => (
 /* ===== 표준 견적(클릭/포커스 제거, 가격 검정색) ===== */
 import { useState } from "react";
 
-export default function StandardPricing() {
+
   const items = [
     { t: "LED 등 교체", p: "80,000원", d: "규격·천장 타입에 따라 변동" },
     { t: "세면대 수전 교체", p: "120,000원", d: "규격·배관 상태에 따라 변동" },
