@@ -251,7 +251,7 @@ function SectionPricing() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="항목/설명 검색 (예: 수전, 문, 전등)"
+                placeholder=""
                 className="w-full sm:w-80 px-4 py-3 pr-24 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
                 type="search"
               />
