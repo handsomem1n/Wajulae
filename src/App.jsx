@@ -391,47 +391,58 @@ export default function App() {
 
       {/* 히어로 (검색바/카테고리칩 느낌) */}
       <section id="hero" className="relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                동네 기사님 바로 연결
-                <span className="block text-neutral-700 mt-1">철산·광명·구로·가산 긴급 생활 수리</span>
-              </h1>
-              <form
-                onSubmit={(e)=>e.preventDefault()}
-                className="mt-6 flex items-center gap-2 p-2 rounded-2xl bg-white shadow-[0_6px_24px_rgba(0,0,0,0.06)] ring-1 ring-neutral-200"
-              >
-                <span className="ml-2 text-neutral-500"><SearchIcon/></span>
-                <input className="flex-1 px-2 py-2 outline-none" placeholder="어떤 수리가 필요하세요? 예: 콘센트 교체" />
-                <button className="px-4 py-2 rounded-xl bg-primary text-white font-semibold">견적 받기</button>
-              </form>
-              <div className="mt-4 flex flex-wrap gap-2 text-sm">
-                {["전기","수전/배관","문/잠금","타일","환풍/후드","기타"].map((x)=> (
-                  <button key={x} className="px-3 py-1.5 rounded-full bg-white ring-1 ring-neutral-200 hover:ring-primary/40 hover:text-primary transition">{x}</button>
-                ))}
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3 text-sm text-neutral-700">
-                <div className="inline-flex items-center gap-2"><Check/> 표준 가격제</div>
-                <div className="inline-flex items-center gap-2"><Check/> 지역 집중 운영</div>
-              </div>
-            </div>
-            <div className="relative lg:h-[460px]">
-              <div className="absolute -inset-6 bg-primary/10 rounded-[2rem] blur-2xl" aria-hidden />
-              <div className="relative aspect-[4/3] lg:absolute lg:inset-0 rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-4 grid grid-cols-2 gap-4">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-3 flex flex-col gap-2">
-                    <div className="h-28 rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100" />
-                    <div className="h-3 w-2/3 rounded bg-neutral-200" />
-                    <div className="h-3 w-1/2 rounded bg-neutral-200" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-cyan-50" />
+
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative text-center">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-neutral-900">
+      믿을 수 있는 생활 수리 연결 서비스
+      <span className="block text-neutral-600 font-semibold mt-2">
+        와줄래는 <span className="text-primary font-bold">정찰제 · 투명 견적 · 책임 보증</span>을 약속합니다.
+      </span>
+    </h1>
+
+    <p className="mt-4 text-neutral-600 text-base sm:text-lg max-w-2xl mx-auto">
+      갑작스러운 고장도 안심하고 맡기세요.<br />
+      방문 전에 예상 비용을 명확히 안내드립니다.
+    </p>
+
+    {/* 검색 + 입력 */}
+    <div className="mt-8 max-w-xl mx-auto flex items-center gap-3 px-5 py-3 rounded-2xl border border-neutral-300 bg-white shadow-sm focus-within:ring-2 focus-within:ring-primary/40">
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-neutral-400">
+        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6 6 0 10-.7.7l.27.28v.79l5 5 1.5-1.5-5-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+      </svg>
+      <input
+        placeholder="어떤 수리가 필요하세요? 예: 콘센트 교체"
+        className="flex-1 outline-none text-sm"
+      />
+    </div>
+
+    {/* 카테고리 */}
+    <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm">
+      {["전기", "수전/배관", "문/잠금", "타일", "환풍/후드", "기타"].map((cat) => (
+        <button
+          key={cat}
+          className="px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-100 transition"
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    {/* 신뢰 포인트 */}
+    <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-neutral-600">
+      <span className="inline-flex items-center gap-2">
+        ✅ 사전 견적 안내
+      </span>
+      <span className="inline-flex items-center gap-2">
+        ✅ 작업 후 비용 변경 없음
+      </span>
+      <span className="inline-flex items-center gap-2">
+        ✅ 시공 품질 보증
+      </span>
+    </div>
+  </div>
+</section>
 
       {/* 오버레이 페이지들 (구성 동일) */}
       {currentPage && (
