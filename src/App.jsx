@@ -41,11 +41,6 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
-const SearchIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden>
-    <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-  </svg>
-);
 
 /* 약관/법적 고지/개인정보 모달 */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
@@ -73,6 +68,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
           : "text-neutral-700 hover:bg-neutral-100")
       }
       aria-pressed={activeTab === id}
+      type="button"
     >
       {children}
     </button>
@@ -82,9 +78,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   return (
     <div role="dialog" aria-modal="true"
          className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
-      {/* 백드롭 */}
       <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
-      {/* 컨텐츠 래퍼: dvh와 패딩으로 가장자리 여유 */}
       <div className="min-h-[100dvh] flex items-start justify-center p-4 sm:p-6">
         <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
           <div className="flex items-center justify-between px-5 py-3 border-b">
@@ -93,10 +87,9 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
               <TabButton id="legal">법적 고지</TabButton>
               <TabButton id="privacy">개인정보 처리방침</TabButton>
             </div>
-            <button onClick={onClose} className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100" aria-label="닫기">×</button>
+            <button onClick={onClose} className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100" aria-label="닫기" type="button">×</button>
           </div>
-          <div
-            className="max-h-[min(72vh,calc(100dvh-160px))] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
+          <div className="max-h-[min(72vh,calc(100dvh-160px))] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
             {activeTab === "tos" && <TOS setActiveTab={setActiveTab} />}
             {activeTab === "legal" && <LegalNotice />}
             {activeTab === "privacy" && <Privacy />}
@@ -110,7 +103,6 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
 /* 문서 섹션 */
 const TOS = ({ setActiveTab }) => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500"></p>
     <h3 className="font-bold text-base">제1조 (목적)</h3>
     <p>본 약관은 회사가 운영하는 생활수리·설치·점검 등의 <strong>중개 플랫폼</strong>(이하 “플랫폼”) 이용에 있어 회사와 이용자(고객/기사)의 권리·의무 및 책임 사항을 정합니다.</p>
     <h3 className="font-bold text-base">제2조 (정의)</h3>
@@ -166,7 +158,6 @@ const TOS = ({ setActiveTab }) => (
 
 const LegalNotice = () => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500"></p>
     {[
       {t:"① 회사 역할 및 책임 한정", d:"회사는 고객과 기사를 연결하는 온라인 중개서비스 제공자이며, 실제 시공·용역의 당사자가 아닙니다. 시공 결과·품질·안전·하자보수·손해배상 등 법적 책임은 기사에게 있습니다."},
       {t:"② 기사의 독립성", d:"기사는 회사의 피용자/대리인이 아닌 독립 사업자로서 작업 방식·일정·안전관리의 권한과 책임을 스스로 부담합니다."},
@@ -188,7 +179,6 @@ const LegalNotice = () => (
 
 const Privacy = () => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500"></p>
     <h3 className="font-bold text-base">개인정보 처리방침(요약)</h3>
     <p><strong>수집 항목</strong>: 성명, 연락처, 주소, 결제정보, 이용기록 등 · <strong>목적</strong>: 매칭·결제·고객지원 · <strong>보관</strong>: 목적 달성 후 지체없이 파기(법정 보관 예외)</p>
     <h4 className="font-semibold">수집/이용</h4>
@@ -206,7 +196,7 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 표준 견적 (Soomgo 느낌 카드 스타일) ===== */
+/* 표준 견적 카드(완전 비활성, 호버/포커스/클릭 제거) */
 function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동" },
@@ -235,19 +225,20 @@ function SectionPricing() {
     <section id="pricing" className="py-16 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
-        <p className="text-neutral-500 mt-2">항목을 선택하면 담당자가 빠르게 연락드립니다.</p>
+        <p className="text-neutral-500 mt-2">항목은 참고용 표준가입니다.</p>
         <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {items.map((c) => (
-            <button
+            <div
               key={c.t}
-              className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 hover:ring-primary/40 hover:shadow-md transition p-4 group"
+              aria-disabled="true"
+              className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default"
             >
               <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
               <p className="font-semibold">{c.t}</p>
               <p className="mt-1 text-lg font-extrabold text-primary">{c.p}</p>
               <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
-              <span className="mt-3 inline-flex items-center gap-1 text-primary text-sm opacity-0 group-hover:opacity-100">바로 문의하기 <ArrowRight /></span>
-            </button>
+              {/* '바로 문의하기' 제거 */}
+            </div>
           ))}
         </div>
         <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
@@ -256,7 +247,7 @@ function SectionPricing() {
   );
 }
 
-/* ===== FAQ ===== */
+/* FAQ */
 function SectionFAQ() {
   return (
     <section id="faq" className="py-16 bg-white">
@@ -280,7 +271,7 @@ function SectionFAQ() {
   );
 }
 
-/* ===== 문의 ===== */
+/* 문의 */
 function SectionContact() {
   return (
     <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
@@ -312,7 +303,7 @@ function SectionContact() {
                 <span className="text-sm font-medium">상세 설명</span>
                 <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="상태/사진 링크 등" />
               </label>
-              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-semibold hover:brightness-95">
+              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-semibold hover:brightness-95" type="button">
                 접수하기 <ArrowRight />
               </button>
             </form>
@@ -334,7 +325,22 @@ function SectionContact() {
   );
 }
 
-/* ===== 앱 루트 ===== */
+/* 모바일 전용 하단 Dock: 페이지 전환 */
+function MobileDock({ onOpen }) {
+  return (
+    <div className="fixed bottom-3 left-0 right-0 z-[70] px-4 md:hidden">
+      <div className="mx-auto max-w-sm rounded-2xl bg-white shadow-xl ring-1 ring-neutral-200 overflow-hidden">
+        <div className="grid grid-cols-3">
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("pricing")} type="button">표준 견적</button>
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50 border-x border-neutral-200" onClick={() => onOpen("faq")} type="button">FAQ</button>
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("contact")} type="button">문의</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* 앱 루트 */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
   const [currentPage, setCurrentPage] = useState(null);
@@ -354,11 +360,8 @@ export default function App() {
     }
   };
 
-  // 이미지 버튼 경로(필요 시 교체)
-  const HERO_SHORTCUT_IMG = "/assets/hero-search.png"; // 프로젝트에서 실제 경로로 변경하세요
-
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden gutter-stable bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -375,6 +378,7 @@ export default function App() {
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-primary text-white font-bold">W</span>
             <span>와줄래</span>
           </a>
+          {/* 데스크톱 네비 */}
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
             {NAV.map((item) => (
               <a
@@ -394,11 +398,10 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 – 심플 랜딩: 표준 견적 바로가기 하나만 (overflow-visible로 수정) */}
+      {/* 히어로 */}
       <section id="hero" className="relative overflow-visible">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
-          {/* 왼쪽 심플 메시지 */}
           <div className="text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 긴급 생활 수리</h1>
             <p className="mt-3 text-neutral-600 max-w-lg">사전 안내된 정찰제 비용으로 진행됩니다.</p>
@@ -411,10 +414,8 @@ export default function App() {
             </button>
           </div>
 
-          {/* 오른쪽 카테고리 박스 (클릭 비활성화) */}
           <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5 select-none cursor-default">
             <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-            <p className="text-sm text-neutral-500 mt-1 text-center lg:text-left"> </p>
             <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
                 {label:"전등 교체", icon:"💡"},
@@ -426,7 +427,7 @@ export default function App() {
               ].map((it) => (
                 <div
                   key={it.label}
-                  className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between cursor-default select-none"
+                  className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between"
                 >
                   <span className="text-2xl" aria-hidden>{it.icon}</span>
                   <span className="font-semibold">{it.label}</span>
@@ -438,7 +439,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 오버레이 페이지들 (윈도우 잘림 방지: overflow-y-auto/100dvh) */}
+      {/* 오버레이 페이지 (우측 잘림 방지) */}
       {currentPage && (
         <div role="dialog" aria-modal="true"
              className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
@@ -447,17 +448,10 @@ export default function App() {
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
+                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
-                {/* 우측 상단 버튼을 좌측 "메인으로"와 동일 스타일로 */}
-                <button
-                  className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400"
-                  onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
-                  aria-label="와줄래 홈으로"
-                >
-                  와줄래 홈
-                </button>
+                {/* 우측 상단 ‘와줄래 홈’ 버튼 완전 제거 */}
               </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -477,22 +471,25 @@ export default function App() {
             <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
           </div>
           <nav className="flex items-center gap-3 text-sm">
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }}>이용약관</button>
+            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
             <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }}>법적 고지</button>
+            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
             <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }}>개인정보 처리방침</button>
+            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
           </nav>
         </div>
       </div>
 
-      {/* 모달 렌더 */}
+      {/* 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
+
+      {/* 모바일 Dock */}
+      <MobileDock onOpen={setCurrentPage} />
     </div>
   );
 }
 
-/* Tailwind 임시 CSS 변수 유틸 */
+/* 전역 유틸 */
 function className(...v){return v.filter(Boolean).join(' ')}
 
 /* 전역 CSS 도움말 (Tailwind config 없이도 사용):
@@ -501,5 +498,5 @@ function className(...v){return v.filter(Boolean).join(' ')}
    .text-primary{ color:var(--primary) }
    .ring-primary\/40{ --tw-ring-color: color-mix(in oklab, var(--primary) 40%, transparent);} 
    .focus\:ring-primary\/30:focus{ --tw-ring-color: color-mix(in oklab, var(--primary) 30%, transparent);} 
-   .vh-safe { min-height: 100dvh; }  /* 필요 시 재사용 */
+   .gutter-stable { scrollbar-gutter: stable both-edges; } /* 우측 잘림/점프 방지 */
 */
