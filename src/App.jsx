@@ -165,7 +165,7 @@ const TOS = ({ setActiveTab }) => (
 const LegalNotice = () => (
   <article className="space-y-4">
     <p className="text-xs text-neutral-500">시행일: 2025-11-09 · 와줄래(“회사”)</p>
-    {[ 
+    {[
       {t:"① 회사 역할 및 책임 한정", d:"회사는 고객과 기사를 연결하는 온라인 중개서비스 제공자이며, 실제 시공·용역의 당사자가 아닙니다. 시공 결과·품질·안전·하자보수·손해배상 등 법적 책임은 기사에게 있습니다."},
       {t:"② 기사의 독립성", d:"기사는 회사의 피용자/대리인이 아닌 독립 사업자로서 작업 방식·일정·안전관리의 권한과 책임을 스스로 부담합니다."},
       {t:"③ 하자·AS 및 환불", d:"하자보수·환불 기준은 고객-기사 간 계약에 따르며, 제공 완료된 용역은 법령이 허용하는 범위에서 환불이 제한될 수 있습니다."},
@@ -389,11 +389,12 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 (검색바/카테고리칩 느낌) */}
+      {/* 히어로 (homeco.kr 유사: 좌측 카피/검색, 우측 카테고리 타일) */}
       <section id="hero" className="relative overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
+            {/* 좌측: 타이틀/검색/칩 (기존 텍스트 유지) */}
             <div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
                 동네 기사님 바로 연결
@@ -417,16 +418,29 @@ export default function App() {
                 <div className="inline-flex items-center gap-2"><Check/> 지역 집중 운영</div>
               </div>
             </div>
-            <div className="relative lg:h-[460px]">
+
+            {/* 우측: "이거 두 개"(샘플 이미지/스켈레톤) 제거 → 홈코 유사 카테고리 타일 */}
+            <div className="relative">
               <div className="absolute -inset-6 bg-primary/10 rounded-[2rem] blur-2xl" aria-hidden />
-              <div className="relative aspect-[4/3] lg:absolute lg:inset-0 rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-4 grid grid-cols-2 gap-4">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-3 flex flex-col gap-2">
-                    <div className="h-28 rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100" />
-                    <div className="h-3 w-2/3 rounded bg-neutral-200" />
-                    <div className="h-3 w-1/2 rounded bg-neutral-200" />
-                  </div>
-                ))}
+              <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5">
+                <h3 className="font-bold text-lg">어떤 도움이 필요하세요?</h3>
+                <p className="text-sm text-neutral-500 mt-1">원하는 항목을 누르면 바로 상담을 시작해요.</p>
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    {label:"전등 교체", icon:"💡"},
+                    {label:"콘센트/스위치", icon:"🔌"},
+                    {label:"수전/배관", icon:"🚿"},
+                    {label:"문/경첩/도어락", icon:"🚪"},
+                    {label:"타일/실리콘", icon:"🧱"},
+                    {label:"환풍기/후드", icon:"🌀"},
+                  ].map((it) => (
+                    <button key={it.label} className="group h-28 rounded-2xl ring-1 ring-neutral-200 hover:ring-primary/40 hover:shadow-md bg-neutral-50 p-4 text-left flex flex-col justify-between">
+                      <span className="text-2xl" aria-hidden>{it.icon}</span>
+                      <span className="font-semibold group-hover:text-primary">{it.label}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-neutral-500">* 사진이 있으면 상담이 더 빨라요</div>
               </div>
             </div>
           </div>
@@ -466,8 +480,8 @@ export default function App() {
       <div className="border-t border-neutral-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-sm text-neutral-600">
-            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: [제2025-서울-0000호]</span>
-            <div className="text-xs text-neutral-400">주소: [서울시 ___구 ___로 ___] · 대표: [성명] · 대표번호: [02-000-0000]</div>
+            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
+            <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
           </div>
           <nav className="flex items-center gap-3 text-sm">
             <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }}>이용약관</button>
