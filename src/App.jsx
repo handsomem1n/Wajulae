@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  BrowserRouter, // 해시 없이 깔끔한 URL
+  HashRouter as BrowserRouter,
   Routes,
   Route,
   Link,
@@ -10,7 +10,7 @@ import {
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-// 카테고리 라벨 (전부 한글 표기)
+// 카테고리 라벨 매핑
 const CATEGORY_LABELS: Record<string, string> = {
   door: "도어/현관",
   bath: "욕실",
@@ -19,7 +19,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   space: "공간",
 };
 
-// ---------- 공통 UI ----------
+// ---------- Shared UI ----------
 function TopBar() {
   return (
     <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
@@ -65,7 +65,7 @@ function Footer() {
   );
 }
 
-// ---------- 랜딩 ----------
+// ---------- Landing ----------
 function Landing() {
   const navigate = useNavigate();
   return (
@@ -110,24 +110,24 @@ function HomeInfoPage() {
   return <Landing />;
 }
 
-// ---------- 데이터 (area/time 제외, 상세는 비워둠) ----------
+// ---------- CASES DATA (area/time 제거) ----------
 const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
+  // 필요 시 계속 추가 (title, category, summary만 채우고 detail은 빈 문자열로 두면 됩니다)
 ];
 
-// ---------- 카드 ----------
+// ---------- Card ----------
 function CaseCard({ item }: { item: any }) {
   const categoryLabel = CATEGORY_LABELS[item.category] || item.category;
   const hasPrice = !!(item.price && String(item.price).trim());
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-      {/* 상단 악센트 바 */}
+      {/* 상단 얇은 악센트 바 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
 
       <div className="flex items-center justify-between">
-        {/* ★ 아이콘 없이 한글 라벨만 */}
         <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
           {categoryLabel}
         </span>
@@ -154,7 +154,7 @@ function CaseCard({ item }: { item: any }) {
   );
 }
 
-// ---------- 목록 페이지 ----------
+// ---------- Cases Page ----------
 function CasesPage() {
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<"all" | keyof typeof CATEGORY_LABELS | string>("all");
@@ -178,13 +178,13 @@ function CasesPage() {
       <TopBar />
 
       <section className="border-b bg-white">
-        <div className="mx-auto w/full max-w-7xl px-6 py-10 md:px-8">
+        <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
           <h1 className="text-2xl font-extrabold md:text-3xl">가능 작업</h1>
           <p className="mt-2 text-sm text-gray-600">
             사례 기준의 시공 내역입니다. 표기 금액은 참고용이며, 사진/주소/증상 확인 후 정확 범위를 안내드립니다.
           </p>
 
-          {/* 탭 */}
+          {/* Tabs */}
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {[
               { key: "all", label: "전체" },
@@ -220,7 +220,7 @@ function CasesPage() {
         </div>
       </section>
 
-      {/* 그리드 */}
+      {/* Grid */}
       <section>
         <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -236,7 +236,7 @@ function CasesPage() {
   );
 }
 
-// ---------- 상세 ----------
+// ---------- Detail ----------
 function CaseDetailPage() {
   const { id } = useParams();
   const data = CASES.find((c) => c.id === id);
@@ -245,7 +245,7 @@ function CaseDetailPage() {
     return (
       <main className="min-h-screen bg-gray-50 text-gray-900">
         <TopBar />
-        <section className="mx-auto w/full max-w-7xl px-6 py-16 md:px-8">
+        <section className="mx-auto w-full max-w-7xl px-6 py-16 md:px-8">
           <div className="text-2xl font-bold">항목을 찾을 수 없습니다.</div>
           <p className="mt-2 text-sm text-gray-600">뒤로 가기 또는 다른 작업을 선택해 주세요.</p>
           <div className="mt-6 flex items-center gap-3">
@@ -278,7 +278,7 @@ function CaseDetailPage() {
     <main className="min-h-screen bg-gray-50 text-gray-900">
       <TopBar />
       <section className="border-b bg-white">
-        <div className="mx-auto w/full max-w-7xl px-6 py-10 md:px-8">
+        <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl font-extrabold md:text-3xl">{data.title}</h1>
@@ -291,7 +291,7 @@ function CaseDetailPage() {
         </div>
       </section>
 
-      <section className="mx-auto w/full max-w-7xl px-6 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
         <div className="mx-auto grid max-w-3xl gap-4">
           <div className="rounded-2xl border bg-white p-5 shadow-sm">
             <dl className="grid gap-3 md:grid-cols-2">
@@ -347,14 +347,14 @@ function FAQPage() {
     <main className="min-h-screen bg-gray-50 text-gray-900">
       <TopBar />
       <section className="border-b bg-white">
-        <div className="mx-auto w/full max-w-7xl px-6 py-10 md:px-8">
+        <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
           <h1 className="text-2xl font-extrabold md:text-3xl">자주 묻는 질문</h1>
           <p className="mt-2 text-sm text-gray-600">추가 문의는 카카오채널로 남겨주세요.</p>
         </div>
       </section>
 
       <section>
-        <div className="mx-auto grid w/full max-w-7xl gap-4 px-6 py-10 md:grid-cols-2 md:px-8">
+        <div className="mx-auto grid w-full max-w-7xl gap-4 px-6 py-10 md:grid-cols-2 md:px-8">
           {items.map((it, idx) => (
             <div key={idx} className="rounded-2xl border bg-white p-5 shadow-sm ring-1 ring-amber-100">
               <div className="font-semibold">Q. {it.q}</div>
