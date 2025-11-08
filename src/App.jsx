@@ -154,7 +154,7 @@ function SectionContact() {
               </ul>
             </div>
             <div className="mt-4 text-xs text-neutral-500">
-              © {new Date().getFullYear()} 와줄래 — 레이아웃 레퍼런스 기반 합법적 유사 제작 예시.
+              © {new Date().getFullYear()} 와줄래
             </div>
           </div>
         </div>
