@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  BrowserRouter,   // ✅ 진짜 BrowserRouter 사용
+  BrowserRouter,
   Routes,
   Route,
   Link,
@@ -10,8 +10,8 @@ import {
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-// 카테고리 라벨 매핑
-const CATEGORY_LABELS: Record<string, string> = {
+// 카테고리 라벨 매핑 (JS)
+const CATEGORY_LABELS = {
   door: "도어/현관",
   bath: "욕실",
   electric: "전기/전등",
@@ -110,7 +110,7 @@ function HomeInfoPage() {
   return <Landing />;
 }
 
-// ---------- CASES DATA (area/time 제거) ----------
+// ---------- CASES DATA ----------
 const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
@@ -118,7 +118,7 @@ const CASES = [
 ];
 
 // ---------- Card ----------
-function CaseCard({ item }: { item: any }) {
+function CaseCard({ item }) { // ← JS로 단순화
   const categoryLabel = CATEGORY_LABELS[item.category] || item.category;
   const hasPrice = !!(item.price && String(item.price).trim());
   return (
@@ -151,7 +151,7 @@ function CaseCard({ item }: { item: any }) {
 // ---------- Cases Page ----------
 function CasesPage() {
   const [q, setQ] = useState("");
-  const [tab, setTab] = useState<"all" | keyof typeof CATEGORY_LABELS | string>("all");
+  const [tab, setTab] = useState("all"); // ← 제네릭 제거
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -373,8 +373,6 @@ export default function App() {
         <Route path="/cases" element={<CasesPage />} />
         <Route path="/cases/:id" element={<CaseDetailPage />} />
         <Route path="/faq" element={<FAQPage />} />
-        {/* 선택: 없는 경로는 랜딩으로 */}
-        {/* <Route path="*" element={<Landing />} /> */}
       </Routes>
     </BrowserRouter>
   );
