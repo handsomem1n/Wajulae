@@ -196,7 +196,7 @@ const Privacy = () => (
   </article>
 );
 
-/* 표준 견적 카드(완전 비활성, 호버/포커스/클릭 제거) */
+/* 표준 견적 카드(완전 비활성, 호버/포커스/클릭 제거) — 가격은 모두 검은색 */
 function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동" },
@@ -235,7 +235,7 @@ function SectionPricing() {
             >
               <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
               <p className="font-semibold">{c.t}</p>
-              <p className="mt-1 text-lg font-extrabold text-[var(--primary)]">{c.p}</p>
+              <p className="mt-1 text-lg font-extrabold text-neutral-900">{c.p}</p>
               <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
             </div>
           ))}
@@ -344,6 +344,13 @@ export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
   const [currentPage, setCurrentPage] = useState(null);
 
+  // 배경 스크롤 잠금: 오버레이 열릴 때 백그라운드(히어로)가 따라 내려오지 않게
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (currentPage) document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [currentPage]);
+
   // 법적 문서 모달 상태
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
@@ -361,7 +368,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
-      {/* 전역: 우측 스크롤바 점프/잘림 방지 클래스 & iOS 탭 하이라이트 제거 */}
       <style>{`
         .gutter-stable { scrollbar-gutter: stable both-edges; }
         * { -webkit-tap-highlight-color: transparent; }
@@ -410,13 +416,16 @@ export default function App() {
           <div className="text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 긴급 생활 수리</h1>
             <p className="mt-3 text-neutral-600 max-w-lg">사전 안내된 정찰제 비용으로 진행됩니다.</p>
-            <button
-              type="button"
-              onClick={() => setCurrentPage("pricing")}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-            >
-              표준 견적 바로가기 <ArrowRight />
-            </button>
+            {/* 오버레이가 열려 있으면 CTA 버튼 숨김 */}
+            {!currentPage && (
+              <button
+                type="button"
+                onClick={() => setCurrentPage("pricing")}
+                className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+              >
+                표준 견적 바로가기 <ArrowRight />
+              </button>
+            )}
           </div>
 
           <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5 select-none cursor-default">
@@ -456,7 +465,6 @@ export default function App() {
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
-                {/* '와줄래 홈' 버튼 제거 */}
               </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -493,6 +501,3 @@ export default function App() {
     </div>
   );
 }
-
-/* 유틸 (미사용 시 삭제 가능) */
-function className(...v){return v.filter(Boolean).join(' ')}
