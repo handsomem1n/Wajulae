@@ -51,29 +51,56 @@ const ArrowRight = () => (
 
 /* 섹션: 표준 견적 */
 function SectionPricing() {
+function SectionPricing() {
+  const items = [
+    { t: "인터폰 교체", d: "기종·배선 상태에 따라 변동" },
+    { t: "현관문 플로어 힌지 교체", d: "도어 규격·부품에 따라 변동" },
+    { t: "싱크대 상판 리모델링 교체", d: "자재·타공·길이에 따라 변동" },
+    { t: "해바라기 수전 교체", d: "배관·벽체 상태에 따라 변동" },
+    { t: "싱크대 수전 교체", d: "부품·배관 상태에 따라 변동" },
+    { t: "타일 부분 교체", d: "면적·자재 수급에 따라 변동" },
+    { t: "주방후드 교체", d: "덕트·전원 위치에 따라 변동" },
+    { t: "언더카운트 세면대 부착", d: "상판 재질·브라켓 유무에 따라 변동" },
+    { t: "싱크대 배수통 부착", d: "사이즈·타공 유무에 따라 변동" },
+    { t: "페인트 시공", d: "면적·도막 두께·색상에 따라 변동" },
+    { t: "화장실 환풍기 교체", d: "전원·덕트 상태에 따라 변동" },
+    { t: "베란다 페인트", d: "면적·방수 상태에 따라 변동" },
+    { t: "환풍기 교체", d: "설치 위치·전원에 따라 변동" },
+    { t: "샤워 수전 교체", d: "배관·벽체 상태에 따라 변동" },
+    { t: "LED 등 교체", d: "규격·천장 타입에 따라 변동" },
+    { t: "세면대 수전 교체", d: "규격·배관 상태에 따라 변동" },
+    { t: "비상센서등 교체", d: "전원·설치 위치에 따라 변동" },
+    { t: "폽업 교체", d: "규격·막힘 여부에 따라 변동" },
+    { t: "소변기 센서 교체", d: "전원·배관 상태에 따라 변동" },
+    { t: "현관문 경첩 교체", d: "도어 무게·힌지 규격에 따라 변동" },
+    { t: "세면대 & 부속 교체", d: "규격·부속 구성에 따라 변동" },
+    { t: "문 재부착 및 수리", d: "틀 뒤틀림·경첩 상태에 따라 변동" },
+    { t: "문고리 교체", d: "백세트 규격·문두께에 따라 변동" },
+    { t: "욕조 실리콘 시공", d: "오염·곰팡이·길이에 따라 변동" },
+  ];
+
   return (
     <section id="pricing" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-bold">표준 견적 가이드 (예시)</h2>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          {[
-            { t: "콘센트 교체", p: "₩35,000~", d: "수량·배선 상태에 따라 변동" },
-            { t: "수전 교체", p: "₩85,000~", d: "부품·난이도에 따라 변동" },
-            { t: "벽지 보수", p: "₩70,000~", d: "면적·오염 상태에 따라 변동" },
-          ].map((c) => (
-            <div key={c.t} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6 flex flex-col">
-              <div className="aspect-video rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-4" />
+        <h2 className="text-2xl sm:text-3xl font-bold">표준 견적 가이드</h2>
+
+        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {items.map((c) => (
+            <div key={c.t} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
+              <div className="aspect-video rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-4"/>
               <p className="font-semibold">{c.t}</p>
-              <p className="text-2xl font-extrabold mt-1">{c.p}</p>
               <p className="text-neutral-600 text-sm mt-1">{c.d}</p>
+              <p className="text-neutral-700 text-sm mt-2 font-medium">비용: 문의</p>
             </div>
           ))}
         </div>
-        <p className="text-xs text-neutral-500 mt-4">※ 실제 가격은 현장 상태/자재/난이도에 따라 달라질 수 있습니다.</p>
+
+        <p className="text-xs text-neutral-500 mt-4">※ 실제 비용은 현장 상황에 따라 변동됩니다.</p>
       </div>
     </section>
   );
 }
+
 
 /* 섹션: FAQ */
 function SectionFAQ() {
