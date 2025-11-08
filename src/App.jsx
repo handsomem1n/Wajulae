@@ -3,8 +3,7 @@ import React, { useState } from "react";
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
 // LEGAL: 사이트 전역 고지(상단 리본·푸터·모달에서 반복 사용)
-const LEGAL_NOTICE =
-  "와줄래는 고객과 지역 기사(사업자)를 연결하는 통신판매중개자입니다. 당사는 거래의 당사자가 아니며, 작업의 계약·결제·환불·A/S·하자담보 책임은 작업을 수행한 기사에게 있습니다.";
+
 
 function PolicyModal({ open, onClose, title, children }) {
   if (!open) return null;
