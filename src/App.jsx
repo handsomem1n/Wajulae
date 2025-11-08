@@ -1,108 +1,98 @@
 // src/App.jsx
 import React, { useEffect, useState } from "react";
 
-/* 구성
- - 히어로(배지: '표준 가격'만 표기)
- - 표준 견적 (오버레이 페이지로 열림)
- - FAQ (오버레이 페이지)
- - 문의 (오버레이 페이지)
- - 특장점/진행절차/가능견적/소개영상 모두 제거
-*/
-
+/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
 const NAV = [
-  { id: "about",   label: "서비스 소개", type: "scroll" }, // 로고와 동일, #hero로 스크롤
+  { id: "about",   label: "서비스 소개", type: "scroll" },
   { id: "pricing", label: "표준 견적",   type: "page"   },
   { id: "faq",     label: "FAQ",        type: "page"   },
   { id: "contact", label: "문의",        type: "page"   },
 ];
 
+/* 현재 섹션 하이라이트 */
 function useScrollSpy(ids) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const ob = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) setActive(visible[0].target.id);
+        const v = entries.filter(e => e.isIntersecting)
+                         .sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+        if (v[0]) setActive(v[0].target.id);
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0,0.25,0.5,0.75,1] }
     );
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    ids.forEach(id => { const el = document.getElementById(id); if (el) ob.observe(el); });
+    return () => ob.disconnect();
   }, [ids]);
   return active;
 }
 
+/* 아이콘들 */
 const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
-    <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
+    <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
   </svg>
 );
-
 const ArrowRight = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
-    <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
+    <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z"/>
   </svg>
 );
 
-/* 섹션: 표준 견적 */
+/* ===== 표준 견적 (가격은 여기 items 배열에서 숫자만 바꾸면 됩니다) ===== */
 function SectionPricing() {
-function SectionPricing() {
+  // ✅ 숫자/문자만 바꾸면 즉시 반영
   const items = [
-    { t: "인터폰 교체", d: "기종·배선 상태에 따라 변동" },
-    { t: "현관문 플로어 힌지 교체", d: "도어 규격·부품에 따라 변동" },
-    { t: "싱크대 상판 리모델링 교체", d: "자재·타공·길이에 따라 변동" },
-    { t: "해바라기 수전 교체", d: "배관·벽체 상태에 따라 변동" },
-    { t: "싱크대 수전 교체", d: "부품·배관 상태에 따라 변동" },
-    { t: "타일 부분 교체", d: "면적·자재 수급에 따라 변동" },
-    { t: "주방후드 교체", d: "덕트·전원 위치에 따라 변동" },
-    { t: "언더카운트 세면대 부착", d: "상판 재질·브라켓 유무에 따라 변동" },
-    { t: "싱크대 배수통 부착", d: "사이즈·타공 유무에 따라 변동" },
-    { t: "페인트 시공", d: "면적·도막 두께·색상에 따라 변동" },
-    { t: "화장실 환풍기 교체", d: "전원·덕트 상태에 따라 변동" },
-    { t: "베란다 페인트", d: "면적·방수 상태에 따라 변동" },
-    { t: "환풍기 교체", d: "설치 위치·전원에 따라 변동" },
-    { t: "샤워 수전 교체", d: "배관·벽체 상태에 따라 변동" },
-    { t: "LED 등 교체", d: "규격·천장 타입에 따라 변동" },
-    { t: "세면대 수전 교체", d: "규격·배관 상태에 따라 변동" },
-    { t: "비상센서등 교체", d: "전원·설치 위치에 따라 변동" },
-    { t: "폽업 교체", d: "규격·막힘 여부에 따라 변동" },
-    { t: "소변기 센서 교체", d: "전원·배관 상태에 따라 변동" },
-    { t: "현관문 경첩 교체", d: "도어 무게·힌지 규격에 따라 변동" },
-    { t: "세면대 & 부속 교체", d: "규격·부속 구성에 따라 변동" },
-    { t: "문 재부착 및 수리", d: "틀 뒤틀림·경첩 상태에 따라 변동" },
-    { t: "문고리 교체", d: "백세트 규격·문두께에 따라 변동" },
-    { t: "욕조 실리콘 시공", d: "오염·곰팡이·길이에 따라 변동" },
+    { t: "콘센트 교체",              p: "15,000원", d: "수량·배선 상태에 따라 변동" },
+    { t: "수전 교체",                p: "25,000원", d: "부품·난이도에 따라 변동" },
+    { t: "벽지 보수",                p: "문의",     d: "면적·오염 상태에 따라 변동" },
+    { t: "인터폰 교체",              p: "문의",     d: "기종·배선 상태에 따라 변동" },
+    { t: "현관문 플로어 힌지 교체",  p: "문의",     d: "도어 규격·부품에 따라 변동" },
+    { t: "싱크대 상판 리모델링 교체", p: "문의",     d: "자재·타공·길이에 따라 변동" },
+    { t: "해바라기 수전 교체",       p: "문의",     d: "배관·벽체 상태에 따라 변동" },
+    { t: "싱크대 수전 교체",         p: "문의",     d: "부품·배관 상태에 따라 변동" },
+    { t: "타일 부분 교체",           p: "문의",     d: "면적·자재 수급에 따라 변동" },
+    { t: "주방후드 교체",            p: "문의",     d: "덕트·전원 위치에 따라 변동" },
+    { t: "언더카운트 세면대 부착",   p: "문의",     d: "상판 재질·브라켓 유무에 따라 변동" },
+    { t: "싱크대 배수통 부착",       p: "문의",     d: "사이즈·타공 유무에 따라 변동" },
+    { t: "페인트 시공",              p: "문의",     d: "면적·도막 두께·색상에 따라 변동" },
+    { t: "화장실 환풍기 교체",       p: "문의",     d: "전원·덕트 상태에 따라 변동" },
+    { t: "베란다 페인트",            p: "문의",     d: "면적·방수 상태에 따라 변동" },
+    { t: "환풍기 교체",              p: "문의",     d: "설치 위치·전원에 따라 변동" },
+    { t: "샤워 수전 교체",           p: "문의",     d: "배관·벽체 상태에 따라 변동" },
+    { t: "LED 등 교체",              p: "문의",     d: "규격·천장 타입에 따라 변동" },
+    { t: "세면대 수전 교체",         p: "문의",     d: "규격·배관 상태에 따라 변동" },
+    { t: "비상센서등 교체",          p: "문의",     d: "전원·설치 위치에 따라 변동" },
+    { t: "폽업 교체",                p: "문의",     d: "규격·막힘 여부에 따라 변동" },
+    { t: "소변기 센서 교체",         p: "문의",     d: "전원·배관 상태에 따라 변동" },
+    { t: "현관문 경첩 교체",         p: "문의",     d: "도어 무게·힌지 규격에 따라 변동" },
+    { t: "세면대&부속 교체",         p: "문의",     d: "규격·부속 구성에 따라 변동" },
+    { t: "문 재부착 및 수리",        p: "문의",     d: "틀 뒤틀림·경첩 상태에 따라 변동" },
+    { t: "문고리 교체",              p: "문의",     d: "백세트 규격·문두께에 따라 변동" },
+    { t: "욕조 실리콘 시공",         p: "문의",     d: "오염·곰팡이·길이에 따라 변동" },
   ];
 
   return (
-    <section id="pricing" className="py-16 bg-white">
+    <section id="pricing" className="py-16 bg-white text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-bold">표준 견적 가이드</h2>
-
-        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <h2 className="text-xl sm:text-2xl font-bold">표준 견적 가이드</h2>
+        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {items.map((c) => (
-            <div key={c.t} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-              <div className="aspect-video rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-4"/>
-              <p className="font-semibold">{c.t}</p>
-              <p className="text-neutral-600 text-sm mt-1">{c.d}</p>
-              <p className="text-neutral-700 text-sm mt-2 font-medium">비용: 문의</p>
+            <div key={c.t} className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
+              <div className="aspect-video rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
+              <p className="font-semibold text-sm">{c.t}</p>
+              <p className="text-base font-bold mt-1">{c.p}</p>
+              <p className="text-neutral-600 text-xs mt-1">{c.d}</p>
             </div>
           ))}
         </div>
-
-        <p className="text-xs text-neutral-500 mt-4">※ 실제 비용은 현장 상황에 따라 변동됩니다.</p>
+        <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
       </div>
     </section>
   );
 }
 
-
-/* 섹션: FAQ */
+/* ===== FAQ (출장비 질문 제거) ===== */
 function SectionFAQ() {
   return (
     <section id="faq" className="py-16 bg-white">
@@ -110,7 +100,6 @@ function SectionFAQ() {
         <h2 className="text-2xl sm:text-3xl font-bold">자주 묻는 질문</h2>
         <div className="mt-8 space-y-4">
           {[
-            { q: "출장비가 정말 무료인가요?", a: "기본 상담·점검은 무료입니다. 일부 외곽 지역은 사전 고지 후 교통비가 발생할 수 있습니다." },
             { q: "견적은 어떻게 산정하나요?", a: "작업 항목·난이도·자재·현장 접근성을 고려한 내부 표준표를 기반으로 산정합니다." },
             { q: "AS 보증은 얼마나 제공되나요?", a: "항목별로 상이하나 통상 3~12개월 보증을 제공합니다. 계약서에 명시됩니다." },
           ].map((f, i) => (
@@ -125,7 +114,7 @@ function SectionFAQ() {
   );
 }
 
-/* 섹션: 문의 */
+/* ===== 문의 ===== */
 function SectionContact() {
   return (
     <footer id="contact" className="py-16">
@@ -166,25 +155,13 @@ function SectionContact() {
             <div className="rounded-3xl border border-neutral-200 p-6 bg-white">
               <h3 className="font-semibold">고객 약속</h3>
               <ul className="mt-4 space-y-2 text-neutral-700">
-                <li className="flex items-start gap-2"><Check /><span>숨겨진 비용 없이 사전 고지된 표준 견적</span></li>
-                <li className="flex items-start gap-2"><Check /><span>전문가 무료 방문 점검</span></li>
+                <li className="flex items-start gap-2"><Check /><span>사전 고지된 표준 견적</span></li>
+                <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
                 <li className="flex items-start gap-2"><Check /><span>시공 품질 보증 및 사후 케어</span></li>
               </ul>
-              <div className="mt-6 grid grid-cols-3 gap-4 text-center">
-                {[
-                  { k: "만족도", v: "4.9/5" },
-                  { k: "재이용률", v: "1/6" },
-                  { k: "평균 응답", v: "당일" },
-                ].map((m) => (
-                  <div key={m.k} className="rounded-2xl border border-neutral-200 p-4 bg-neutral-50">
-                    <p className="text-xs text-neutral-500">{m.k}</p>
-                    <p className="text-xl font-extrabold mt-1">{m.v}</p>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="mt-4 text-xs text-neutral-500">
-              © {new Date().getFullYear()} 와줄래 — 본 페이지는 레이아웃 레퍼런스 기반의 합법적 유사 제작 예시입니다.
+              © {new Date().getFullYear()} 와줄래 — 레이아웃 레퍼런스 기반 합법적 유사 제작 예시.
             </div>
           </div>
         </div>
@@ -193,9 +170,9 @@ function SectionContact() {
   );
 }
 
-/* === 앱 루트 === */
+/* ===== 앱 루트 ===== */
 export default function App() {
-  const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
+  const active = useScrollSpy(["hero", ...NAV.map(n => n.id)]);
   const [currentPage, setCurrentPage] = useState(null);
 
   const handleNavClick = (item) => (e) => {
@@ -261,14 +238,22 @@ export default function App() {
               <div className="mt-6 flex gap-3">
                 <a
                   href="#pricing"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage("pricing");
-                  }}
+                  onClick={(e) => { e.preventDefault(); setCurrentPage("pricing"); }}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90 focus:ring-2 focus:ring-neutral-900/20"
                 >
                   표준 견적 보기 <ArrowRight />
                 </a>
+                <a
+                  href="#faq"
+                  onClick={(e) => { e.preventDefault(); setCurrentPage("faq"); }}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-neutral-200 font-semibold text-neutral-800 hover:bg-neutral-50"
+                >
+                  FAQ 보기
+                </a>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-4 text-sm text-neutral-600">
+                <span className="inline-flex items-center gap-2"><Check /> 표준 가격제</span>
+                <span className="inline-flex items-center gap-2"><Check /> 지역 집중 운영</span>
               </div>
             </div>
             <div className="relative lg:h-[480px]">
@@ -287,9 +272,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 메인 페이지에는 추가 섹션을 직접 노출하지 않음 (요청 반영) */}
-
-      {/* 전체 화면 오버레이 (페이지 전환처럼) */}
+      {/* 오버레이 페이지들 */}
       {currentPage && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch">
           <div className="absolute inset-0 bg-white" />
@@ -297,18 +280,12 @@ export default function App() {
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-lg border" onClick={() => setCurrentPage(null)}>
-                    ← 메인으로
-                  </button>
-                  <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
+                  <button className="px-3 py-1 rounded-lg border" onClick={() => setCurrentPage(null)}>← 메인으로</button>
+                  <span className="text-neutral-500 text-sm">{NAV.find(n => n.id === currentPage)?.label}</span>
                 </div>
                 <a
                   href="#hero"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(null);
-                    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
-                  }}
+                  onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
                   className="text-sm underline underline-offset-4"
                 >
                   와줄래 홈
@@ -317,7 +294,7 @@ export default function App() {
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
               {currentPage === "pricing" && <SectionPricing />}
-              {currentPage === "faq" && <SectionFAQ />}
+              {currentPage === "faq"     && <SectionFAQ />}
               {currentPage === "contact" && <SectionContact />}
             </div>
           </div>
