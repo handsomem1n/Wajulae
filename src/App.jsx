@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  HashRouter as Router,  // 새로고침 404 방지
+  BrowserRouter as Router, // 장기 권장: BrowserRouter
   Routes,
   Route,
   Link,
@@ -10,7 +10,7 @@ import {
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-// 카테고리 라벨(한글)
+// 카테고리 라벨(한글) — TypeScript가 아니라도 동작하도록 any 사용
 const CATEGORY_LABELS: Record<string, string> = {
   door: "도어/현관",
   bath: "욕실",
@@ -120,20 +120,21 @@ const CASES = [
 // ---------- 카드 ----------
 function CaseCard({ item }: { item: any }) {
   const categoryLabel = CATEGORY_LABELS[item.category] || item.category;
+  const showPrice = item.price && String(item.price).trim();
+
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
       {/* 상단 악센트 바 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
 
       <div className="flex items-center justify-between">
-        {/* ★ 아이콘/별 전부 없음: 텍스트만 */}
+        {/* 별/아이콘 없음, 한글 라벨 */}
         <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
           {categoryLabel}
         </span>
 
-        {/* 비용 뱃지(아이콘 없음) */}
-        <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + ((item.price && String(item.price).trim()) ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
-          {(item.price && String(item.price).trim()) ? `비용 ${item.price}` : "비용 입력 전"}
+        <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + (showPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
+          {showPrice ? `비용 ${item.price}` : "비용 입력 전"}
         </span>
       </div>
 
@@ -178,7 +179,7 @@ function CasesPage() {
       <TopBar />
 
       <section className="border-b bg-white">
-        <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
+        <div className="mx-auto w/full max-w-7xl px-6 py-10 md:px-8">
           <h1 className="text-2xl font-extrabold md:text-3xl">가능 작업</h1>
           <p className="mt-2 text-sm text-gray-600">
             사례 기준의 시공 내역입니다. 표기 금액은 참고용이며, 사진/주소/증상 확인 후 정확 범위를 안내드립니다.
