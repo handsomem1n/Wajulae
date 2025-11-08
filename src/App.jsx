@@ -337,6 +337,9 @@ export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
   const [currentPage, setCurrentPage] = useState(null);
 
+  // 모바일 메뉴 상태
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   // 법적 문서 모달 상태
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
@@ -353,7 +356,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 [--primary:#00c7ae] overflow-x-hidden">
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -386,8 +389,32 @@ export default function App() {
               </a>
             ))}
           </nav>
+          {/* 모바일 메뉴 버튼 */}
+          <button className="md:hidden px-3 py-2 rounded-lg ring-1 ring-neutral-300" onClick={() => setMobileOpen(true)}>메뉴</button>
         </div>
       </header>
+
+      {/* 모바일 메뉴 드로워 */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[70] bg-black/40" onClick={() => setMobileOpen(false)}>
+          <div className="absolute right-0 top-0 bottom-0 w-64 bg-white shadow-xl p-4" onClick={(e)=>e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <strong>와줄래</strong>
+              <button className="px-2 py-1 ring-1 ring-neutral-200 rounded" onClick={() => setMobileOpen(false)}>닫기</button>
+            </div>
+            <ul className="space-y-2">
+              {NAV.map((item)=> (
+                <li key={item.id}>
+                  <button
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-neutral-100"
+                    onClick={(e)=>{ setMobileOpen(false); handleNavClick(item)(e); }}
+                  >{item.label}</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
 
       {/* 히어로 (homeco.kr 유사: 좌측 카피/검색, 우측 카테고리 타일) */}
       <section id="hero" className="relative overflow-hidden">
@@ -417,11 +444,16 @@ export default function App() {
                 <div className="inline-flex items-center gap-2"><Check/> 표준 가격제</div>
                 <div className="inline-flex items-center gap-2"><Check/> 지역 집중 운영</div>
               </div>
+              {/* CTA 버튼 */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                <button onClick={()=>setCurrentPage('pricing')} className="px-4 py-2 rounded-xl bg-primary text-white font-semibold">표준 견적 보기</button>
+                <button onClick={()=>{ document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}); }} className="px-4 py-2 rounded-xl ring-1 ring-neutral-300">문의하기</button>
+              </div>
             </div>
 
             {/* 우측: "이거 두 개"(샘플 이미지/스켈레톤) 제거 → 홈코 유사 카테고리 타일 */}
-            <div className="relative">
-              <div className="absolute -inset-6 bg-primary/10 rounded-[2rem] blur-2xl" aria-hidden />
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-primary/10 rounded-[2rem] blur-2xl" aria-hidden />
               <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5">
                 <h3 className="font-bold text-lg">어떤 도움이 필요하세요?</h3>
                 <p className="text-sm text-neutral-500 mt-1">원하는 항목을 누르면 바로 상담을 시작해요.</p>
@@ -449,29 +481,26 @@ export default function App() {
 
       {/* 오버레이 페이지들 (구성 동일) */}
       {currentPage && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch">
-          <div className="absolute inset-0 bg-white" />
-          <div className="relative w-full h-full overflow-y-auto">
-            <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-                <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
-                  <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
-                </div>
-                <a
-                  href="#hero"
-                  onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
-                  className="text-sm underline underline-offset-4"
-                >
-                  와줄래 홈
-                </a>
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] overflow-y-auto bg-white">
+          <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+              <div className="flex items-center gap-2 font-semibold">
+                <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
+                <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
               </div>
+              <a
+                href="#hero"
+                onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
+                className="text-sm underline underline-offset-4"
+              >
+                와줄래 홈
+              </a>
             </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-              {currentPage === "pricing" && <SectionPricing />}
-              {currentPage === "faq"     && <SectionFAQ />}
-              {currentPage === "contact" && <SectionContact />}
-            </div>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            {currentPage === "pricing" && <SectionPricing />}
+            {currentPage === "faq"     && <SectionFAQ />}
+            {currentPage === "contact" && <SectionContact />}
           </div>
         </div>
       )}
@@ -480,8 +509,8 @@ export default function App() {
       <div className="border-t border-neutral-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-sm text-neutral-600">
-            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
-            <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
+            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: [제2025-서울-0000호]</span>
+            <div className="text-xs text-neutral-400">주소: [서울시 ___구 ___로 ___] · 대표: [성명] · 대표번호: [02-000-0000]</div>
           </div>
           <nav className="flex items-center gap-3 text-sm">
             <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }}>이용약관</button>
