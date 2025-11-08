@@ -410,7 +410,7 @@ export default function App() {
           {/* 오른쪽 카테고리 박스 (클릭 비활성화) */}
           <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5 select-none cursor-default">
             <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-            <p className="text-sm text-neutral-500 mt-1 text-center lg:text-left">항목은 예시이며 현재는 선택 동작이 없습니다.</p>
+            <p className="text-sm text-neutral-500 mt-1 text-center lg:text-left"> </p>
             <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
                 {label:"전등 교체", icon:"💡"},
