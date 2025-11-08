@@ -195,50 +195,82 @@ const Privacy = () => (
 );
 
 /* ===== 표준 견적(클릭/포커스 제거, 가격 검정색) ===== */
-function SectionPricing() {
+import { useState } from "react";
+
+export default function SectionPricing() {
   const items = [
-    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동" },
-    { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동" },
-    { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동" },
-    { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동" },
-    { t: "싱크대 상판 리모델링 교체", p: "120,000원", d: "자재·타공·길이에 따라 변동" },
-    { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동" },
-    { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동" },
-    { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동" },
-    { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동" },
-    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동" },
-    { t: "화장실 환풍기 교체",       p: "100,000원", d: "전원·덕트 상태에 따라 변동" },
-    { t: "샤워 수전 교체",           p: "150,000원", d: "배관·벽체 상태에 따라 변동" },
-    { t: "LED 등 교체",              p: "80,000원",  d: "규격·천장 타입에 따라 변동" },
-    { t: "세면대 수전 교체",         p: "120,000원", d: "규격·배관 상태에 따라 변동" },
-    { t: "비상센서등 교체",          p: "100,000원", d: "전원·설치 위치에 따라 변동" },
-    { t: "폽업 교체",                p: "45,000원",  d: "규격·막힘 여부에 따라 변동" },
-    { t: "소변기 센서 교체",         p: "100,000원", d: "전원·배관 상태에 따라 변동" },
-    { t: "현관문 경첩 교체",         p: "200,000원", d: "도어 무게·힌지 규격에 따라 변동" },
-    { t: "문 재부착 및 수리",        p: "50,000원",  d: "틀 뒤틀림·경첩 상태에 따라 변동" },
-    { t: "문고리 교체",              p: "50,000원",  d: "백세트 규격·문두께에 따라 변동" },
+    { t: "LED 등 교체", p: "80,000원", d: "규격·천장 타입에 따라 변동" },
+    { t: "세면대 수전 교체", p: "120,000원", d: "규격·배관 상태에 따라 변동" },
+    { t: "싱크대 배수통 부착", p: "80,000원", d: "사이즈·타공 유무에 따라 변동" },
+    { t: "화장실 환풍기 교체", p: "100,000원", d: "전원·덕트 상태에 따라 변동" },
+    { t: "샤워 수전 교체", p: "150,000원", d: "배관·벽체 상태에 따라 변동" },
+    { t: "비상센서등 교체", p: "100,000원", d: "전원·설치 위치에 따라 변동" },
+    { t: "폽업 교체", p: "45,000원", d: "규격·막힘 여부에 따라 변동" },
+    { t: "소변기 센서 교체", p: "100,000원", d: "전원·배관 상태에 따라 변동" },
+    { t: "현관문 경첩 교체", p: "200,000원", d: "도어 무게·힌지 규격에 따라 변동" },
+    { t: "문 재부착 및 수리", p: "50,000원", d: "틀 뒤틀림/경첩 상태에 따라 변동" },
+    { t: "문고리 교체", p: "50,000원", d: "백세트 규격·문두께에 따라 변동" },
   ];
 
+  // ✅ 검색 가능하도록 상태 추가
+  const [q, setQ] = useState("");
+  const filtered = items.filter((c) =>
+    (c.t + " " + c.p + " " + c.d).toLowerCase().includes(q.trim().toLowerCase())
+  );
+
   return (
-    <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
-        <p className="text-neutral-500 mt-2">항목은 참고용 표준가입니다.</p>
-        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {items.map((c) => (
-            <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
-              <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
-              <p className="font-semibold">{c.t}</p>
-              <p className="mt-1 text-lg font-extrabold text-neutral-900">{c.p}</p>
-              <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
-            </div>
-          ))}
+    <section className="max-w-7xl mx-auto px-6 py-20">
+      <div>
+        <h2 className="text-4xl font-bold tracking-tight mb-3">철산·광명·구로·홀 수리</h2>
+        <p className="text-neutral-500 text-sm">
+          사전 안내된 정찰제 비용으로 진행됩니다.
+        </p>
+
+        {/* ✅ 검색 입력창 추가 */}
+        <div className="mt-6">
+          <input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="검색 (예: 수전, 센서, 문고리...)"
+            className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-[15px]
+                       focus:outline-none focus:ring-2 ring-offset-0"
+          />
         </div>
-        <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
       </div>
+
+      {/* ✅ 카드 리스트 */}
+      <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filtered.length === 0 ? (
+          <div className="col-span-full text-neutral-400 text-sm text-center py-10">
+            검색 결과가 없습니다.
+          </div>
+        ) : (
+          filtered.map((c, i) => (
+            <div
+              key={i}
+              className="border border-neutral-200 rounded-2xl p-5 hover:shadow-sm transition"
+            >
+              <div className="w-full h-40 bg-neutral-100 rounded-xl mb-4" />
+              <div className="text-base font-medium">{c.t}</div>
+
+              {/* ✅ 숫자를 모두 검정색으로 고정 */}
+              <div className="text-black font-semibold mt-1">{c.p}</div>
+              <div className="text-neutral-500 text-sm mt-1">{c.d}</div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ✅ 첫페이지 CTA 삭제 완료 (요청사항 반영) */}
+
+      <p className="text-neutral-400 text-xs mt-10">
+        ※ 현장 상황에 따라 달라질 수 있습니다.
+      </p>
     </section>
   );
 }
+
 
 function SectionFAQ() {
   return (
