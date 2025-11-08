@@ -398,12 +398,13 @@ export default function App() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">동네 기사님 바로 연결</h1>
             <p className="mt-3 text-neutral-600 max-w-lg">철산·광명·구로·가산 긴급 생활 수리</p>
             <button
-              type="button"
-              onClick={() => setCurrentPage("pricing")}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-white font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
-            >
-              표준 견적 바로가기 <ArrowRight />
-            </button>
+  type="button"
+  onClick={() => setCurrentPage("pricing")}
+  className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
+>
+  표준 견적 바로가기 <ArrowRight />
+</button>
+
           </div>
 
           {/* 오른쪽 카테고리 박스 (클릭 비활성화) */}
