@@ -105,7 +105,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
 /* 문서 섹션 */
 const TOS = ({ setActiveTab }) => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500">시행일: 2025-11-09 · 와줄래(“회사”)</p>
+    <p className="text-xs text-neutral-500"></p>
     <h3 className="font-bold text-base">제1조 (목적)</h3>
     <p>본 약관은 회사가 운영하는 생활수리·설치·점검 등의 <strong>중개 플랫폼</strong>(이하 “플랫폼”) 이용에 있어 회사와 이용자(고객/기사)의 권리·의무 및 책임 사항을 정합니다.</p>
     <h3 className="font-bold text-base">제2조 (정의)</h3>
@@ -161,7 +161,7 @@ const TOS = ({ setActiveTab }) => (
 
 const LegalNotice = () => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500">시행일: 2025-11-09 · 와줄래(“회사”)</p>
+    <p className="text-xs text-neutral-500"></p>
     {[
       {t:"① 회사 역할 및 책임 한정", d:"회사는 고객과 기사를 연결하는 온라인 중개서비스 제공자이며, 실제 시공·용역의 당사자가 아닙니다. 시공 결과·품질·안전·하자보수·손해배상 등 법적 책임은 기사에게 있습니다."},
       {t:"② 기사의 독립성", d:"기사는 회사의 피용자/대리인이 아닌 독립 사업자로서 작업 방식·일정·안전관리의 권한과 책임을 스스로 부담합니다."},
@@ -183,7 +183,7 @@ const LegalNotice = () => (
 
 const Privacy = () => (
   <article className="space-y-4">
-    <p className="text-xs text-neutral-500">시행일: 2025-11-09 · 와줄래</p>
+    <p className="text-xs text-neutral-500"></p>
     <h3 className="font-bold text-base">개인정보 처리방침(요약)</h3>
     <p><strong>수집 항목</strong>: 성명, 연락처, 주소, 결제정보, 이용기록 등 · <strong>목적</strong>: 매칭·결제·고객지원 · <strong>보관</strong>: 목적 달성 후 지체없이 파기(법정 보관 예외)</p>
     <h4 className="font-semibold">수집/이용</h4>
