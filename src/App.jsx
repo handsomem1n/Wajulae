@@ -150,7 +150,7 @@ function SectionContact() {
               <ul className="mt-4 space-y-2 text-neutral-700">
                 <li className="flex items-start gap-2"><Check /><span>사전 고지된 표준 견적</span></li>
                 <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
-                <li className="flex items-start gap-2"><Check /><span>시공 품질 보증 및 사후 케어</span></li>
+                <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
               </ul>
             </div>
             <div className="mt-4 text-xs text-neutral-500">
