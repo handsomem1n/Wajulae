@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  HashRouter as BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   Link,
@@ -115,7 +115,11 @@ const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
+<<<<<<< HEAD
   // 필요 시 계속 추가
+=======
+  // …필요 시 추가
+>>>>>>> parent of 9ca0a04 (Update App.jsx)
 ];
 
 // ---------- Card ----------
@@ -124,6 +128,7 @@ function CaseCard({ item }: { item: any }) {
   const hasPrice = !!(item.price && String(item.price).trim());
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+<<<<<<< HEAD
       {/* 아이콘/장식 제거: 깔끔한 헤더 */}
       <div className="flex items-center justify-between">
         <span className="inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
@@ -354,3 +359,8 @@ export default function App() {
     </BrowserRouter>
   );
 }
+=======
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
+
+      <div className="flex items-center justify-between">
+>>>>>>> parent of 9ca0a04 (Update App.jsx)
