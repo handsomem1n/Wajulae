@@ -64,7 +64,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
       className={
         "px-3 py-2 rounded-full text-sm font-semibold transition " +
         (activeTab === id
-          ? "bg-primary text-neutral-900 shadow font-bold"
+          ? "bg-[var(--primary)] text-neutral-900 shadow font-bold"
           : "text-neutral-700 hover:bg-neutral-100")
       }
       aria-pressed={activeTab === id}
@@ -235,9 +235,8 @@ function SectionPricing() {
             >
               <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
               <p className="font-semibold">{c.t}</p>
-              <p className="mt-1 text-lg font-extrabold text-primary">{c.p}</p>
+              <p className="mt-1 text-lg font-extrabold text-[var(--primary)]">{c.p}</p>
               <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
-              {/* '바로 문의하기' 제거 */}
             </div>
           ))}
         </div>
@@ -283,15 +282,15 @@ function SectionContact() {
             <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">이름</span>
-                <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="홍길동" />
+                <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="홍길동" />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">연락처</span>
-                <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="010-0000-0000" />
+                <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="010-0000-0000" />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">요청 항목</span>
-                <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0">
                   <option>콘센트 교체</option>
                   <option>수전 교체</option>
                   <option>전등/전기</option>
@@ -301,9 +300,9 @@ function SectionContact() {
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">상세 설명</span>
-                <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="상태/사진 링크 등" />
+                <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
               </label>
-              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-semibold hover:brightness-95" type="button">
+              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
                 접수하기 <ArrowRight />
               </button>
             </form>
@@ -361,7 +360,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden gutter-stable bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+      {/* 전역: 우측 스크롤바 점프/잘림 방지 클래스 & iOS 탭 하이라이트 제거 */}
+      <style>{`
+        .gutter-stable { scrollbar-gutter: stable both-edges; }
+        * { -webkit-tap-highlight-color: transparent; }
+      `}</style>
+
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -375,7 +380,7 @@ export default function App() {
               setCurrentPage(null);
             }}
           >
-            <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-primary text-white font-bold">W</span>
+            <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
           </a>
           {/* 데스크톱 네비 */}
@@ -387,7 +392,7 @@ export default function App() {
                 onClick={handleNavClick(item)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                   active === item.id
-                    ? "bg-primary text-white shadow"
+                    ? "bg-[var(--primary)] text-white shadow"
                     : "text-neutral-700 hover:bg-neutral-100"
                 }`}
               >
@@ -400,7 +405,7 @@ export default function App() {
 
       {/* 히어로 */}
       <section id="hero" className="relative overflow-visible">
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 긴급 생활 수리</h1>
@@ -408,7 +413,7 @@ export default function App() {
             <button
               type="button"
               onClick={() => setCurrentPage("pricing")}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
             >
               표준 견적 바로가기 <ArrowRight />
             </button>
@@ -439,7 +444,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 오버레이 페이지 (우측 잘림 방지) */}
+      {/* 오버레이 페이지 */}
       {currentPage && (
         <div role="dialog" aria-modal="true"
              className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
@@ -451,7 +456,7 @@ export default function App() {
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
-                {/* 우측 상단 ‘와줄래 홈’ 버튼 완전 제거 */}
+                {/* '와줄래 홈' 버튼 제거 */}
               </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -471,11 +476,11 @@ export default function App() {
             <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
           </div>
           <nav className="flex items-center gap-3 text-sm">
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
+            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
             <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
+            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
             <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-primary" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
+            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
           </nav>
         </div>
       </div>
@@ -489,14 +494,5 @@ export default function App() {
   );
 }
 
-/* 전역 유틸 */
+/* 유틸 (미사용 시 삭제 가능) */
 function className(...v){return v.filter(Boolean).join(' ')}
-
-/* 전역 CSS 도움말 (Tailwind config 없이도 사용):
-   :root { --primary:#00c7ae }
-   .bg-primary{ background:var(--primary) }
-   .text-primary{ color:var(--primary) }
-   .ring-primary\/40{ --tw-ring-color: color-mix(in oklab, var(--primary) 40%, transparent);} 
-   .focus\:ring-primary\/30:focus{ --tw-ring-color: color-mix(in oklab, var(--primary) 30%, transparent);} 
-   .gutter-stable { scrollbar-gutter: stable both-edges; } /* 우측 잘림/점프 방지 */
-*/
