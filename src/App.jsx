@@ -325,7 +325,7 @@ export default function WajulleLanding() {
             <ul className="mt-2 space-y-1">
               <li>상호: 와줄래</li>
               <li>사업자등록번호: 338-46-01315</li>
-              <li>대표: 김현성</li>
+              <li>대표: 안정근, 한승민, 김현성</li>
               <li>연락: 카카오채널 문의</li>
               {/* 주소는 유지 권장. 필요 시 축약 가능 */}
               <li>주소: 경기도 안산시 상록구 광덕산1로</li>
