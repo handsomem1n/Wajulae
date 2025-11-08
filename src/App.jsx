@@ -468,9 +468,8 @@ export default function App() {
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">가까운 기사님과 빠르게 연결해드려요.
-철산·광명·구로·가산 생활수리 플랫폼</h1>
-              <p className="mt-3 text-neutral-600 max-w-lg">    참고용 표준가 제공/과장 없는 사전 안내 </p>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 생활수리 플랫폼</h1>
+              <p className="mt-3 text-neutral-600 max-w-lg"> 참고용 표준가 제공/과장 없는 사전 안내 </p>
               <button
                 type="button"
                 onClick={() => setCurrentPage("pricing")}
@@ -531,7 +530,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
-              <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] · 대표번호: [02-000-0000]</div>
+              <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 한승민, 김현성] </div>
             </div>
             <nav className="flex items-center gap-3 text-sm">
               <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
