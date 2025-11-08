@@ -10,7 +10,7 @@ import {
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-// 카테고리 라벨 매핑 (영문 키 -> 한글 라벨)
+// 카테고리 라벨 매핑
 const CATEGORY_LABELS: Record<string, string> = {
   door: "도어/현관",
   bath: "욕실",
@@ -115,7 +115,7 @@ const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
-  // 필요 시 계속 추가
+  // 필요 시 계속 추가 (title, category, summary만 채우고 detail은 빈 문자열로 두면 됩니다)
 ];
 
 // ---------- Card ----------
@@ -128,20 +128,11 @@ function CaseCard({ item }: { item: any }) {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
 
       <div className="flex items-center justify-between">
-        {/* 카테고리: 한글 라벨만 표기 */}
         <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
           {categoryLabel}
         </span>
 
-        {/* 가격 칩 (아이콘 없음) */}
-        <span
-          className={
-            "inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " +
-            (hasPrice
-              ? "bg-amber-100 text-amber-800 ring-amber-200"
-              : "bg-gray-50 text-gray-500 ring-gray-200")
-          }
-        >
+        <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + (hasPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
           {hasPrice ? `비용 ${item.price}` : "비용 입력 전"}
         </span>
       </div>
@@ -149,12 +140,15 @@ function CaseCard({ item }: { item: any }) {
       <div className="mt-2 text-base font-semibold">{item.title}</div>
       <div className="mt-1 text-sm text-gray-600">{item.summary}</div>
 
-      {/* CTA 버튼 (아이콘/별 전부 제거) */}
       <Link
         to={`/cases/${item.id}`}
-        className="mt-4 inline-flex items-center rounded-lg bg-amber-500 px-3 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
+        className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
       >
         자세히 보기
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M5 12h14" />
+          <path d="M12 5l7 7-7 7" />
+        </svg>
       </Link>
     </div>
   );
@@ -194,11 +188,11 @@ function CasesPage() {
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {[
               { key: "all", label: "전체" },
-              { key: "door", label: CATEGORY_LABELS.door },
-              { key: "bath", label: CATEGORY_LABELS.bath },
-              { key: "electric", label: CATEGORY_LABELS.electric },
-              { key: "kitchen", label: CATEGORY_LABELS.kitchen },
-              { key: "space", label: CATEGORY_LABELS.space },
+              { key: "door", label: "도어/현관" },
+              { key: "bath", label: "욕실" },
+              { key: "electric", label: "전기/전등" },
+              { key: "kitchen", label: "주방" },
+              { key: "space", label: "공간" },
             ].map((c) => (
               <button
                 key={c.key}
@@ -287,4 +281,105 @@ function CaseDetailPage() {
         <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-extrabold md:text-3xl">{dat
+              <h1 className="text-2xl font-extrabold md:text-3xl">{data.title}</h1>
+              <p className="mt-1 text-sm text-gray-600">사례 상세 안내</p>
+            </div>
+            <Link to="/cases" className="rounded-full border px-4 py-2 text-sm">
+              목록으로
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
+        <div className="mx-auto grid max-w-3xl gap-4">
+          <div className="rounded-2xl border bg-white p-5 shadow-sm">
+            <dl className="grid gap-3 md:grid-cols-2">
+              {detailRows.map((r, i) => (
+                <div key={i} className="rounded-xl border bg-amber-50/40 p-3 ring-1 ring-amber-100">
+                  <dt className="text-xs font-semibold text-amber-700">{r.label}</dt>
+                  <dd className="mt-1 text-gray-900">{r.value || " "}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="rounded-2xl border bg-white p-5 shadow-sm">
+            <div className="text-sm">
+              <div className="mb-2 font-semibold">설명</div>
+              <div className="leading-6 text-gray-700">{data.summary}</div>
+            </div>
+          </div>
+
+          <div className="rounded-xl bg-amber-50 p-4 text-xs text-amber-900 ring-1 ring-amber-200">
+            * 표기 금액과 내역은 사례 기준이며, 현장 상태(배관/전원/구조)에 따라 변동될 수 있습니다.
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a
+              href={KAKAO_CHAT_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-amber-600"
+            >
+              카카오채널로 상담하기
+            </a>
+            <Link to="/cases" className="text-sm text-gray-600 underline">
+              목록으로 돌아가기
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
+
+// ---------- FAQ ----------
+function FAQPage() {
+  const items = [
+    { q: "결제는 어디에 하나요?", a: "작업 확정 후 현장에서 또는 기사님 안내 계좌로 직접 결제합니다." },
+    { q: "가격은 어떻게 되나요?", a: "사진/주소/증상 확인 후 대략적인 범위를 안내드립니다." },
+    { q: "AS와 작업 책임은 누구에게 있나요?", a: "작업을 수행한 기사님에게 있습니다." },
+  ];
+  return (
+    <main className="min-h-screen bg-gray-50 text-gray-900">
+      <TopBar />
+      <section className="border-b bg-white">
+        <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8">
+          <h1 className="text-2xl font-extrabold md:text-3xl">자주 묻는 질문</h1>
+          <p className="mt-2 text-sm text-gray-600">추가 문의는 카카오채널로 남겨주세요.</p>
+        </div>
+      </section>
+
+      <section>
+        <div className="mx-auto grid w-full max-w-7xl gap-4 px-6 py-10 md:grid-cols-2 md:px-8">
+          {items.map((it, idx) => (
+            <div key={idx} className="rounded-2xl border bg-white p-5 shadow-sm ring-1 ring-amber-100">
+              <div className="font-semibold">Q. {it.q}</div>
+              <div className="mt-2 text-sm leading-6 text-gray-700">A. {it.a}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
+
+// ---------- App ----------
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Landing />} />
+        <Route path="/cases" element={<CasesPage />} />
+        <Route path="/cases/:id" element={<CaseDetailPage />} />
+        <Route path="/faq" element={<FAQPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
