@@ -64,38 +64,43 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   }, [open, onClose]);
 
   const TabButton = ({ id, children }) => (
-  <button
-    onClick={() => setActiveTab(id)}
-    className={
-      "px-3 py-2 rounded-full text-sm font-semibold transition " +
-      (activeTab === id
-        ? "bg-primary text-neutral-900 shadow font-bold" // ✅ 글자색 변경
-        : "text-neutral-700 hover:bg-neutral-100")
-    }
-    aria-pressed={activeTab === id}
-  >
-    {children}
-  </button>
-);
-
+    <button
+      onClick={() => setActiveTab(id)}
+      className={
+        "px-3 py-2 rounded-full text-sm font-semibold transition " +
+        (activeTab === id
+          ? "bg-primary text-neutral-900 shadow font-bold"
+          : "text-neutral-700 hover:bg-neutral-100")
+      }
+      aria-pressed={activeTab === id}
+    >
+      {children}
+    </button>
+  );
 
   if (!open) return null;
   return (
-    <div role="dialog" aria-modal="true" className="fixed inset-0 z-[80]">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
-      <div className="relative mx-auto mt-[6vh] max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
-        <div className="flex items-center justify-between px-5 py-3 border-b">
-          <div className="flex items-center gap-2">
-            <TabButton id="tos">이용약관</TabButton>
-            <TabButton id="legal">법적 고지</TabButton>
-            <TabButton id="privacy">개인정보 처리방침</TabButton>
+    <div role="dialog" aria-modal="true"
+         className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
+      {/* 백드롭 */}
+      <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
+      {/* 컨텐츠 래퍼: dvh와 패딩으로 가장자리 여유 */}
+      <div className="min-h-[100dvh] flex items-start justify-center p-4 sm:p-6">
+        <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
+          <div className="flex items-center justify-between px-5 py-3 border-b">
+            <div className="flex items-center gap-2">
+              <TabButton id="tos">이용약관</TabButton>
+              <TabButton id="legal">법적 고지</TabButton>
+              <TabButton id="privacy">개인정보 처리방침</TabButton>
+            </div>
+            <button onClick={onClose} className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100" aria-label="닫기">×</button>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100" aria-label="닫기">×</button>
-        </div>
-        <div className="max-h-[72vh] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
-          {activeTab === "tos" && <TOS setActiveTab={setActiveTab} />}
-          {activeTab === "legal" && <LegalNotice />}
-          {activeTab === "privacy" && <Privacy />}        
+          <div
+            className="max-h-[min(72vh,calc(100dvh-160px))] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
+            {activeTab === "tos" && <TOS setActiveTab={setActiveTab} />}
+            {activeTab === "legal" && <LegalNotice />}
+            {activeTab === "privacy" && <Privacy />}
+          </div>
         </div>
       </div>
     </div>
@@ -389,8 +394,8 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 – 심플 랜딩: 표준 견적 바로가기 하나만 */}
-      <section id="hero" className="relative overflow-hidden">
+      {/* 히어로 – 심플 랜딩: 표준 견적 바로가기 하나만 (overflow-visible로 수정) */}
+      <section id="hero" className="relative overflow-visible">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-teal-50 to-white" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
           {/* 왼쪽 심플 메시지 */}
@@ -398,13 +403,12 @@ export default function App() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 긴급 생활 수리</h1>
             <p className="mt-3 text-neutral-600 max-w-lg">사전 안내된 정찰제 비용으로 진행됩니다.</p>
             <button
-  type="button"
-  onClick={() => setCurrentPage("pricing")}
-  className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
->
-  표준 견적 바로가기 <ArrowRight />
-</button>
-
+              type="button"
+              onClick={() => setCurrentPage("pricing")}
+              className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/30"
+            >
+              표준 견적 바로가기 <ArrowRight />
+            </button>
           </div>
 
           {/* 오른쪽 카테고리 박스 (클릭 비활성화) */}
@@ -434,18 +438,19 @@ export default function App() {
         </div>
       </section>
 
-      {/* 오버레이 페이지들 (구성 동일) */}
+      {/* 오버레이 페이지들 (윈도우 잘림 방지: overflow-y-auto/100dvh) */}
       {currentPage && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch">
+        <div role="dialog" aria-modal="true"
+             className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
-          <div className="relative w-full h-full overflow-y-auto">
+          <div className="relative w-full min-h-[100dvh]">
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)}>← 메인으로</button>
                   <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
-                {/* ⬇️ 우측 상단 버튼을 좌측 "메인으로"와 동일 스타일로 */}
+                {/* 우측 상단 버튼을 좌측 "메인으로"와 동일 스타일로 */}
                 <button
                   className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400"
                   onClick={(e) => { e.preventDefault(); setCurrentPage(null); document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" }); }}
@@ -491,11 +496,10 @@ export default function App() {
 function className(...v){return v.filter(Boolean).join(' ')}
 
 /* 전역 CSS 도움말 (Tailwind config 없이도 사용):
-   .bg-primary 등은 직접 쓸 수 없으므로 [--primary] CSS 변수와 함께 다음 유틸 클래스를 사용하세요.
-   아래는 글로벌에 한 번 추가해두면 편한 유틸입니다. (예: globals.css)
    :root { --primary:#00c7ae }
    .bg-primary{ background:var(--primary) }
    .text-primary{ color:var(--primary) }
    .ring-primary\/40{ --tw-ring-color: color-mix(in oklab, var(--primary) 40%, transparent);} 
    .focus\:ring-primary\/30:focus{ --tw-ring-color: color-mix(in oklab, var(--primary) 30%, transparent);} 
+   .vh-safe { min-height: 100dvh; }  /* 필요 시 재사용 */
 */
