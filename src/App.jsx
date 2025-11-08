@@ -94,7 +94,7 @@ function SectionFAQ() {
         <div className="mt-8 space-y-4">
           {[
             { q: "견적은 어떻게 산정하나요?", a: "작업 항목·난이도·자재·현장 접근성을 고려한 내부 표준표를 기반으로 산정합니다." },
-            { q: "AS 보증은 얼마나 제공되나요?", a: "항목별로 상이하나 통상 3~12개월 보증을 제공합니다. 계약서에 명시됩니다." },
+     
           ].map((f, i) => (
             <details key={i} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
               <summary className="font-semibold cursor-pointer">{f.q}</summary>
