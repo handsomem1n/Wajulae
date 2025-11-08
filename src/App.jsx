@@ -197,7 +197,7 @@ const Privacy = () => (
 /* ===== 표준 견적(클릭/포커스 제거, 가격 검정색) ===== */
 import { useState } from "react";
 
-export default function SectionPricing() {
+export default function StandardPricing() {
   const items = [
     { t: "LED 등 교체", p: "80,000원", d: "규격·천장 타입에 따라 변동" },
     { t: "세면대 수전 교체", p: "120,000원", d: "규격·배관 상태에 따라 변동" },
@@ -212,7 +212,6 @@ export default function SectionPricing() {
     { t: "문고리 교체", p: "50,000원", d: "백세트 규격·문두께에 따라 변동" },
   ];
 
-  // ✅ 검색 가능하도록 상태 추가
   const [q, setQ] = useState("");
   const filtered = items.filter((c) =>
     (c.t + " " + c.p + " " + c.d).toLowerCase().includes(q.trim().toLowerCase())
@@ -220,29 +219,30 @@ export default function SectionPricing() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-20">
-      <div>
-        <h2 className="text-4xl font-bold tracking-tight mb-3">철산·광명·구로·홀 수리</h2>
-        <p className="text-neutral-500 text-sm">
-          사전 안내된 정찰제 비용으로 진행됩니다.
-        </p>
 
-        {/* ✅ 검색 입력창 추가 */}
-        <div className="mt-6">
-          <input
-            type="search"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="검색 (예: 수전, 센서, 문고리...)"
-            className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-[15px]
-                       focus:outline-none focus:ring-2 ring-offset-0"
-          />
-        </div>
-      </div>
+      {/* 페이지 제목 */}
+      <h2 className="text-4xl font-bold tracking-tight mb-3">
+        철산·광명·구로·활 수리
+      </h2>
+      <p className="text-neutral-500 text-sm mb-6">
+        사전 안내된 정찰제 비용으로 진행됩니다.
+      </p>
 
-      {/* ✅ 카드 리스트 */}
-      <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* ✅ 검색 입력창 */}
+      <input
+        type="search"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="검색 (예: 수전, 센서, 문고리...)"
+        className="w-full px-4 py-3 rounded-xl border border-neutral-300
+        text-[15px] focus:outline-none focus:ring-2 ring-offset-0 mb-8"
+      />
+
+      {/* ✅ 견적 카드 리스트 */}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
         {filtered.length === 0 ? (
-          <div className="col-span-full text-neutral-400 text-sm text-center py-10">
+          <div className="col-span-full text-center text-neutral-400 py-12">
             검색 결과가 없습니다.
           </div>
         ) : (
@@ -254,22 +254,24 @@ export default function SectionPricing() {
               <div className="w-full h-40 bg-neutral-100 rounded-xl mb-4" />
               <div className="text-base font-medium">{c.t}</div>
 
-              {/* ✅ 숫자를 모두 검정색으로 고정 */}
+              {/* ✅ 가격을 검정색 고정 */}
               <div className="text-black font-semibold mt-1">{c.p}</div>
+
               <div className="text-neutral-500 text-sm mt-1">{c.d}</div>
             </div>
           ))
         )}
       </div>
 
-      {/* ✅ 첫페이지 CTA 삭제 완료 (요청사항 반영) */}
+      {/* ✅ 첫 페이지에서 내려오던 CTA 완전 제거됨 */}
 
-      <p className="text-neutral-400 text-xs mt-10">
+      <p className="text-neutral-400 text-xs mt-12">
         ※ 현장 상황에 따라 달라질 수 있습니다.
       </p>
     </section>
   );
 }
+
 
 
 function SectionFAQ() {
