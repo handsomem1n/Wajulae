@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  HashRouter,
+  HashRouter as BrowserRouter,
   Routes,
   Route,
   Link,
@@ -10,7 +10,7 @@ import {
 
 const KAKAO_CHAT_LINK = "http://pf.kakao.com/_xdmQxkn/chat";
 
-// 카테고리 라벨 매핑 (영문 키 -> 한글)
+// 카테고리 라벨 매핑
 const CATEGORY_LABELS: Record<string, string> = {
   door: "도어/현관",
   bath: "욕실",
@@ -115,11 +115,7 @@ const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
-<<<<<<< HEAD
-  // 필요 시 계속 추가
-=======
-  // …필요 시 추가
->>>>>>> parent of 9ca0a04 (Update App.jsx)
+  // 필요 시 계속 추가 (title, category, summary만 채우고 detail은 빈 문자열로 두면 됩니다)
 ];
 
 // ---------- Card ----------
@@ -128,13 +124,15 @@ function CaseCard({ item }: { item: any }) {
   const hasPrice = !!(item.price && String(item.price).trim());
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-<<<<<<< HEAD
-      {/* 아이콘/장식 제거: 깔끔한 헤더 */}
+      {/* 상단 얇은 악센트 바 */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
+
       <div className="flex items-center justify-between">
-        <span className="inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
+        <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
           {categoryLabel}
         </span>
-        <span className={"inline-flex rounded-full px-3 py-1 text-xs ring-1 " + (hasPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
+
+        <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + (hasPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
           {hasPrice ? `비용 ${item.price}` : "비용 입력 전"}
         </span>
       </div>
@@ -144,9 +142,13 @@ function CaseCard({ item }: { item: any }) {
 
       <Link
         to={`/cases/${item.id}`}
-        className="mt-4 inline-flex rounded-lg bg-amber-500 px-3 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
+        className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
       >
         자세히 보기
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M5 12h14" />
+          <path d="M12 5l7 7-7 7" />
+        </svg>
       </Link>
     </div>
   );
@@ -163,7 +165,9 @@ function CasesPage() {
     if (tab !== "all") list = list.filter((c) => c.category === tab);
     if (s) {
       list = list.filter(
-        (c) => c.title.toLowerCase().includes(s) || c.summary.toLowerCase().includes(s)
+        (c) =>
+          c.title.toLowerCase().includes(s) ||
+          c.summary.toLowerCase().includes(s)
       );
     }
     return list;
@@ -184,11 +188,11 @@ function CasesPage() {
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {[
               { key: "all", label: "전체" },
-              { key: "door", label: CATEGORY_LABELS.door },
-              { key: "bath", label: CATEGORY_LABELS.bath },
-              { key: "electric", label: CATEGORY_LABELS.electric },
-              { key: "kitchen", label: CATEGORY_LABELS.kitchen },
-              { key: "space", label: CATEGORY_LABELS.space },
+              { key: "door", label: "도어/현관" },
+              { key: "bath", label: "욕실" },
+              { key: "electric", label: "전기/전등" },
+              { key: "kitchen", label: "주방" },
+              { key: "space", label: "공간" },
             ].map((c) => (
               <button
                 key={c.key}
@@ -245,8 +249,17 @@ function CaseDetailPage() {
           <div className="text-2xl font-bold">항목을 찾을 수 없습니다.</div>
           <p className="mt-2 text-sm text-gray-600">뒤로 가기 또는 다른 작업을 선택해 주세요.</p>
           <div className="mt-6 flex items-center gap-3">
-            <Link to="/cases" className="rounded-xl border px-4 py-2 text-sm">목록으로</Link>
-            <a href={KAKAO_CHAT_LINK} target="_blank" rel="noreferrer" className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white">카카오채널 문의</a>
+            <Link to="/cases" className="rounded-xl border px-4 py-2 text-sm">
+              목록으로
+            </Link>
+            <a
+              href={KAKAO_CHAT_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white"
+            >
+              카카오채널 문의
+            </a>
           </div>
         </section>
         <Footer />
@@ -271,7 +284,9 @@ function CaseDetailPage() {
               <h1 className="text-2xl font-extrabold md:text-3xl">{data.title}</h1>
               <p className="mt-1 text-sm text-gray-600">사례 상세 안내</p>
             </div>
-            <Link to="/cases" className="rounded-full border px-4 py-2 text-sm">목록으로</Link>
+            <Link to="/cases" className="rounded-full border px-4 py-2 text-sm">
+              목록으로
+            </Link>
           </div>
         </div>
       </section>
@@ -301,8 +316,17 @@ function CaseDetailPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href={KAKAO_CHAT_LINK} target="_blank" rel="noreferrer" className="rounded-2xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-amber-600">카카오채널로 상담하기</a>
-            <Link to="/cases" className="text-sm text-gray-600 underline">목록으로 돌아가기</Link>
+            <a
+              href={KAKAO_CHAT_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-amber-600"
+            >
+              카카오채널로 상담하기
+            </a>
+            <Link to="/cases" className="text-sm text-gray-600 underline">
+              목록으로 돌아가기
+            </Link>
           </div>
         </div>
       </section>
@@ -359,8 +383,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-=======
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
-
-      <div className="flex items-center justify-between">
->>>>>>> parent of 9ca0a04 (Update App.jsx)
