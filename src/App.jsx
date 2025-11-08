@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  HashRouter as BrowserRouter,
+  BrowserRouter,   // ✅ 진짜 BrowserRouter 사용
   Routes,
   Route,
   Link,
@@ -115,7 +115,6 @@ const CASES = [
   { id:"intercom-replace-01", title:"인터폰 교체", category:"door", summary:"인터폰 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"k-sink-faucet-01", title:"싱크대 수전 교체", category:"kitchen", summary:"수전 교체 사례", content:"", price:"", labor:"", material:"" },
   { id:"bath-fan-01", title:"욕실 환풍기 교체", category:"bath", summary:"환풍기 교체 사례", content:"", price:"", labor:"", material:"" },
-  // 필요 시 계속 추가 (title, category, summary만 채우고 detail은 빈 문자열로 두면 됩니다)
 ];
 
 // ---------- Card ----------
@@ -124,22 +123,17 @@ function CaseCard({ item }: { item: any }) {
   const hasPrice = !!(item.price && String(item.price).trim());
   return (
     <div className="group relative overflow-hidden rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-      {/* 상단 얇은 악센트 바 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600" />
-
       <div className="flex items-center justify-between">
         <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
           {categoryLabel}
         </span>
-
         <span className={"inline-flex items-center rounded-full px-3 py-1 text-xs ring-1 " + (hasPrice ? "bg-amber-100 text-amber-800 ring-amber-200" : "bg-gray-50 text-gray-500 ring-gray-200")}>
           {hasPrice ? `비용 ${item.price}` : "비용 입력 전"}
         </span>
       </div>
-
       <div className="mt-2 text-base font-semibold">{item.title}</div>
       <div className="mt-1 text-sm text-gray-600">{item.summary}</div>
-
       <Link
         to={`/cases/${item.id}`}
         className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
@@ -379,6 +373,8 @@ export default function App() {
         <Route path="/cases" element={<CasesPage />} />
         <Route path="/cases/:id" element={<CaseDetailPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        {/* 선택: 없는 경로는 랜딩으로 */}
+        {/* <Route path="*" element={<Landing />} /> */}
       </Routes>
     </BrowserRouter>
   );
