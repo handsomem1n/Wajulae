@@ -28,7 +28,7 @@ function PolicyModal({ open, onClose, title, children }) {
 }
 
 export default function WajulleLanding() {
-  const [open, setOpen] = useState(null as null | "terms" | "privacy" | "liability");
+ const [open, setOpen] = useState(null);
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
