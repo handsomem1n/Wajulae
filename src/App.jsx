@@ -441,6 +441,24 @@ export default function App() {
                   <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">
                     * 사진이 있으면 상담이 더 빨라요
                   </div>
+                  {/* ✅ 추가: 안내 이미지 2장 (같은 크기/디자인, 세로 스택) */}
+<div className="mt-4 space-y-3">
+  <div className="rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
+    <img
+      src="/images/hero-extra-1.png"
+      alt="사진 첨부 안내 1"
+      loading="lazy"
+      className="w-full aspect-[16/9] object-cover"
+    />
+  </div>
+  <div className="rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
+    <img
+      src="/images/hero-extra-2.png"
+      alt="사진 첨부 안내 2"
+      loading="lazy"
+      className="w-full aspect-[16/9] object-cover"
+    />
+  </div>
                 </div>
               </div>
             </div>
