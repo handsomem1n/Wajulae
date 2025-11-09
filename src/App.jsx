@@ -40,7 +40,6 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
-/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -447,7 +446,7 @@ export default function App() {
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            {/* 문구 항상 보이도록 */}
+            {/* 문구 항상 보이도록 (모바일에서도 표시) */}
             <span className="ml-2 text-sm font-normal text-neutral-500">
               표준견적 안내 / 생활수리 플랫폼
             </span>
@@ -477,9 +476,9 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* ★ 와이드 확장: 최대 140rem, 2XL 패딩/갭 강화, 높이 확대 */}
+          {/* 히어로(와이드 확장) */}
           <div className="relative w-full max-w-[140rem] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 py-24 lg:py-32 2xl:py-40 grid lg:grid-cols-2 gap-12 2xl:gap-16 items-center min-h-[80vh]">
-            {/* 왼쪽: 타이틀 */}
+            {/* 왼쪽: 타이틀/설명/CTA */}
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
                 철산·광명·구로·가산
@@ -499,7 +498,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* 오른쪽: 카드 (가운데 정렬 + 더 넓게) */}
+            {/* 오른쪽: 카테고리 카드 */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full md:max-w-[540px] xl:max-w-[600px] 2xl:max-w-[680px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
                 <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
@@ -530,14 +529,12 @@ export default function App() {
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
-            {/* 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
                 </div>
-                {/* 오버레이 내 탭 */}
                 <nav className="flex items-center gap-1" aria-label="오버레이 탭">
                   {["pricing","faq","contact"].map((id) => (
                     <button
