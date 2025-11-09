@@ -471,7 +471,7 @@ export default function App() {
       </header>
 
       {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
-     {!isOverlayOpen && (
+    {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
     {/* 배경 */}
     <div
@@ -479,14 +479,24 @@ export default function App() {
       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
     />
 
-    {/* ✅ 화면(뷰포트) 기준 진짜 중앙 정렬 */}
+    {/* ✅ 부모 영향 배제: 뷰포트 기준 ‘진짜 중앙’ 강제 고정 */}
     <div className="relative py-24 lg:py-32">
-      {/* 화면 전체를 그리드로 만들고, 콘텐츠를 가운데 한 점으로 정렬 */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 grid place-items-center">
-        {/* 고정 폭 묶음: 560 + 64(gap-16) + 520 = 1144px */}
-        <div className="w-[1144px] max-w-full grid gap-16 lg:grid-cols-[560px_520px] items-center">
+      {/* 뷰포트 기준 중앙선(확인용) — 필요 없으면 삭제해도 됨 */}
+      {/* <div className="fixed inset-y-0 left-1/2 w-[2px] bg-red-500/50 z-[9999] pointer-events-none" /> */}
+
+      {/* 핵심: 이 래퍼 자체가 viewport의 정중앙에 고정됨 */}
+      <div
+        className="
+          relative
+          left-1/2 -translate-x-1/2      /* 수평 중앙 강제 */
+          w-[1144px] max-w-[calc(100%-32px)]  /* 560 + 64(gap16) + 520 = 1144 */
+          px-4
+        "
+      >
+        {/* 560 / 520 고정폭 2단 그리드 */}
+        <div className="grid items-center gap-16 lg:grid-cols-[560px_520px]">
           {/* 왼쪽: 타이틀(최대 560) */}
-          <div className="max-w-[560px] text-center lg:text-left justify-self-center lg:justify-self-start">
+          <div className="max-w-[560px] text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -506,9 +516,9 @@ export default function App() {
           </div>
 
           {/* 오른쪽: 카드(최대 520) */}
-          <div className="max-w-[520px] justify-self-center lg:justify-self-start">
+          <div className="max-w-[520px]">
             <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
-              <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+              <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
                   { label: "전등 교체", icon: "💡" },
@@ -527,15 +537,14 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
+              <div className="mt-4 text-xs text-neutral-500 text-left">
                 * 사진이 있으면 상담이 더 빨라요
               </div>
             </div>
           </div>
         </div>
-        {/* /1144 래퍼 끝 */}
       </div>
-      {/* /place-items-center 끝 */}
+      {/* /센터 고정 래퍼 끝 */}
     </div>
   </section>
       )}
