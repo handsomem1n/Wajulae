@@ -350,7 +350,14 @@ function HomeIntro() {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
       {/* 풀블리드 + 가변 그리드 */}
-      <div className="relative w-full max-w-none px-6 sm:px-10 lg:px-14 py-20 lg:py-28 grid lg:grid-cols-[minmax(0,1fr)_minmax(420px,min(42vw,640px))] gap-10 xl:gap-16 items-center">
+      <div className="
+              relative max-w-[120rem] mx-auto
+              px-6 sm:px-10 lg:px-14
+              py-20 lg:py-28
+              grid
+              lg:grid-cols-[minmax(0,1fr)_minmax(420px,min(42vw,640px))]
+              gap-10 xl:gap-16 items-center
+            ">
         {/* 왼쪽: 타이틀 */}
         <div className="text-center lg:text-left">
           <h1 className="max-w-[48ch] mx-auto lg:mx-0 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
