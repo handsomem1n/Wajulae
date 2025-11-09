@@ -202,14 +202,12 @@ const Privacy = () => (
 
 /* ===== 표준 견적(검색 + 이미지 지원) ===== */
 function SectionPricing() {
-  // ✅ 초보자도 넣기 쉽게: 각 항목에 img(이미지 경로)만 추가하면 자동 표시됩니다.
-  // 예) public/images 아래에 파일을 넣고 "/images/plug.jpg" 처럼 경로만 넣으면 됩니다.
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
     { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
     { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동",             img: "/images/intercom.jpg" },
     { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
-    { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",             img: "/images/countertop.jpg" },
+    { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",           img: "/images/countertop.jpg" },
     { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/kitchen-faucet.jpg" },
     { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동",             img: "/images/tiles.jpg" },
     { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동",             img: "/images/kitchen-hood.jpg" },
@@ -238,15 +236,12 @@ function SectionPricing() {
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">{/* 1536px 컨테이너로 넓게 */}
-        {/* 제목/설명 + (우측)검색 */}
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
             <p className="text-neutral-500 mt-2">항목은 참고용 표준가입니다.</p>
           </div>
-
-          {/* 우측 상단 검색창 */}
           <div className="w-full sm:w-auto">
             <label className="relative block">
               <span className="sr-only">항목 검색</span>
@@ -274,12 +269,10 @@ function SectionPricing() {
           </div>
         </div>
 
-        {/* 결과 개수 */}
         <div className="mt-4 text-sm text-neutral-500">
           총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
         </div>
 
-        {/* 카드 그리드 */}
         {filtered.length > 0 ? (
           <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
             {filtered.map((c) => (
@@ -455,8 +448,8 @@ export default function App() {
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
             <span className="ml-2 text-sm font-normal text-neutral-500 hidden sm:inline">
-             표준견적 안내 / 생활수리 플랫폼
-             </span>
+              표준견적 안내 / 생활수리 플랫폼
+            </span>
           </a>
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
             {NAV.map((item) => (
@@ -483,8 +476,9 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* ✅ Windows(넓은 화면)에서 작게/왼쪽 치우침 개선: 더 넓은 컨테이너 + 가운데 정렬 + 여백 확대 */}
-          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center justify-center min-h-[70vh]">
+          {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
+          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
+            {/* 왼쪽: 타이틀 */}
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
                 철산·광명·구로·가산
@@ -504,42 +498,65 @@ export default function App() {
               </div>
             </div>
 
-            <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
-              <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-              <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  {label:"전등 교체", icon:"💡"},
-                  {label:"콘센트/스위치", icon:"🔌"},
-                  {label:"수전/배관", icon:"🚿"},
-                  {label:"문/경첩/도어락", icon:"🚪"},
-                  {label:"타일/실리콘", icon:"🧱"},
-                  {label:"환풍기/후드", icon:"🌀"},
-                ].map((it) => (
-                  <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
-                    <span className="text-2xl" aria-hidden>{it.icon}</span>
-                    <span className="font-semibold">{it.label}</span>
-                  </div>
-                ))}
+            {/* 오른쪽: 카드 (가운데 정렬) */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+                <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    {label:"전등 교체", icon:"💡"},
+                    {label:"콘센트/스위치", icon:"🔌"},
+                    {label:"수전/배관", icon:"🚿"},
+                    {label:"문/경첩/도어락", icon:"🚪"},
+                    {label:"타일/실리콘", icon:"🧱"},
+                    {label:"환풍기/후드", icon:"🌀"},
+                  ].map((it) => (
+                    <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
+                      <span className="text-2xl" aria-hidden>{it.icon}</span>
+                      <span className="font-semibold">{it.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
             </div>
           </div>
         </section>
       )}
 
-      {/* 오버레이 페이지 (배경 콘텐츠 렌더 자체 제거되어 ‘비침’ 불가) */}
+      {/* 오버레이 페이지 */}
       {isOverlayOpen && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
+            {/* ▶ 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
-                  <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
+                  <span className="text-neutral-500 text-sm">빠른 이동</span>
                 </div>
+                {/* 오버레이 내 탭 */}
+                <nav className="flex items-center gap-1" aria-label="오버레이 탭">
+                  {["pricing","faq","contact"].map((id) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setCurrentPage(id)}
+                      aria-current={currentPage === id ? "page" : undefined}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+                        currentPage === id
+                          ? "bg-[var(--primary)] text-white shadow"
+                          : "text-neutral-700 hover:bg-neutral-100"
+                      }`}
+                    >
+                      {NAV.find(n=>n.id===id)?.label}
+                    </button>
+                  ))}
+                </nav>
               </div>
             </div>
+
             <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-10">
               {currentPage === "pricing" && <SectionPricing />}
               {currentPage === "faq"     && <SectionFAQ />}
@@ -571,7 +588,7 @@ export default function App() {
       {/* 약관 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
-      {/* 모바일 Dock은 항상 노출 (오버레이/메인 모두에서 이동 편의) */}
+      {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
     </div>
   );
