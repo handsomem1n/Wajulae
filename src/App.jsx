@@ -240,8 +240,7 @@ function SectionPricing() {
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
-            <p className="text-neutral-500 mt-2">* 모든 금액은 부가세 · 출장비 · 기본 부품비 포함 기준입니다.  
-  현장 상황(추가 자재 / 난이도)에 따라 변동될 수 있습니다..</p>
+            <p className="text-neutral-500 mt-2">* 모든 금액은 부가세 · 출장비 · 기본 부품비 포함 기준입니다.</p>
           </div>
           <div className="w-full sm:w-auto">
             <label className="relative block">
