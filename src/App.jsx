@@ -525,7 +525,7 @@ export default function App() {
             {/* 왼쪽: 타이틀/설명/CTA */}
             <div className="text-center lg:text-left">
               <h1 className="font-extrabold tracking-tight leading-[1.05] text-[clamp(36px,4.2vw,88px)]">
-                철산·광명·구로·가산
+                서울·경기남부
                 <br className="hidden sm:block" /> 생활수리 플랫폼
               </h1>
               <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">
