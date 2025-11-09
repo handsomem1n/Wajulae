@@ -445,7 +445,7 @@ function MobileDock({ onOpen }) {
 
 /* ===== 앱 루트 ===== */
 export default function App() {
-  const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
+  const active = useScrollSpy(["hero", "pricing", "faq", "contact"]);
   const [currentPage, setCurrentPage] = useState(null);
   const isOverlayOpen = !!currentPage;
 
@@ -499,8 +499,12 @@ export default function App() {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={handleNavClick(item)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                  active === item.id ? "bg-[var(--primary)] text-white shadow" : "text-neutral-700 hover:bg-neutral-100"
+onClick={handleNavClick(item)}
+  className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+    active === (item.id === "about" ? "hero" : item.id)
+      ? "bg-[var(--primary)] text-white shadow"
+      : "text-neutral-700 hover:bg-neutral-100"
+  }`}
                 }`}
               >
                 {item.label}
