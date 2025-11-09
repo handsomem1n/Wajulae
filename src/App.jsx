@@ -431,7 +431,10 @@ export default function App() {
        html { scrollbar-gutter: stable; }
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
-
+        <div
+  aria-hidden
+  className="fixed inset-y-0 left-1/2 w-[2px] bg-red-500/60 pointer-events-none z-[9999]"
+/>
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
