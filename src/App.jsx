@@ -247,7 +247,7 @@ function SectionPricing() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="이미지/항목 검색"
+                placeholder="항목 검색"
                 className="w-full sm:w-80 pl-11 pr-24 py-3 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
                 type="search"
               />
@@ -349,9 +349,9 @@ function SectionContact() {
                 <span className="text-sm font-medium">요청 항목</span>
                 <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0">
                   <option>콘센트 교체</option>
-                  <option>수전 교체</option>
+                  <option>문/경첩/도어락 교체</option>
                   <option>전등/전기</option>
-                  <option>문/잠금장치</option>
+                  <option>타일/실리콘/대리석</option>
                   <option>기타</option>
                 </select>
               </label>
@@ -559,8 +559,8 @@ export default function App() {
                     {label:"콘센트/스위치", icon:"🔌"},
                     {label:"수전/배관", icon:"🚿"},
                     {label:"문/경첩/도어락", icon:"🚪"},
-                    {label:"타일/실리콘", icon:"🧱"},
-                    {label:"환풍기/후드", icon:"🌀"},
+                    {label:"타일/대리석/실리콘", icon:"🧱"},
+                    {label:"환풍기/후드/배수구", icon:"🌀"},
                   ].map((it) => (
                     <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
                       <span className="text-2xl 2xl:text-3xl" aria-hidden>{it.icon}</span>
