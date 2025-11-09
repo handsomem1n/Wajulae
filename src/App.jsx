@@ -520,27 +520,28 @@ export default function App() {
               <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">참고용 표준가 제공 / 과장 없는 사전 안내</p>
 
               {/* 버튼 묶음: 모바일(가로), 데스크톱(lg~ 세로 아래 배치) */}
-              <div className="mt-10 flex flex-row gap-3 justify-center lg:justify-start lg:flex-col lg:items-start">
-                {/* 표준 견적 버튼 */}
-                <button
-                  type="button"
-                  onClick={() => setCurrentPage("pricing")}
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]"
-                >
-                  표준 견적 바로가기 <ArrowRight />
-                </button>
+<div className="mt-10 flex flex-row gap-3 justify-center lg:justify-start lg:flex-col lg:items-start">
 
-                {/* 카카오톡 상담 버튼 */}
-                <a
-                  href="http://pf.kakao.com/_xdmQxkn/chat"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)] lg:mt-3"
-                >
-                  💬 카카오톡 상담하기
-                </a>
-              </div>
-            </div>
+  {/* ✅ 표준 견적 버튼 (카카오톡과 동일한 외곽선 스타일, 아이콘 제거) */}
+  <button
+    type="button"
+    onClick={() => setCurrentPage("pricing")}
+    className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)]"
+  >
+    표준 견적 바로가기
+  </button>
+
+  {/* 💬 카카오톡 상담 버튼 (그대로 유지) */}
+  <a
+    href="http://pf.kakao.com/_xdmQxkn/chat"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)] lg:mt-3"
+  >
+    💬 카카오톡 상담하기
+  </a>
+
+</div>
 
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full sm:w-[min(92vw,560px)] lg:w-[min(50vw,760px)] 2xl:w-[min(44vw,920px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
