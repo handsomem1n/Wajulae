@@ -376,7 +376,7 @@ function SectionContact() {
             <div className="rounded-3xl ring-1 ring-neutral-200 p-6 bg-white">
               <h3 className="font-semibold">고객 약속</h3>
               <ul className="mt-4 space-y-2 text-neutral-700">
-                <li className="flex items-start gap-2"><Check /><span>사전 고지된 표준 견적</span></li>
+                <li className="flex items-start gap-2"><Check /><span>표준 견적 안내</span></li>
                 <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
                 <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
               </ul>
