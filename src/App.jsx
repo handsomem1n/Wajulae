@@ -426,11 +426,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+    <div className="min-h-screen w-full overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
       <style>{`
-        html { scrollbar-gutter: stable both-edges; }
-        body { overflow-y: scroll; }
-        .gutter-stable { scrollbar-gutter: stable both-edges; }
+       html { scrollbar-gutter: stable; }
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
 
@@ -475,17 +473,14 @@ export default function App() {
       {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
 {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
-    {/* 전체 배경 */}
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
-    />
+    <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-    {/* ▶ 그룹 전체를 정확히 가운데 정렬: 총폭 1044px(560 + 64 + 420) */}
     <div className="relative py-24 lg:py-28">
-      <div className="mx-auto w-full px-6 lg:px-0">
+      {/* 헤더와 같은 폭 시스템 */}
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 2컬럼 그룹 자체를 고정 총폭 1044px로 정확히 가운데 */}
         <div className="mx-auto max-w-[1044px] flex flex-col lg:flex-row items-center justify-center gap-16">
-          {/* 왼쪽: 타이틀(고정폭 560) */}
+          {/* 왼쪽 560 */}
           <div className="w-full max-w-[560px] text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
               철산·광명·구로·가산
@@ -505,7 +500,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽: 카드(고정폭 420) */}
+          {/* 오른쪽 420 */}
           <div className="w-full max-w-[420px]">
             <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
               <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
@@ -518,18 +513,13 @@ export default function App() {
                   { label: "타일/실리콘", icon: "🧱" },
                   { label: "환풍기/후드", icon: "🌀" },
                 ].map((it) => (
-                  <div
-                    key={it.label}
-                    className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between"
-                  >
+                  <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between">
                     <span className="text-2xl" aria-hidden>{it.icon}</span>
                     <span className="font-semibold">{it.label}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
-                * 사진이 있으면 상담이 더 빨라요
-              </div>
+              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
             </div>
           </div>
         </div>
