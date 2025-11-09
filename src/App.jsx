@@ -171,7 +171,7 @@ const LegalNotice = () => (
       {t:"① 회사의 법적 지위", d:"회사는 고객과 기사를 연결하는 온라인 중개자이며, 거래의 당사자가 아닙니다."},
       {t:"② 결제 구조", d:"고객이 지급하는 시공 대금의 귀속 주체는 기사입니다. 회사는 고객으로부터 직접 대금을 수령하지 않으며, 결제도구 제공 시 기사 명의의 집금 대행자 역할에 한정됩니다."},
       {t:"③ 기사의 독립성", d:"기사는 회사의 피용자/대리인이 아닌 독립 사업자입니다. 작업 품질·안전·일정·하자보수 책임은 기사에게 있습니다."},
-      {t:"④ 영수증/세금계산서", d:"용역 대금 관련 영수증/세금계산서는 기사(사업자)가 발행합니다. 회사는 기사에게 청구되는 중개 수수료에 대해서만 세금계산서를 발행할 수 있습니다."},
+      {t:"④ 영수증/세금계산서", d:"용역 대금 관련 영수증·세금계산서는 기사(사업자)가 발행합니다. 회사는 기사에게 청구되는 중개 수수료에 대해서만 세금계산서를 발행할 수 있습니다."},
       {t:"⑤ 하자·AS·환불", d:"하자보수·환불 기준은 고객-기사 간 약정 및 법령에 따릅니다. 회사는 분쟁 조정 절차를 안내할 수 있으나 법적 강제권은 없습니다."},
       {t:"⑥ 책임 제한", d:"법령이 허용하는 범위 내에서 회사는 간접·특별·결과적 손해에 대해 책임을 지지 않습니다."},
       {t:"⑦ 안전 및 준법", d:"기사의 자격·면허·보험 유지, 산업안전 및 관련 법령 준수 책임은 기사에게 있습니다."},
@@ -493,12 +493,30 @@ export default function App() {
             <div className="text-center lg:text-left">
               <h1 className="font-extrabold tracking-tight leading-[1.05] text-[clamp(36px,4.2vw,88px)]">서울·경기남부<br className="hidden sm:block" /> 생활수리 플랫폼</h1>
               <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">참고용 표준가 제공 / 과장 없는 사전 안내</p>
-              <div className="mt-10">
-                <button type="button" onClick={() => setCurrentPage("pricing")} className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]">
+
+              {/* ✅ 버튼 묶음: 모바일(기본) = 가로 배치, 데스크톱(lg~) = 세로 배치 */}
+              <div className="mt-10 flex flex-row gap-3 justify-center lg:justify-start lg:flex-col lg:items-start">
+                {/* 표준 견적 버튼 */}
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage("pricing")}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]"
+                >
                   표준 견적 바로가기 <ArrowRight />
                 </button>
+
+                {/* 카카오톡 상담 버튼 (카카오 채널 링크로 교체하세요) */}
+                <a
+                  href="https://pf.kakao.com/_YOURCHANNELID/chat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)] lg:mt-3"
+                >
+                  💬 카카오톡 상담하기
+                </a>
               </div>
             </div>
+
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full sm:w-[min(92vw,560px)] lg:w-[min(50vw,760px)] 2xl:w-[min(44vw,920px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
                 <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
