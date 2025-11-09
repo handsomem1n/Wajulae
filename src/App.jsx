@@ -481,12 +481,12 @@ export default function App() {
       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
     />
 
-    {/* ▶ homeco 스타일: 중앙 컨테이너 + 2컬럼(좌 가변 / 우 고정) */}
+    {/* ▶ 그룹 전체를 정확히 가운데 정렬: 총폭 1044px(560 + 64 + 420) */}
     <div className="relative py-24 lg:py-28">
-      <div className="mx-auto max-w-[1140px] px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,560px)_420px] justify-items-center lg:justify-items-stretch">
-          {/* 왼쪽: 타이틀(유동폭) */}
-          <div className="text-center lg:text-left w-full max-w-[560px] lg:justify-self-end">
+      <div className="mx-auto w-full px-6 lg:px-0">
+        <div className="mx-auto max-w-[1044px] flex flex-col lg:flex-row items-center justify-center gap-16">
+          {/* 왼쪽: 타이틀(고정폭 560) */}
+          <div className="w-full max-w-[560px] text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -505,9 +505,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽: 카드(고정폭) */}
-          <div className="w-full lg:justify-self-start flex justify-center lg:justify-start">
-            <div className="w-full max-w-[420px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
+          {/* 오른쪽: 카드(고정폭 420) */}
+          <div className="w-full max-w-[420px]">
+            <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
               <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
@@ -522,9 +522,7 @@ export default function App() {
                     key={it.label}
                     className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between"
                   >
-                    <span className="text-2xl" aria-hidden>
-                      {it.icon}
-                    </span>
+                    <span className="text-2xl" aria-hidden>{it.icon}</span>
                     <span className="font-semibold">{it.label}</span>
                   </div>
                 ))}
