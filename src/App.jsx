@@ -496,19 +496,17 @@ export default function App() {
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
             {NAV.map((item) => (
               <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={handleNavClick(item)}
-onClick={handleNavClick(item)}
+  key={item.id}
+  href={`#${item.id}`}
+  onClick={handleNavClick(item)}
   className={`px-4 py-2 rounded-full text-sm font-medium transition ${
     active === (item.id === "about" ? "hero" : item.id)
       ? "bg-[var(--primary)] text-white shadow"
       : "text-neutral-700 hover:bg-neutral-100"
   }`}
-                }`}
-              >
-                {item.label}
-              </a>
+>
+  {item.label}
+</a>
             ))}
           </nav>
         </div>
