@@ -46,7 +46,7 @@ const SearchIcon = () => (
   </svg>
 );
 
-/* ===== 문서 섹션들 (약관/법고지/개인정보) — 직결제(고객→기사), 회사는 기사에게 수수료 청구 구조 반영 ===== */
+/* ===== 문서 섹션들 (약관/법고지/개인정보) — 생략 없이 유지 ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -93,7 +93,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
             </div>
             <button onClick={onClose} className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100" aria-label="닫기" type="button">×</button>
           </div>
-          <div className="max-h:[min(72vh,calc(100dvh-160px))] max-h-[min(72vh,calc(100dvh-160px))] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
+          <div className="max-h-[min(72vh,calc(100dvh-160px))] overflow-y-auto p-6 text-[14px] leading-relaxed text-neutral-800">
             {activeTab === "tos" && <TOS setActiveTab={setActiveTab} />}
             {activeTab === "legal" && <LegalNotice />}
             {activeTab === "privacy" && <Privacy />}
@@ -108,70 +108,51 @@ const TOS = ({ setActiveTab }) => (
   <article className="space-y-4">
     <h3 className="font-bold text-base">제1조 (목적)</h3>
     <p>본 약관은 회사가 운영하는 생활수리·설치·점검 등의 <strong>중개 플랫폼</strong>(이하 “플랫폼”) 이용에 있어 회사와 이용자(고객/기사)의 권리·의무 및 책임 사항을 정합니다.</p>
-
     <h3 className="font-bold text-base">제2조 (정의)</h3>
     <ul className="list-disc pl-5 space-y-1">
       <li>“고객”: 플랫폼을 통해 서비스를 요청하는 자</li>
       <li>“기사(서비스 제공자)”: 고객에게 직접 시공·용역을 제공하는 독립 개인 또는 사업자</li>
-      <li>“중개서비스”: 매칭 등 연결을 위한 온라인 시스템</li>
+      <li>“중개서비스”: 매칭·결제 등 연결을 위한 온라인 시스템</li>
       <li>“거래계약”: 고객과 기사 간 직접 체결되는 용역 계약</li>
     </ul>
-
     <h3 className="font-bold text-base">제3조 (중개 서비스의 성격)</h3>
     <ol className="list-decimal pl-5 space-y-1">
       <li>회사는 <strong>중개자</strong>이며, 실제 시공·용역의 <strong>당사자</strong>가 아닙니다.</li>
       <li>고객과 기사 간 거래계약은 상호 합의로 성립하며 회사는 당사자가 아닙니다.</li>
       <li>기사는 회사의 지휘·감독을 받지 않는 <strong>독립 사업자</strong>입니다.</li>
     </ol>
-
     <h3 className="font-bold text-base">제4조 (시공·용역 책임)</h3>
     <ol className="list-decimal pl-5 space-y-1">
       <li>품질·안전·하자보수·일정·손해배상 등 <strong>모든 법적 책임은 기사</strong>에게 있습니다.</li>
       <li>기사는 관련 법령·자격·안전기준을 준수하며, 위반 시 책임은 기사에게 있습니다.</li>
       <li>고객은 작업 범위·가격·AS 조건을 기사와 사전 합의해야 합니다.</li>
     </ol>
-
-    <h3 className="font-bold text-base">제5조 (대금 지급 및 수수료)</h3>
+    <h3 className="font-bold text-base">제5조 (가격·결제·수수료)</h3>
     <ol className="list-decimal pl-5 space-y-1">
-      <li>고객은 서비스 이용 대금을 <strong>배정된 기사에게 직접 지급</strong>합니다. 지급 방식(카드/계좌/현금/간편결제 등)은 고객–기사 간 선택에 따릅니다.</li>
-      <li>회사는 고객 대금을 수령·보관·예치하거나 정산하지 않으며, 결제의 당사자가 아닙니다.</li>
-      <li>회사는 플랫폼 운영 대가로 <strong>기사에게 플랫폼 이용료/중개 수수료</strong>를 청구할 수 있으며, 건별 차감형 또는 월 정산형으로 운영될 수 있습니다. 수수료율·정산일 등은 서비스 내 고지에 따릅니다.</li>
+      <li>대금은 고객과 기사 간 합의로 확정됩니다.</li>
+      <li>회사는 PG/에스크로 등 결제 시스템을 제공하고 <strong>중개 수수료</strong>를 부과할 수 있으며, 세부는 플랫폼에 고지합니다.</li>
     </ol>
-
-    <h3 className="font-bold text-base">제5-1조 (영수증·세금계산서)</h3>
-    <ol className="list-decimal pl-5 space-y-1">
-      <li>고객에 대한 영수증·세금계산서 발급 책임은 <strong>기사</strong>에게 있습니다. 회사는 고객 거래의 판매자·용역제공자가 아닙니다.</li>
-      <li>회사는 기사 대상 플랫폼 이용료·수수료에 대해 기사(사업자)에게 세금계산서/영수증을 발행할 수 있습니다.</li>
-    </ol>
-
     <h3 className="font-bold text-base">제6조 (취소·환불)</h3>
     <ol className="list-decimal pl-5 space-y-1">
       <li>배정 전 취소는 전액 환불이 원칙입니다.</li>
-      <li>배정 후 취소/이미 제공된 용역의 환불·하자보수 기준은 <strong>고객–기사 간 약정 및 법령</strong>에 따릅니다.</li>
-      <li>고객 사유로 방문 후 취소 또는 노쇼가 발생한 경우, 출장비/위약금이 부과될 수 있으며, 기준은 기사 고지 또는 서비스 정책에 따릅니다.</li>
+      <li>배정 후 취소/이미 제공된 용역은 기사와의 약정 및 법령에 따릅니다.</li>
     </ol>
-
     <h3 className="font-bold text-base">제7조 (분쟁 해결)</h3>
     <ol className="list-decimal pl-5 space-y-1">
       <li>분쟁은 당사자 간 해결을 원칙으로 합니다.</li>
-      <li>회사는 중립적으로 상담/중재를 <strong>안내</strong>할 수 있으나 법적 강제권은 없습니다.</li>
+      <li>회사는 상담/중재를 안내할 수 있으나 법적 강제권은 없습니다.</li>
     </ol>
-
     <h3 className="font-bold text-base">제8조 (면책)</h3>
     <ul className="list-disc pl-5 space-y-1">
       <li>기사 과실·계약 위반</li>
       <li>고객 제공 정보의 오류</li>
       <li>천재지변 등 불가항력</li>
       <li>회사의 중대한 과실이 없는 한 시스템 장애로 인한 간접·특별·결과적 손해</li>
-      <li><strong>고객–기사 간 직접 금전 거래에서의 분쟁(미수/과다/과소 청구, 영수증 분쟁 등)</strong></li>
     </ul>
-
     <h3 className="font-bold text-base">제9조 (자격·보험)</h3>
     <p>특정 업종에 필요한 자격/면허/보험은 기사 책임이며, 유지·갱신의 책임 또한 기사에게 있습니다.</p>
-
     <h3 className="font-bold text-base">제10조 (개인정보 보호)</h3>
     <p>개인정보 처리에 관한 사항은 <button className="underline underline-offset-4" onClick={() => setActiveTab("privacy")}>개인정보 처리방침</button>을 따릅니다.</p>
-
     <h3 className="font-bold text-base">제11조 (준거법/관할)</h3>
     <p>대한민국 법령을 준거법으로 하며, 관할은 민사소송법에 따릅니다.</p>
     <p className="text-xs text-neutral-500">문의: legal@wajullae.co.kr</p>
@@ -185,10 +166,7 @@ const LegalNotice = () => (
       {t:"② 기사의 독립성", d:"기사는 회사의 피용자/대리인이 아닌 독립 사업자로서 작업 방식·일정·안전관리의 권한과 책임을 스스로 부담합니다."},
       {t:"③ 하자·AS 및 환불", d:"하자보수·환불 기준은 고객-기사 간 계약에 따르며, 제공 완료된 용역은 법령이 허용하는 범위에서 환불이 제한될 수 있습니다."},
       {t:"④ 자격·보험·법령 준수", d:"특정 업종의 자격증·면허·보험 가입은 기사 책임이며, 법령 위반 시 모든 책임은 기사에게 귀속됩니다."},
-      {t:"⑤ 분쟁 처리", d:"분쟁은 당사자 간 해결을 원칙으로 하며, 회사는 상담/중재를 안내할 수 있으나 법적 강제권은 없습니다."},
-      {t:"⑥ 결제 주체(직접결제)", d:"대금은 고객이 기사에게 직접 지급합니다. 회사는 고객 대금을 수령·보관·예치·정산하지 않습니다."},
-      {t:"⑦ 영수증·환불 주체", d:"영수증·세금계산서 발급 및 환불·하자보수 등 거래 이행 책임은 기사에게 있습니다."},
-      {t:"⑧ 플랫폼 수수료", d:"회사는 매칭·운영 대가로 기사에게 플랫폼 이용료/수수료를 청구할 수 있으며, 방식(건별/월정산)과 요율은 서비스 내 고지합니다."},
+      {t:"⑤ 분쟁 처리", d:"분쟁은 당사자 간 해결을 원칙으로 하며, 회사는 상담/중재를 안내할 수 있으나 법적 강제권은 없습니다."}
     ].map((x,i)=> (
       <details key={i} className="rounded-2xl border p-4 group">
         <summary className="font-semibold cursor-pointer flex items-center justify-between">
@@ -205,58 +183,18 @@ const LegalNotice = () => (
 const Privacy = () => (
   <article className="space-y-4">
     <h3 className="font-bold text-base">개인정보 처리방침(요약)</h3>
-    <p><strong>수집 항목</strong>: 성명, 연락처, 주소, 이용기록 등 · <strong>목적</strong>: 매칭·고객지원 · <strong>보관</strong>: 목적 달성 후 지체없이 파기(법정 보관 예외)</p>
-
+    <p><strong>수집 항목</strong>: 성명, 연락처, 주소, 결제정보, 이용기록 등 · <strong>목적</strong>: 매칭·결제·고객지원 · <strong>보관</strong>: 목적 달성 후 지체없이 파기(법정 보관 예외)</p>
     <h4 className="font-semibold">수집/이용</h4>
     <ul className="list-disc pl-5 space-y-1">
-      <li>회원가입·매칭·상담을 위한 최소 정보 수집</li>
+      <li>회원가입·매칭·결제·정산·분쟁대응을 위한 최소 정보 수집</li>
       <li>법령상 거래기록은 관련 기간 보관</li>
     </ul>
-
     <h4 className="font-semibold">제3자 제공/처리위탁</h4>
-    <p>아래 범위에서 개인정보를 제공합니다/위탁합니다.</p>
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm border mt-2">
-        <thead>
-          <tr className="bg-neutral-50">
-            <th className="p-2 border">제공/수탁 대상</th>
-            <th className="p-2 border">제공 항목</th>
-            <th className="p-2 border">목적</th>
-            <th className="p-2 border">보유·이용 기간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="p-2 border">배정된 기사</td>
-            <td className="p-2 border">이름, 연락처, 주소(현장), 요청 내용, 사진/영상(선택)</td>
-            <td className="p-2 border">현장 방문, 견적 산정, 서비스 제공</td>
-            <td className="p-2 border">서비스 완료 후 최대 90일(분쟁 대응)</td>
-          </tr>
-          <tr>
-            <td className="p-2 border">고객센터/알림 발송사</td>
-            <td className="p-2 border">연락처, 상담기록</td>
-            <td className="p-2 border">민원 처리, 공지/알림 발송</td>
-            <td className="p-2 border">목적 달성 시 즉시 파기</td>
-          </tr>
-          <tr>
-            <td className="p-2 border">정산/청구 결제대행사(기사 대상)</td>
-            <td className="p-2 border">기사 사업자정보, 청구·납부 정보</td>
-            <td className="p-2 border">플랫폼 수수료 청구/자동결제(기사 대상)</td>
-            <td className="p-2 border">세무·회계 등 관계 법령 보존기간</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h4 className="font-semibold">결제 정보 처리</h4>
-    <p>고객 결제는 <strong>고객↔기사 간 직접</strong> 진행되며, 회사는 고객 결제정보를 수집·저장하지 않습니다. 다만 기사 수수료 청구를 위한 기사 결제수단(자동이체/카드 등)은 회사 또는 PG사가 수집·저장할 수 있습니다.</p>
-
+    <p>PG사·문자전송·클라우드·고객센터 등에 한정하여 위탁하며, 수탁사/항목/기간은 서비스 내 고지합니다.</p>
     <h4 className="font-semibold">이용자 권리</h4>
     <p>열람·정정·삭제·처리정지·동의 철회 요청 가능</p>
-
     <h4 className="font-semibold">보호조치</h4>
     <p>암호화·접근통제·접속기록 보관·침해사고 대응</p>
-
     <p className="text-xs text-neutral-500">전문은 별도 문서로 제공되며, 본 요약은 이해를 돕기 위한 것입니다.</p>
   </article>
 );
@@ -362,10 +300,6 @@ function SectionPricing() {
           </div>
         )}
 
-        <div className="mt-6 rounded-xl bg-amber-50 text-amber-900 p-4 text-sm ring-1 ring-amber-200">
-          <p><strong>안내:</strong> 결제는 배정된 <strong>기사에게 직접</strong> 진행됩니다. 회사는 대금의 수령·보관·정산을 하지 않으며, 영수증·세금계산서는 기사 발급 대상입니다. 표준 견적은 참고가이며 현장 점검 후 최종 확정됩니다.</p>
-        </div>
-
         <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
       </div>
     </section>
@@ -382,11 +316,11 @@ function SectionFAQ() {
             { q: "견적은 어떻게 산정하나요?", a: "작업 항목·난이도·자재·현장 접근성을 고려한 내부 표준표를 기반으로 산정합니다." },
             { q: "예약은 어떻게 진행돼요?", a: "요청 접수 → 기사 배정 → 방문 점검 → 작업/정산 순서로 진행됩니다." },
             { q: "하자보수는 누가 책임지나요?", a: "시공의 주체는 기사이며, 하자보수 책임 또한 기사에게 있습니다." },
-            { q: "결제는 안전한가요?", a: "고객이 <strong>기사에게 직접 결제</strong>하며, 영수증·세금계산서는 기사 발급 대상입니다. 회사는 대금을 수령·보관하지 않으며 분쟁 시 중립적으로 상담·안내만 제공합니다." },
+            { q: "결제는 안전한가요?", a: "PG/에스크로 연동으로 안전 결제를 지원합니다." },
           ].map((f, i) => (
             <details key={i} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
-              <summary className="font-semibold cursor-pointer" dangerouslySetInnerHTML={{__html: f.q}} />
-              <p className="text-neutral-600 mt-2" dangerouslySetInnerHTML={{__html: f.a}} />
+              <summary className="font-semibold cursor-pointer">{f.q}</summary>
+              <p className="text-neutral-600 mt-2">{f.a}</p>
             </details>
           ))}
         </div>
@@ -437,9 +371,6 @@ function SectionContact() {
               <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-XL bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
                 접수하기 <ArrowRight />
               </button>
-              <div className="text-xs text-neutral-500 mt-3">
-                결제는 배정된 <strong>기사에게 직접</strong> 진행되며, 영수증/세금계산서는 기사 발급 대상입니다. 회사는 대금을 수령·보관하지 않습니다.
-              </div>
             </form>
           </div>
           <div className="lg:pl-10">
@@ -448,7 +379,7 @@ function SectionContact() {
               <ul className="mt-4 space-y-2 text-neutral-700">
                 <li className="flex items-start gap-2"><Check /><span>표준 견적 안내</span></li>
                 <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
-                <li className="flex items-start gap-2"><Check /><span>시공 품질 보증(기사 책임)</span></li>
+                <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
               </ul>
             </div>
             <div className="mt-4 text-xs text-neutral-500">© {new Date().getFullYear()} 와줄래</div>
@@ -704,11 +635,6 @@ export default function App() {
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
               <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
-              <ul className="mt-3 text-xs text-neutral-500 list-disc pl-4 space-y-1">
-                <li>결제는 배정된 <strong>기사에게 직접</strong> 진행됩니다. 회사는 고객 대금을 수령·보관·예치·정산하지 않습니다.</li>
-                <li>영수증/세금계산서는 기사 발급 대상입니다. 환불·하자보수 책임 또한 기사에게 있습니다.</li>
-                <li>회사는 중개 및 플랫폼 운영(기사 대상 수수료 청구)만 제공합니다.</li>
-              </ul>
             </div>
             <nav className="flex items-center gap-3 text-sm">
               <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
