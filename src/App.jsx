@@ -229,14 +229,14 @@ function SectionPricing() {
   const filtered = useMemo(() => {
     const keyword = q.trim().toLowerCase();
     if (!keyword) return items;
-    return items.filter((c) =>
-      (c.t + " " + c.d).toLowerCase().includes(keyword)
-    );
+    return items.filter((c) => (c.t + " " + c.d).toLowerCase().includes(keyword));
   }, [q, items]);
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 바깥 컨테이너: 좌우 여백 + 중앙 정렬 고정폭 */}
+      <div className="mx-auto max-w-[96rem] px-4 sm:px-6 lg:px-8">
+        {/* 헤더 + 검색 */}
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
@@ -270,13 +270,27 @@ function SectionPricing() {
         </div>
 
         <div className="mt-4 text-sm text-neutral-500">
-          총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
+          총 {filtered.length}건 {q ? `(검색어: “${q}”)` : ""}
         </div>
 
+        {/* 카드 그리드: 언제나 '진짜 가운데' 정렬 */}
         {filtered.length > 0 ? (
-          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          <div
+            className="
+              mt-8
+              grid gap-5
+              sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
+              justify-center          /* 가로축 중앙 */
+              place-items-stretch     /* 카드 채우기 */
+              auto-rows-fr            /* 행 높이 균일화 */
+              mx-auto                 /* 컨테이너 자체도 중앙 */
+            "
+          >
             {filtered.map((c) => (
-              <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
+              <div
+                key={c.t}
+                className="rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default flex flex-col"
+              >
                 {c.img ? (
                   <img
                     src={c.img}
