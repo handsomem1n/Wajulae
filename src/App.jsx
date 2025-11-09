@@ -478,16 +478,16 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* 고정폭 + 정확한 가운데 배치 */}
-          <div className="relative mx-auto px-6 sm:px-10 lg:px-0 py-24 lg:py-32">
-            <div className="mx-auto lg:w-[calc(520px+48px+520px)] grid lg:grid-cols-[520px_520px] gap-12 items-center justify-center">
+          {/* 고정폭 + 정확한 가운데 배치 (흐름 유지: 푸터가 아래로 내려가도록 절대배치 제거) */}
+          <div className="relative py-24 lg:py-32">
+            <div className="mx-auto px-6 sm:px-10 lg:px-0 lg:w-[calc(520px+48px+520px)] grid lg:grid-cols-[520px_520px] gap-12 items-center justify-items-center">
               {/* 왼쪽: 타이틀 */}
-              <div className="text-center max-w-[520px] mx-auto">
+              <div className="text-center max-w-[520px] w-full">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
                   철산·광명·구로·가산
                   <br className="hidden sm:block"/> 생활수리 플랫폼
                 </h1>
-                <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-none">
+                <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
                   참고용 표준가 제공 / 과장 없는 사전 안내
                 </p>
                 <div className="mt-10 flex justify-center">
