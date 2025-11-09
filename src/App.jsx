@@ -479,19 +479,14 @@ export default function App() {
       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
     />
 
-    {/* ✅ 뷰포트 기준 ‘진짜 중앙’ 고정 래퍼 */}
+    {/* ✅ 화면(뷰포트) 기준 진짜 중앙 정렬 */}
     <div className="relative py-24 lg:py-32">
-      <div
-        className="
-          relative left-1/2 -translate-x-1/2
-          w-[1144px] max-w-[calc(100%-32px)]
-          px-4
-        "
-      >
-        {/* 560 + 520 = 1080, 여백 64 = 총 1144 */}
-        <div className="grid grid-cols-[560px_520px] gap-x-8 items-center">
-          {/* 왼쪽: 타이틀(560px 고정) */}
-          <div className="text-left">
+      {/* 화면 전체를 그리드로 만들고, 콘텐츠를 가운데 한 점으로 정렬 */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 grid place-items-center">
+        {/* 고정 폭 묶음: 560 + 64(gap-16) + 520 = 1144px */}
+        <div className="w-[1144px] max-w-full grid gap-16 lg:grid-cols-[560px_520px] items-center">
+          {/* 왼쪽: 타이틀(최대 560) */}
+          <div className="max-w-[560px] text-center lg:text-left justify-self-center lg:justify-self-start">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -510,10 +505,10 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽: 카드(520px 고정) */}
-          <div className="justify-self-start">
-            <div className="w-[520px] max-w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
-              <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
+          {/* 오른쪽: 카드(최대 520) */}
+          <div className="max-w-[520px] justify-self-center lg:justify-self-start">
+            <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
+              <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
                   { label: "전등 교체", icon: "💡" },
@@ -525,22 +520,22 @@ export default function App() {
                 ].map((it) => (
                   <div
                     key={it.label}
-                    className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between"
+                    className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between text-left"
                   >
-                    <span className="text-2xl" aria-hidden>
-                      {it.icon}
-                    </span>
+                    <span className="text-2xl" aria-hidden>{it.icon}</span>
                     <span className="font-semibold">{it.label}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-left">
+              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
                 * 사진이 있으면 상담이 더 빨라요
               </div>
             </div>
           </div>
         </div>
+        {/* /1144 래퍼 끝 */}
       </div>
+      {/* /place-items-center 끝 */}
     </div>
   </section>
       )}
