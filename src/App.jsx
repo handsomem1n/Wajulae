@@ -478,11 +478,11 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* 고정폭 + 정확한 가운데 배치 (흐름 유지: 푸터가 아래로 내려가도록 절대배치 제거) */}
+          {/* 숨고 스타일: 가운데 컨테이너 + 좌 가변/우 고정 */}
           <div className="relative py-24 lg:py-32">
-            <div className="mx-auto px-6 sm:px-10 lg:px-0 lg:w-[calc(520px+48px+520px)] grid lg:grid-cols-[520px_520px] gap-12 items-center justify-items-center">
-              {/* 왼쪽: 타이틀 */}
-              <div className="text-center max-w-[520px] w-full">
+            <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-16 items-center">
+              {/* 왼쪽: 타이틀 (유동폭) */}
+              <div className="text-center lg:text-left max-w-[640px] mx-auto lg:mx-0">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
                   철산·광명·구로·가산
                   <br className="hidden sm:block"/> 생활수리 플랫폼
@@ -490,7 +490,7 @@ export default function App() {
                 <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
                   참고용 표준가 제공 / 과장 없는 사전 안내
                 </p>
-                <div className="mt-10 flex justify-center">
+                <div className="mt-10 flex justify-center lg:justify-start">
                   <button
                     type="button"
                     onClick={() => setCurrentPage("pricing")}
@@ -501,10 +501,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* 오른쪽: 카드 (가운데 정렬) */}
-              <div className="flex justify-center">
-                <div className="relative w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
-                  <h3 className="font-bold text-lg text-center">어떤 도움이 필요하세요?</h3>
+              {/* 오른쪽: 카드 (고정폭) */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+                  <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
                   <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {[
                       {label:"전등 교체", icon:"💡"},
@@ -520,7 +520,7 @@ export default function App() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 text-xs text-neutral-500 text-center">* 사진이 있으면 상담이 더 빨라요</div>
+                  <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
                 </div>
               </div>
             </div>
