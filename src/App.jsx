@@ -1,7 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from "react-router-dom";
 
-/* 네비게이션: 각각 독립 페이지로 전환 */
+/* =========================================================
+   리팩터링 목표 (요청 반영)
+   - 최초 제공해주신 코드 구조를 유지하되, "서비스 소개"도
+     표준견적/FAQ/문의와 동일한 "독립 페이지"로 분리
+   - 모든 페이지의 레이아웃/컨테이너 폭/정렬 일관화
+   - 오버레이/스크롤 락/해시 스크롤 제거 → 라우팅 기반 전환
+   - 헤더/푸터/모바일 Dock 공통 유지
+   ========================================================= */
+
+/* ===== 네비게이션 정의 (라우트 기반) ===== */
 const NAV = [
   { id: "home",    label: "서비스 소개", to: "/" },
   { id: "pricing", label: "표준 견적",   to: "/pricing" },
@@ -9,14 +18,14 @@ const NAV = [
   { id: "contact", label: "문의",        to: "/contact" },
 ];
 
-/* 라우팅 시 스크롤 상단 이동 */
+/* ===== 라우팅 시 스크롤 상단 이동 ===== */
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [pathname]);
   return null;
 }
 
-/* 아이콘 */
+/* ===== 아이콘 ===== */
 const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
@@ -27,14 +36,13 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
-/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
   </svg>
 );
 
-/* ===== 문서 섹션들 (약관/법고지/개인정보) — 기존 그대로 유지 ===== */
+/* ===== 약관/법고지/개인정보 모달 (원본 유지) ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -68,8 +76,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
 
   if (!open) return null;
   return (
-    <div role="dialog" aria-modal="true"
-         className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
+    <div role="dialog" aria-modal="true" className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
       <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
       <div className="min-h-[100dvh] flex items-start justify-center p-4 sm:p-6">
         <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
@@ -221,7 +228,7 @@ function SectionPricing() {
 
   return (
     <main className="py-16 bg-neutral-50">
-      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h1>
@@ -266,11 +273,11 @@ function SectionPricing() {
   );
 }
 
-/* ===== FAQ ===== */
+/* ===== FAQ 페이지 ===== */
 function SectionFAQ() {
   return (
     <main className="py-16 bg-white">
-      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h1>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -290,11 +297,11 @@ function SectionFAQ() {
   );
 }
 
-/* ===== 문의 ===== */
+/* ===== 문의 페이지 ===== */
 function SectionContact() {
   return (
     <main className="py-16 bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h1>
@@ -342,37 +349,34 @@ function SectionContact() {
   );
 }
 
-/* ===== 홈(서비스 소개) — 별도 페이지로 분리 ===== */
+/* ===== 홈(서비스 소개) — 기존 히어로를 독립 페이지로 ===== */
 function HomeIntro() {
   return (
     <main id="hero" className="relative overflow-visible">
-      {/* 배경은 화면 가득 */}
+      {/* 배경은 풀블리드 */}
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-      {/* 풀블리드 + 가변 그리드 */}
-      <div className="
-              relative max-w-[120rem] mx-auto
-              px-6 sm:px-10 lg:px-14
-              py-20 lg:py-28
-              grid
-              lg:grid-cols-[minmax(0,1fr)_minmax(420px,min(42vw,640px))]
-              gap-10 xl:gap-16 items-center
-            ">
+      {/* 콘텐츠 컨테이너는 다른 페이지와 동일하게 중앙 정렬 */}
+      <div className="relative max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
         {/* 왼쪽: 타이틀 */}
         <div className="text-center lg:text-left">
-          <h1 className="max-w-[48ch] mx-auto lg:mx-0 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
             철산·광명·구로·가산
             <br className="hidden sm:block"/> 생활수리 플랫폼
           </h1>
-          <p className="max-w-[60ch] mx-auto lg:mx-0 mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">참고용 표준가 제공 / 과장 없는 사전 안내</p>
+          <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+            참고용 표준가 제공 / 과장 없는 사전 안내
+          </p>
           <div className="mt-10">
-            <Link to="/pricing" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none">표준 견적 바로가기 <ArrowRight /></Link>
+            <Link to="/pricing" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none">
+              표준 견적 바로가기 <ArrowRight />
+            </Link>
           </div>
         </div>
 
-        {/* 오른쪽: 카드 */}
-        <div className="justify-self-center lg:justify-self-end">
-          <div className="relative w-full max-w-[min(42vw,640px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+        {/* 오른쪽: 카드 (컨테이너 폭 상한 유지) */}
+        <div className="flex justify-center lg:justify-end">
+          <div className="relative w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
             <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
             <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
@@ -397,7 +401,7 @@ function HomeIntro() {
   );
 }
 
-/* 모바일 Dock — 라우트 링크로 전환 */
+/* ===== 모바일 Dock — 라우터 링크 ===== */
 function MobileDock() {
   return (
     <div className="fixed bottom-3 left-0 right-0 z-[70] px-4 md:hidden">
@@ -412,7 +416,7 @@ function MobileDock() {
   );
 }
 
-/* ===== 공통 레이아웃(Header/푸터) + 라우팅 ===== */
+/* ===== 공통 Shell (헤더/푸터) ===== */
 function Shell() {
   const { pathname } = useLocation();
   const [legalOpen, setLegalOpen] = useState(false);
@@ -427,7 +431,7 @@ function Shell() {
 
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-        <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 font-semibold text-lg" aria-label="홈">
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
@@ -443,19 +447,19 @@ function Shell() {
         </div>
       </header>
 
-      {/* 라우팅 영역 */}
+      {/* 라우트 영역 */}
       <Routes>
         <Route path="/" element={<HomeIntro />} />
         <Route path="/pricing" element={<SectionPricing />} />
         <Route path="/faq" element={<SectionFAQ />} />
         <Route path="/contact" element={<SectionContact />} />
-        {/* 오래된 #hash 접근 보호 */}
+        {/* 과거 #hash 접근 호환 */}
         <Route path="/about" element={<Navigate to="/" replace />} />
       </Routes>
 
       {/* 푸터 */}
       <div className="border-t border-neutral-200 bg-white">
-        <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-sm text-neutral-600">
             <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
             <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
