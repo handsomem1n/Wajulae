@@ -477,7 +477,8 @@ export default function App() {
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
           {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
-          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32
+                grid lg:grid-cols-[minmax(0,1fr)_520px] gap-12 items-center justify-items-center">
             {/* 왼쪽: 타이틀 */}
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
@@ -499,7 +500,7 @@ export default function App() {
             </div>
 
             {/* 오른쪽: 카드 (가운데 정렬) */}
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center">
               <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
                 <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
                 <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
