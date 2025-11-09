@@ -610,7 +610,7 @@ export default function App() {
 
       {/* 푸터 — 오버레이 때는 안 보이게 */}
       {!isOverlayOpen && (
-        <div className="border-t border-neutral-200 bg-white">
+       <div className="border-t border-neutral-200 bg-white pb-24 md:pb-0">
           <div className="max-w-[96rem] w-full mx-auto px-6 lg:px-10 py-8">
             <div className="text-sm text-neutral-700 space-y-1">
               <div>
