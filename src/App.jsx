@@ -480,15 +480,15 @@ export default function App() {
           <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32
                 grid lg:grid-cols-[minmax(0,1fr)_520px] gap-12 items-center justify-items-center">
             {/* 왼쪽: 타이틀 */}
-            <div className="text-center lg:text-left">
+            <div className="text-center">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
                 철산·광명·구로·가산
                 <br className="hidden sm:block"/> 생활수리 플랫폼
               </h1>
-              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto">
                 참고용 표준가 제공 / 과장 없는 사전 안내
               </p>
-              <div className="mt-10">
+              <div className="mt-10 flex justify-center">
                 <button
                   type="button"
                   onClick={() => setCurrentPage("pricing")}
