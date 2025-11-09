@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-/* 네비게이션 */
+/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
 const NAV = [
   { id: "about",   label: "서비스 소개", type: "scroll" },
   { id: "pricing", label: "표준 견적",   type: "page"   },
@@ -40,13 +40,14 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
+/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
   </svg>
 );
 
-/* ===== 문서 섹션들 (약관/법고지/개인정보) ===== */
+/* ===== 문서 섹션들 (약관/법고지/개인정보) — 생략 없이 유지 ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -80,7 +81,8 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
 
   if (!open) return null;
   return (
-    <div role="dialog" aria-modal="true" className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
+    <div role="dialog" aria-modal="true"
+         className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
       <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
       <div className="min-h-[100dvh] flex items-start justify-center p-4 sm:p-6">
         <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
@@ -198,7 +200,7 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 표준 견적 ===== */
+/* ===== 표준 견적(검색 + 이미지 지원) ===== */
 function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
@@ -401,12 +403,14 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(null);
   const isOverlayOpen = !!currentPage;
 
+  // 오버레이 열릴 때 배경 스크롤 완전 잠금
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (isOverlayOpen) document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
   }, [isOverlayOpen]);
 
+  // 모달(약관)
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
 
@@ -466,8 +470,8 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 */}
-      {!isOverlayOpen && (
+      {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
+     {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
     {/* 배경 */}
     <div
@@ -475,12 +479,13 @@ export default function App() {
       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
     />
 
-    {/* ✅ 전체 묶음을 ‘정중앙’에 고정 (560 + 32 + 520 = 1144px) */}
-    <div className="relative py-24 lg:py-32">
-      <div className="mx-auto w-[1144px] max-w-[calc(100%-32px)] px-4">
-        <div className="grid grid-cols-[560px_520px] gap-x-8 items-center">
-          {/* 왼쪽: 타이틀(560px 고정) */}
-          <div className="text-left">
+    {/* ▶ 오버레이와 동일한 컨테이너 규격: max-w-[96rem] + 좌우 패딩 */}
+    <div className="relative">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        {/* 2열 그리드: 좌 타이틀 / 우 카드. 넓은 화면에서도 중앙 정렬 유지 */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* 왼쪽: 타이틀(가독 폭 제한) */}
+          <div className="text-left max-w-3xl">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -499,9 +504,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽: 카드(520px 고정) */}
-          <div className="justify-self-start">
-            <div className="w-[520px] max-w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+          {/* 오른쪽: 카드(폭 제한 + 중앙 정렬) */}
+          <div className="justify-self-center lg:justify-self-end w-full">
+            <div className="w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
               <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
@@ -539,12 +544,14 @@ export default function App() {
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
+            {/* ▶ 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
                 </div>
+                {/* 오버레이 내 탭 */}
                 <nav className="flex items-center gap-1" aria-label="오버레이 탭">
                   {["pricing","faq","contact"].map((id) => (
                     <button
@@ -574,7 +581,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 푸터 */}
+      {/* 푸터 — 오버레이 때는 안 보이게 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
           <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -596,7 +603,7 @@ export default function App() {
       {/* 약관 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
-      {/* 모바일 Dock */}
+      {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
     </div>
   );
