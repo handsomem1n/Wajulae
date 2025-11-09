@@ -477,8 +477,8 @@ export default function App() {
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
           {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
-          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32
-                grid lg:grid-cols-[minmax(0,1fr)_520px] gap-12 items-center justify-items-center">
+          <div className="relative max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32
+                grid lg:grid-cols-[520px_520px] gap-12 items-start justify-center">
             {/* 왼쪽: 타이틀 */}
             <div className="text-center">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
