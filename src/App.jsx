@@ -473,22 +473,16 @@ export default function App() {
       {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
 {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
+    {/* 배경 */}
     <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
     <div className="relative py-24 lg:py-28">
-      {/* 헤더와 동일 그리드 폭 시스템 */}
+      {/* ① 헤더와 같은 외곽 컨테이너(안전 여백) */}
       <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 총폭 1044px 그룹을 정확히 가운데 */}
-        <div
-          className="
-            mx-auto max-w-[1044px]
-            flex flex-col lg:flex-row items-center justify-center gap-16
-            /* ↓↓↓ ‘보이는’ 치우침을 잡는 미세 보정 (큰 화면에서만) */
-            lg:translate-x-[12px]
-          "
-        >
-          {/* 왼쪽 560 */}
-          <div className="w-full max-w-[560px] text-center lg:text-left">
+        {/* ② ‘타이틀+카드’ 묶음을 총폭 고정(= 560 + 64 + 520 = 1144px)해서 가운데 배치 */}
+        <div className="mx-auto max-w-[1144px] w-full flex flex-col lg:flex-row items-center justify-center gap-16">
+          {/* 왼쪽: 타이틀(고정폭 560) */}
+          <div className="w-[560px] max-w-full text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -507,8 +501,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽 420 */}
-          <div className="w-full max-w-[420px]">
+          {/* 오른쪽: 카드(고정폭 520) */}
+          <div className="w-[520px] max-w-full">
             <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
               <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -526,10 +520,13 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
+                * 사진이 있으면 상담이 더 빨라요
+              </div>
             </div>
           </div>
         </div>
+        {/* // 묶음 끝 */}
       </div>
     </div>
   </section>
