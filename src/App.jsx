@@ -202,29 +202,28 @@ const Privacy = () => (
 
 /* ===== 표준 견적(검색 + 이미지 지원) ===== */
 function SectionPricing() {
-  // ✅ 초보자도 넣기 쉽게: 각 항목에 img(이미지 경로)만 추가하면 자동 표시됩니다.
-  // 예) public/images 아래에 파일을 넣고 "/images/plug.jpg" 처럼 경로만 넣으면 됩니다.
+  // 초보자도 넣기 쉽게: 각 항목에 img만 추가하면 자동 표시됩니다. (public/images에 넣고 /images/.. 경로)
   const items = [
-    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/plug.jpg" },
-    { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
-    { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동",             img: "/images/intercom.jpg" },
-    { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
-    { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",             img: "/images/countertop.jpg" },
-    { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/kitchen-faucet.jpg" },
-    { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동",             img: "/images/tiles.jpg" },
-    { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동",             img: "/images/kitchen-hood.jpg" },
-    { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동",      img: "/images/undercounter-sink.jpg" },
-    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동",          img: "/images/drain-basket.jpg" },
-    { t: "화장실 환풍기 교체",       p: "100,000원", d: "전원·덕트 상태에 따라 변동",             img: "/images/bath-fan.jpg" },
-    { t: "샤워 수전 교체",           p: "150,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/shower-faucet.jpg" },
-    { t: "LED 등 교체",              p: "80,000원",  d: "규격·천장 타입에 따라 변동",             img: "/images/led-light.jpg" },
-    { t: "세면대 수전 교체",         p: "120,000원", d: "규격·배관 상태에 따라 변동",             img: "/images/basin-faucet.jpg" },
-    { t: "비상센서등 교체",          p: "100,000원", d: "전원·설치 위치에 따라 변동",             img: "/images/emergency-light.jpg" },
-    { t: "폽업 교체",                p: "45,000원",  d: "규격·막힘 여부에 따라 변동",             img: "/images/pop-up.jpg" },
-    { t: "소변기 센서 교체",         p: "100,000원", d: "전원·배관 상태에 따라 변동",             img: "/images/urinal-sensor.jpg" },
-    { t: "현관문 경첩 교체",         p: "200,000원", d: "도어 무게·힌지 규격에 따라 변동",        img: "/images/door-hinge2.jpg" },
-    { t: "문 재부착 및 수리",        p: "50,000원",  d: "틀 뒤틀림·경첩 상태에 따라 변동",        img: "/images/door-repair.jpg" },
-    { t: "문고리 교체",              p: "50,000원",  d: "백세트 규격·문두께에 따라 변동",         img: "/images/door-handle.jpg" },
+    { t: "콘센트 교체",              p: "60,000원",   d: "수량·배선 상태에 따라 변동",           img: "/images/plug.jpg" },
+    { t: "해바라기 수전 교체",        p: "450,000원",  d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
+    { t: "인터폰 교체",              p: "400,000원",  d: "기종·배선 상태에 따라 변동",           img: "/images/intercom.jpg" },
+    { t: "현관문 플로어 힌지 교체",  p: "150,000원",  d: "도어 규격·부품에 따라 변동",           img: "/images/door-hinge.jpg" },
+    { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",          img: "/images/countertop.jpg" },
+    { t: "싱크대 수전 교체",         p: "100,000원",  d: "배관·벽체 상태에 따라 변동",           img: "/images/kitchen-faucet.jpg" },
+    { t: "타일 한 박스 부분 교체",    p: "180,000원",  d: "면적·자재 수급에 따라 변동",           img: "/images/tiles.jpg" },
+    { t: "주방후드 교체",            p: "500,000원",  d: "덕트·전원 위치에 따라 변동",           img: "/images/kitchen-hood.jpg" },
+    { t: "언더카운트 세면대 부착",   p: "160,000원",  d: "상판 재질·브라켓 유무에 따라 변동",    img: "/images/undercounter-sink.jpg" },
+    { t: "싱크대 배수통 부착",       p: "80,000원",   d: "사이즈·타공 유무에 따라 변동",         img: "/images/drain-basket.jpg" },
+    { t: "화장실 환풍기 교체",       p: "100,000원",  d: "전원·덕트 상태에 따라 변동",           img: "/images/bath-fan.jpg" },
+    { t: "샤워 수전 교체",           p: "150,000원",  d: "배관·벽체 상태에 따라 변동",           img: "/images/shower-faucet.jpg" },
+    { t: "LED 등 교체",              p: "80,000원",   d: "규격·천장 타입에 따라 변동",           img: "/images/led-light.jpg" },
+    { t: "세면대 수전 교체",         p: "120,000원",  d: "규격·배관 상태에 따라 변동",           img: "/images/basin-faucet.jpg" },
+    { t: "비상센서등 교체",          p: "100,000원",  d: "전원·설치 위치에 따라 변동",           img: "/images/emergency-light.jpg" },
+    { t: "폽업 교체",                p: "45,000원",   d: "규격·막힘 여부에 따라 변동",           img: "/images/pop-up.jpg" },
+    { t: "소변기 센서 교체",         p: "100,000원",  d: "전원·배관 상태에 따라 변동",           img: "/images/urinal-sensor.jpg" },
+    { t: "현관문 경첩 교체",         p: "200,000원",  d: "도어 무게·힌지 규격에 따라 변동",      img: "/images/door-hinge2.jpg" },
+    { t: "문 재부착 및 수리",        p: "50,000원",   d: "틀 뒤틀림·경첩 상태에 따라 변동",      img: "/images/door-repair.jpg" },
+    { t: "문고리 교체",              p: "50,000원",   d: "백세트 규격·문두께에 따라 변동",       img: "/images/door-handle.jpg" },
   ];
 
   const [q, setQ] = useState("");
@@ -238,7 +237,7 @@ function SectionPricing() {
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">{/* 1536px 컨테이너로 넓게 */}
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 제목/설명 + (우측)검색 */}
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -276,7 +275,7 @@ function SectionPricing() {
 
         {/* 결과 개수 */}
         <div className="mt-4 text-sm text-neutral-500">
-          총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
+          총 {filtered.length}건 {q ? `(검색어: “${q}”)` : ""}
         </div>
 
         {/* 카드 그리드 */}
@@ -455,8 +454,8 @@ export default function App() {
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
             <span className="ml-2 text-sm font-normal text-neutral-500 hidden sm:inline">
-             표준견적 안내 / 생활수리 플랫폼
-             </span>
+              표준견적 안내 / 생활수리 플랫폼
+            </span>
           </a>
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
             {NAV.map((item) => (
@@ -483,7 +482,7 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* ✅ Windows(넓은 화면)에서 작게/왼쪽 치우침 개선: 더 넓은 컨테이너 + 가운데 정렬 + 여백 확대 */}
+          {/* Windows(넓은 화면)에서 작게/왼쪽 치우침 개선 */}
           <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center justify-center min-h-[70vh]">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
@@ -527,7 +526,7 @@ export default function App() {
         </section>
       )}
 
-      {/* 오버레이 페이지 (배경 콘텐츠 렌더 자체 제거되어 ‘비침’ 불가) */}
+      {/* 오버레이 페이지 */}
       {isOverlayOpen && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
@@ -571,7 +570,7 @@ export default function App() {
       {/* 약관 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
-      {/* 모바일 Dock은 항상 노출 (오버레이/메인 모두에서 이동 편의) */}
+      {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
     </div>
   );
