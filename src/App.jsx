@@ -51,8 +51,31 @@ const SearchIcon = () => (
 /* ===== 표준 견적 섹션 ===== */
 function SectionPricing() {
   const items = [
+<<<<<<< HEAD
     { t: "콘센트 교체", p: "60,000원", d: "수량·배선 상태에 따라 변동", img: "/images/plug.jpg" },
     ...
+=======
+    { t: "콘센트 교체",              p: "60,000원",   d: "수량·배선 상태에 따라 변동",           img: "/images/plug.jpg" },
+    { t: "해바라기 수전 교체",        p: "450,000원",  d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
+    { t: "인터폰 교체",              p: "400,000원",  d: "기종·배선 상태에 따라 변동",           img: "/images/intercom.jpg" },
+    { t: "현관문 플로어 힌지 교체",  p: "150,000원",  d: "도어 규격·부품에 따라 변동",           img: "/images/door-hinge.jpg" },
+    { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",          img: "/images/countertop.jpg" },
+    { t: "싱크대 수전 교체",         p: "100,000원",  d: "배관·벽체 상태에 따라 변동",           img: "/images/kitchen-faucet.jpg" },
+    { t: "타일 한 박스 부분 교체",    p: "180,000원",  d: "면적·자재 수급에 따라 변동",           img: "/images/tiles.jpg" },
+    { t: "주방후드 교체",            p: "500,000원",  d: "덕트·전원 위치에 따라 변동",           img: "/images/kitchen-hood.jpg" },
+    { t: "언더카운트 세면대 부착",   p: "160,000원",  d: "상판 재질·브라켓 유무에 따라 변동",    img: "/images/undercounter-sink.jpg" },
+    { t: "싱크대 배수통 부착",       p: "80,000원",   d: "사이즈·타공 유무에 따라 변동",         img: "/images/drain-basket.jpg" },
+    { t: "화장실 환풍기 교체",       p: "100,000원",  d: "전원·덕트 상태에 따라 변동",           img: "/images/bath-fan.jpg" },
+    { t: "샤워 수전 교체",           p: "150,000원",  d: "배관·벽체 상태에 따라 변동",           img: "/images/shower-faucet.jpg" },
+    { t: "LED 등 교체",              p: "80,000원",   d: "규격·천장 타입에 따라 변동",           img: "/images/led-light.jpg" },
+    { t: "세면대 수전 교체",         p: "120,000원",  d: "규격·배관 상태에 따라 변동",           img: "/images/basin-faucet.jpg" },
+    { t: "비상센서등 교체",          p: "100,000원",  d: "전원·설치 위치에 따라 변동",           img: "/images/emergency-light.jpg" },
+    { t: "폽업 교체",                p: "45,000원",   d: "규격·막힘 여부에 따라 변동",           img: "/images/pop-up.jpg" },
+    { t: "소변기 센서 교체",         p: "100,000원",  d: "전원·배관 상태에 따라 변동",           img: "/images/urinal-sensor.jpg" },
+    { t: "현관문 경첩 교체",         p: "200,000원",  d: "도어 무게·힌지 규격에 따라 변동",      img: "/images/door-hinge2.jpg" },
+    { t: "문 재부착 및 수리",        p: "50,000원",   d: "틀 뒤틀림·경첩 상태에 따라 변동",      img: "/images/door-repair.jpg" },
+    { t: "문고리 교체",              p: "50,000원",   d: "백세트 규격·문두께에 따라 변동",       img: "/images/door-handle.jpg" },
+>>>>>>> parent of 092ac10 (Update App.jsx)
   ];
 
   const [q, setQ] = useState("");
