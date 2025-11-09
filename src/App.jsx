@@ -631,22 +631,22 @@ export default function App() {
       {/* 푸터 — 오버레이 때는 안 보이게 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
-          <div className="max-w-[96rem] w-full mx-auto px-6 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="text-sm text-neutral-600">
-<<<<<<< HEAD
-              <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">대표: 안정근&김현성 주소: 경기도 광명시 철산동 사업자등록번호: 000-00-00000 </span>
-              <div className="text-xs text-neutral-400"></div>
-=======
-              <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
-              <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
->>>>>>> parent of 3c64367 (Update App.jsx)
+          {/* ✅ homeco 스타일처럼 왼쪽 하단 정렬: 사업자 정보가 위, 링크가 그 아래 */}
+          <div className="max-w-[96rem] w-full mx-auto px-6 lg:px-10 py-8">
+            <div className="text-sm text-neutral-700 space-y-1">
+              <div>
+                <strong className="text-neutral-900">와줄래</strong> <span className="text-neutral-400">|</span>
+              </div>
+              <div>대표: 안정근&김현성</div>
+              <div>주소: 경기도 광명시 철산동</div>
+              <div>사업자등록번호: 000-00-00000</div>
             </div>
-            <nav className="flex items-center gap-3 text-sm">
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
+            <nav className="mt-3 flex items-center gap-3 text-sm">
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
               <span className="text-neutral-300">·</span>
               <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
               <span className="text-neutral-300">·</span>
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
             </nav>
           </div>
         </div>
