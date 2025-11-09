@@ -417,7 +417,81 @@ function MobileDock({ onOpen }) {
     </div>
   );
 }
+/* === Kakao 채널 카드 컴포넌트 === */
+function KakaoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
+      <path
+        d="M12 3C6.48 3 2 6.54 2 10.9c0 2.76 1.9 5.18 4.83 6.58l-.78 3.27a.6.6 0 0 0 .9.65l3.65-2.1c.46.06.93.09 1.4.09 5.52 0 10-3.55 10-7.9S17.52 3 12 3z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
 
+function KakaoChannelCard() {
+  return (
+    <div className="mt-4 rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
+      {/* 상단 배너 */}
+      <div className="px-5 py-3 flex items-center justify-between bg-[#FEE500]">
+        <div className="flex items-center gap-2 text-neutral-900">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 text-[#FEE500]">
+            <KakaoIcon />
+          </span>
+          <div className="leading-tight">
+            <div className="font-extrabold">카카오톡 채널 문의</div>
+            <div className="text-xs text-neutral-700">1:1 채팅으로 빠른 상담</div>
+          </div>
+        </div>
+        <a
+          href="https://pf.kakao.com/_YOUR_CHANNEL_ID_"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 text-white text-sm font-semibold hover:opacity-90"
+        >
+          채널 추가
+        </a>
+      </div>
+
+      {/* 본문 */}
+      <div className="p-5 grid grid-cols-[auto,1fr] gap-4 items-center">
+        {/* QR 이미지가 있으면 아래 div 대신 <img src="/images/kakao-qr.png" alt="카카오톡 채널 QR" className="w-24 h-24 rounded-xl object-cover" /> 로 교체 */}
+        <div className="w-24 h-24 rounded-xl bg-neutral-200 grid place-items-center text-[10px] text-neutral-600 select-none">
+          QR
+        </div>
+        <div>
+          <div className="text-sm text-neutral-700">
+            아래 버튼을 누르거나 QR을 스캔하면 상담창이 열립니다.{" "}
+            <br className="hidden sm:block" />
+            운영시간 외에는 접수 순서대로 답변드려요.
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <a
+              href="http://pf.kakao.com/_xdmQxkn/chat"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEE500] text-neutral-900 font-semibold hover:brightness-95"
+              aria-label="카카오톡 채널 1:1 상담"
+            >
+              1:1 상담하기
+            </a>
+            <a
+              href="http://pf.kakao.com/_xdmQxkn"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90"
+              aria-label="카카오톡 채널 추가"
+            >
+              채널 추가
+            </a>
+          </div>
+          <div className="mt-2 text-xs text-neutral-500">채널 ID: 와줄래 </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+/* === /Kakao 채널 카드 === */
 /* ===== 앱 루트 ===== */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
