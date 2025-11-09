@@ -530,17 +530,22 @@ export default function App() {
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-              <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-                <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
-                  <span className="text-neutral-500 text-sm">빠른 이동</span>
-                </div>
+              {/* 좌측 ‘메인으로/빠른 이동’ 제거하고, 우측에 탭만 배치 + 서비스 소개 추가 */}
+              <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-end">
                 <nav className="flex items-center gap-1" aria-label="오버레이 탭">
-                  {["pricing","faq","contact"].map((id) => (
+                  {["about","pricing","faq","contact"].map((id) => (
                     <button
                       key={id}
                       type="button"
-                      onClick={() => setCurrentPage(id)}
+                      onClick={() => {
+                        if (id === "about") {
+                          // 서비스 소개: 히어로로 이동 + 오버레이 닫기
+                          setCurrentPage(null);
+                          document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                        } else {
+                          setCurrentPage(id);
+                        }
+                      }}
                       aria-current={currentPage === id ? "page" : undefined}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                         currentPage === id
@@ -548,7 +553,7 @@ export default function App() {
                           : "text-neutral-700 hover:bg-neutral-100"
                       }`}
                     >
-                      {NAV.find(n=>n.id===id)?.label}
+                      {NAV.find(n=>n.id===id)?.label || (id === "about" ? "서비스 소개" : id)}
                     </button>
                   ))}
                 </nav>
