@@ -1,27 +1,33 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import PageHome from "./pages/PageHome";
-import PagePricing from "./pages/PagePricing";
-import PageFAQ from "./pages/PageFAQ";
-import PageContact from "./pages/PageContact";
-/* -----------------------------------------------------
-   새 구조 요약
-   - 라우팅 기반으로 "서비스 소개"를 독립 페이지로 분리
-   - /  : 서비스 소개(새 메인)
-   - /pricing, /faq, /contact : 각 페이지(와이드에서도 정상 레이아웃)
-   - 기존 오버레이 방식 제거 → 여백/센터링 이슈 해소
-   - App.jsx에 그대로 붙여넣어 동작하도록 단일 파일 구성
-   ----------------------------------------------------- */
-
-/* 네비게이션 정의 */
+/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
 const NAV = [
-  { id: "home",    label: "서비스 소개", to: "/" },
-  { id: "pricing", label: "표준 견적",   to: "/pricing" },
-  { id: "faq",     label: "FAQ",        to: "/faq" },
-  { id: "contact", label: "문의",        to: "/contact" },
+  { id: "about",   label: "서비스 소개", type: "scroll" },
+  { id: "pricing", label: "표준 견적",   type: "page"   },
+  { id: "faq",     label: "FAQ",        type: "page"   },
+  { id: "contact", label: "문의",        type: "page"   },
 ];
+
+function useScrollSpy(ids) {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const ob = new IntersectionObserver(
+      (entries) => {
+        const v = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (v[0]) setActive(v[0].target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) ob.observe(el);
+    });
+    return () => ob.disconnect();
+  }, [ids]);
+  return active;
+}
 
 /* 아이콘 */
 const Check = () => (
@@ -34,13 +40,14 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
+/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
   </svg>
 );
 
-/* ===== 공통: 약관/법고지/개인정보 모달 ===== */
+/* ===== 문서 섹션들 (약관/법고지/개인정보) — 생략 없이 유지 ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -193,172 +200,8 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 공통 컴포넌트: 헤더 & 푸터 ===== */
-function Header() {
-  const location = useLocation();
-  const [legalOpen, setLegalOpen] = useState(false);
-  const [legalTab, setLegalTab] = useState("tos");
-
-  return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center gap-2 font-semibold text-lg"
-          aria-label="홈"
-        >
-          <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
-          <span>와줄래</span>
-          <span className="ml-2 text-sm font-normal text-neutral-500 hidden sm:inline">
-            표준견적 안내 / 생활수리 플랫폼
-          </span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
-          {NAV.map((item) => (
-            <Link
-              key={item.id}
-              to={item.to}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                location.pathname === item.to
-                  ? "bg-[var(--primary)] text-white shadow"
-                  : "text-neutral-700 hover:bg-neutral-100"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* 약관 바로가기 (헤더 우측 작은 링크) */}
-        <div className="hidden md:flex items-center gap-3 text-sm">
-          <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
-          <span className="text-neutral-300">·</span>
-          <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
-          <span className="text-neutral-300">·</span>
-          <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
-        </div>
-        <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
-      </div>
-    </header>
-  );
-}
-
-function Footer() {
-  const [legalOpen, setLegalOpen] = useState(false);
-  const [legalTab, setLegalTab] = useState("tos");
-
-  return (
-    <>
-      <div className="border-t border-neutral-200 bg-white">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="text-sm text-neutral-600">
-            <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
-            <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
-          </div>
-          <nav className="flex items-center gap-3 text-sm">
-            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
-            <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
-            <span className="text-neutral-300">·</span>
-            <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
-          </nav>
-        </div>
-      </div>
-      <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
-    </>
-  );
-}
-
-/* ===== 페이지: 서비스 소개(새 메인) ===== */
-function PageHome() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  return (
-    <main className="[--primary:#00c7ae] min-h-screen w-full overflow-x-hidden bg-neutral-50 text-neutral-900">
-      <style>{`
-        .gutter-stable { scrollbar-gutter: stable both-edges; }
-        * { -webkit-tap-highlight-color: transparent; }
-      `}</style>
-
-      {/* 히어로: 풀브리드 배경 + 중앙 정렬 컨테이너 (와이드 모니터 대응) */}
-      <section className="relative">
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-
-        <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
-              철산·광명·구로·가산
-              <br className="hidden sm:block"/> 생활수리 플랫폼
-            </h1>
-            <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
-              참고용 표준가 제공 / 과장 없는 사전 안내
-            </p>
-            <div className="mt-10">
-              <button
-                type="button"
-                onClick={() => navigate('/pricing')}
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-              >
-                표준 견적 바로가기 <ArrowRight />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
-              <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-              <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  {label:"전등 교체", icon:"💡"},
-                  {label:"콘센트/스위치", icon:"🔌"},
-                  {label:"수전/배관", icon:"🚿"},
-                  {label:"문/경첩/도어락", icon:"🚪"},
-                  {label:"타일/실리콘", icon:"🧱"},
-                  {label:"환풍기/후드", icon:"🌀"},
-                ].map((it) => (
-                  <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
-                    <span className="text-2xl" aria-hidden>{it.icon}</span>
-                    <span className="font-semibold">{it.label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 특징 섹션(간단) */}
-      <section className="py-14 bg-white">
-        <div className="max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14">
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              {t:"표준 견적 안내", d:"내부 표준표 기반의 투명한 사전 안내"},
-              {t:"전문가 방문 점검", d:"현장 확인 후 최종 확정"},
-              {t:"품질 보증", d:"기사 책임 하자보수 원칙"},
-            ].map((x)=> (
-              <div key={x.t} className="rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-6">
-                <p className="font-bold">{x.t}</p>
-                <p className="text-neutral-600 mt-1">{x.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 모바일 Dock */}
-      <MobileDock />
-    </main>
-  );
-}
-
-/* ===== 페이지: 표준 견적 ===== */
-function PagePricing() {
-  useEffect(() => { window.scrollTo(0,0); }, []);
-
+/* ===== 표준 견적(검색 + 이미지 지원) ===== */
+function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
     { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
@@ -392,213 +235,361 @@ function PagePricing() {
   }, [q, items]);
 
   return (
-    <main className="[--primary:#00c7ae] min-h-screen bg-neutral-50">
-      <section className="py-16 bg-neutral-50">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between gap-4 flex-wrap">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
-              <p className="text-neutral-500 mt-2">* 모든 금액은 부가세 · 출장비 · 기본 부품비 포함 기준입니다.</p>
-            </div>
-            <div className="w-full sm:w-auto">
-              <label className="relative block">
-                <span className="sr-only">항목 검색</span>
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="이미지/항목 검색"
-                  className="w-full sm:w-80 pl-11 pr-24 py-3 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
-                  type="search"
-                />
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
-                  <SearchIcon />
-                </span>
-                {q && (
-                  <button
-                    type="button"
-                    onClick={() => setQ("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 text-sm rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700"
-                    aria-label="검색어 지우기"
-                  >
-                    지우기
-                  </button>
-                )}
-              </label>
-            </div>
+    <section id="pricing" className="py-16 bg-neutral-50">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between gap-4 flex-wrap">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
+            <p className="text-neutral-500 mt-2">* 모든 금액은 부가세 · 출장비 · 기본 부품비 포함 기준입니다.</p>
           </div>
-
-          <div className="mt-4 text-sm text-neutral-500">
-            총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
+          <div className="w-full sm:w-auto">
+            <label className="relative block">
+              <span className="sr-only">항목 검색</span>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="이미지/항목 검색"
+                className="w-full sm:w-80 pl-11 pr-24 py-3 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
+                type="search"
+              />
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+                <SearchIcon />
+              </span>
+              {q && (
+                <button
+                  type="button"
+                  onClick={() => setQ("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 text-sm rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700"
+                  aria-label="검색어 지우기"
+                >
+                  지우기
+                </button>
+              )}
+            </label>
           </div>
-
-          {filtered.length > 0 ? (
-            <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-              {filtered.map((c) => (
-                <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
-                  {c.img ? (
-                    <img
-                      src={c.img}
-                      alt={c.t}
-                      loading="lazy"
-                      className="aspect-[4/3] w-full object-cover rounded-xl mb-3"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
-                  ) : (
-                    <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
-                  )}
-                  <p className="font-semibold">{c.t}</p>
-                  <p className="mt-1 text-lg font-extrabold text-neutral-900">{c.p}</p>
-                  <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-white p-8 text-center text-neutral-600">
-              검색 결과가 없습니다. 다른 키워드로 다시 시도해 보세요.
-            </div>
-          )}
-
-          <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
         </div>
-      </section>
 
-      {/* 모바일 Dock */}
-      <MobileDock />
-    </main>
-  );
-}
+        <div className="mt-4 text-sm text-neutral-500">
+          총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
+        </div>
 
-/* ===== 페이지: FAQ ===== */
-function PageFAQ() {
-  useEffect(() => { window.scrollTo(0,0); }, []);
-  return (
-    <main className="[--primary:#00c7ae] min-h-screen bg-white">
-      <section className="py-16 bg-white">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
-          <div className="mt-8 grid md:grid-cols-2 gap-4">
-            {[
-              { q: "견적은 어떻게 산정하나요?", a: "작업 항목·난이도·자재·현장 접근성을 고려한 내부 표준표를 기반으로 산정합니다." },
-              { q: "예약은 어떻게 진행돼요?", a: "요청 접수 → 기사 배정 → 방문 점검 → 작업/정산 순서로 진행됩니다." },
-              { q: "하자보수는 누가 책임지나요?", a: "시공의 주체는 기사이며, 하자보수 책임 또한 기사에게 있습니다." },
-              { q: "결제는 안전한가요?", a: "PG/에스크로 연동으로 안전 결제를 지원합니다." },
-            ].map((f, i) => (
-              <details key={i} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
-                <summary className="font-semibold cursor-pointer">{f.q}</summary>
-                <p className="text-neutral-600 mt-2">{f.a}</p>
-              </details>
+        {filtered.length > 0 ? (
+          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {filtered.map((c) => (
+              <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
+                {c.img ? (
+                  <img
+                    src={c.img}
+                    alt={c.t}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover rounded-xl mb-3"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                ) : (
+                  <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
+                )}
+                <p className="font-semibold">{c.t}</p>
+                <p className="mt-1 text-lg font-extrabold text-neutral-900">{c.p}</p>
+                <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        ) : (
+          <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-white p-8 text-center text-neutral-600">
+            검색 결과가 없습니다. 다른 키워드로 다시 시도해 보세요.
+          </div>
+        )}
 
-      {/* 모바일 Dock */}
-      <MobileDock />
-    </main>
+        <p className="text-xs text-neutral-500 mt-4">※ 현장 상황에 따라 달라질 수 있습니다.</p>
+      </div>
+    </section>
   );
 }
 
-/* ===== 페이지: 문의 ===== */
-function PageContact() {
-  useEffect(() => { window.scrollTo(0,0); }, []);
+function SectionFAQ() {
   return (
-    <main className="[--primary:#00c7ae] min-h-screen bg-gradient-to-b from-white to-neutral-50">
-      <section className="py-16">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-10">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
-              <p className="mt-2 text-neutral-600">필수 정보만 빠르게 남겨 주세요. 상담원이 연락드립니다.</p>
-              <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
-                <label className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">이름</span>
-                  <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="홍길동" />
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">연락처</span>
-                  <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="010-0000-0000" />
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">요청 항목</span>
-                  <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0">
-                    <option>콘센트 교체</option>
-                    <option>수전 교체</option>
-                    <option>전등/전기</option>
-                    <option>문/잠금장치</option>
-                    <option>기타</option>
-                  </select>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">상세 설명</span>
-                  <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
-                </label>
-                <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
-                  접수하기 <ArrowRight />
-                </button>
-              </form>
+    <section id="faq" className="py-16 bg-white">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
+        <div className="mt-8 grid md:grid-cols-2 gap-4">
+          {[
+            { q: "견적은 어떻게 산정하나요?", a: "작업 항목·난이도·자재·현장 접근성을 고려한 내부 표준표를 기반으로 산정합니다." },
+            { q: "예약은 어떻게 진행돼요?", a: "요청 접수 → 기사 배정 → 방문 점검 → 작업/정산 순서로 진행됩니다." },
+            { q: "하자보수는 누가 책임지나요?", a: "시공의 주체는 기사이며, 하자보수 책임 또한 기사에게 있습니다." },
+            { q: "결제는 안전한가요?", a: "PG/에스크로 연동으로 안전 결제를 지원합니다." },
+          ].map((f, i) => (
+            <details key={i} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
+              <summary className="font-semibold cursor-pointer">{f.q}</summary>
+              <p className="text-neutral-600 mt-2">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SectionContact() {
+  return (
+    <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-10">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
+            <p className="mt-2 text-neutral-600">필수 정보만 빠르게 남겨 주세요. 상담원이 연락드립니다.</p>
+            <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
+              <label className="flex flex-col gap-2">
+                <span className="text-sm font-medium">이름</span>
+                <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="홍길동" />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-sm font-medium">연락처</span>
+                <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="010-0000-0000" />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-sm font-medium">요청 항목</span>
+                <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0">
+                  <option>콘센트 교체</option>
+                  <option>수전 교체</option>
+                  <option>전등/전기</option>
+                  <option>문/잠금장치</option>
+                  <option>기타</option>
+                </select>
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-sm font-medium">상세 설명</span>
+                <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
+              </label>
+              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
+                접수하기 <ArrowRight />
+              </button>
+            </form>
+          </div>
+          <div className="lg:pl-10">
+            <div className="rounded-3xl ring-1 ring-neutral-200 p-6 bg-white">
+              <h3 className="font-semibold">고객 약속</h3>
+              <ul className="mt-4 space-y-2 text-neutral-700">
+                <li className="flex items-start gap-2"><Check /><span>표준 견적 안내</span></li>
+                <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
+                <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
+              </ul>
             </div>
-            <div className="lg:pl-10">
-              <div className="rounded-3xl ring-1 ring-neutral-200 p-6 bg-white">
-                <h3 className="font-semibold">고객 약속</h3>
-                <ul className="mt-4 space-y-2 text-neutral-700">
-                  <li className="flex items-start gap-2"><Check /><span>표준 견적 안내</span></li>
-                  <li className="flex items-start gap-2"><Check /><span>전문가 방문 점검</span></li>
-                  <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
-                </ul>
-              </div>
-              <div className="mt-4 text-xs text-neutral-500">© {new Date().getFullYear()} 와줄래</div>
-            </div>
+            <div className="mt-4 text-xs text-neutral-500">© {new Date().getFullYear()} 와줄래</div>
           </div>
         </div>
-      </section>
-
-      {/* 모바일 Dock */}
-      <MobileDock />
-    </main>
+      </div>
+    </footer>
   );
 }
 
-/* ===== 모바일 Dock (라우팅 전환) ===== */
-function MobileDock() {
-  const navigate = useNavigate();
+/* 모바일 Dock */
+function MobileDock({ onOpen }) {
   return (
     <div className="fixed bottom-3 left-0 right-0 z-[70] px-4 md:hidden">
       <div className="mx-auto max-w-sm rounded-2xl bg-white shadow-xl ring-1 ring-neutral-200 overflow-hidden">
         <div className="grid grid-cols-3">
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => navigate('/pricing')} type="button">표준 견적</button>
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50 border-x border-neutral-200" onClick={() => navigate('/faq')} type="button">FAQ</button>
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => navigate('/contact')} type="button">문의</button>
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("pricing")} type="button">표준 견적</button>
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50 border-x border-neutral-200" onClick={() => onOpen("faq")} type="button">FAQ</button>
+          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("contact")} type="button">문의</button>
         </div>
       </div>
     </div>
   );
 }
 
-/* ===== 레이아웃 (공통 헤더/푸터) ===== */
-function Layout({ children }) {
+/* ===== 앱 루트 ===== */
+export default function App() {
+  const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
+  const [currentPage, setCurrentPage] = useState(null);
+  const isOverlayOpen = !!currentPage;
+
+  // 오버레이 열릴 때 배경 스크롤 완전 잠금
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (isOverlayOpen) document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [isOverlayOpen]);
+
+  // 모달(약관)
+  const [legalOpen, setLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState("tos");
+
+  const handleNavClick = (item) => (e) => {
+    if (item.type === "scroll") {
+      e.preventDefault();
+      document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+      setCurrentPage(null);
+    } else {
+      e.preventDefault();
+      setCurrentPage(item.id);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
-      <Header />
-      {children}
-      <Footer />
-    </div>
-  );
-}
+      <style>{`
+        .gutter-stable { scrollbar-gutter: stable both-edges; }
+        * { -webkit-tap-highlight-color: transparent; }
+      `}</style>
 
-/* ===== 루트 App ===== */
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<PageHome />} />
-          <Route path="/pricing" element={<PagePricing />} />
-          <Route path="/faq" element={<PageFAQ />} />
-          <Route path="/contact" element={<PageContact />} />
-          {/* 필요 시 404 */}
-          <Route path="*" element={<PageHome />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+      {/* 헤더 */}
+      <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
+        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <a
+            href="#hero"
+            className="flex items-center gap-2 font-semibold text-lg"
+            aria-label="홈"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              setCurrentPage(null);
+            }}
+          >
+            <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
+            <span>와줄래</span>
+            <span className="ml-2 text-sm font-normal text-neutral-500 hidden sm:inline">
+              표준견적 안내 / 생활수리 플랫폼
+            </span>
+          </a>
+          <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
+            {NAV.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={handleNavClick(item)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+                  active === item.id
+                    ? "bg-[var(--primary)] text-white shadow"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
+      {!isOverlayOpen && (
+        <section id="hero" className="relative overflow-visible">
+          {/* 배경은 항상 화면 가득 */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
+
+          {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
+          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
+            {/* 왼쪽: 타이틀 */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                철산·광명·구로·가산
+                <br className="hidden sm:block"/> 생활수리 플랫폼
+              </h1>
+              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+                참고용 표준가 제공 / 과장 없는 사전 안내
+              </p>
+              <div className="mt-10">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage("pricing")}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                >
+                  표준 견적 바로가기 <ArrowRight />
+                </button>
+              </div>
+            </div>
+
+            {/* 오른쪽: 카드 (가운데 정렬) */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+                <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    {label:"전등 교체", icon:"💡"},
+                    {label:"콘센트/스위치", icon:"🔌"},
+                    {label:"수전/배관", icon:"🚿"},
+                    {label:"문/경첩/도어락", icon:"🚪"},
+                    {label:"타일/실리콘", icon:"🧱"},
+                    {label:"환풍기/후드", icon:"🌀"},
+                  ].map((it) => (
+                    <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
+                      <span className="text-2xl" aria-hidden>{it.icon}</span>
+                      <span className="font-semibold">{it.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 오버레이 페이지 */}
+      {isOverlayOpen && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
+          <div className="absolute inset-0 bg-white" />
+          <div className="relative w-full min-h-[100dvh]">
+            {/* ▶ 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
+            <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
+              <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+                <div className="flex items-center gap-2 font-semibold">
+                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
+                  <span className="text-neutral-500 text-sm">빠른 이동</span>
+                </div>
+                {/* 오버레이 내 탭 */}
+                <nav className="flex items-center gap-1" aria-label="오버레이 탭">
+                  {["pricing","faq","contact"].map((id) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setCurrentPage(id)}
+                      aria-current={currentPage === id ? "page" : undefined}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+                        currentPage === id
+                          ? "bg-[var(--primary)] text-white shadow"
+                          : "text-neutral-700 hover:bg-neutral-100"
+                      }`}
+                    >
+                      {NAV.find(n=>n.id===id)?.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
+
+            <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+              {currentPage === "pricing" && <SectionPricing />}
+              {currentPage === "faq"     && <SectionFAQ />}
+              {currentPage === "contact" && <SectionContact />}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 푸터 — 오버레이 때는 안 보이게 */}
+      {!isOverlayOpen && (
+        <div className="border-t border-neutral-200 bg-white">
+          <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="text-sm text-neutral-600">
+              <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
+              <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
+            </div>
+            <nav className="flex items-center gap-3 text-sm">
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
+              <span className="text-neutral-300">·</span>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
+              <span className="text-neutral-300">·</span>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
+            </nav>
+          </div>
+        </div>
+      )}
+
+      {/* 약관 모달 */}
+      <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
+
+      {/* 모바일 Dock은 항상 노출 */}
+      <MobileDock onOpen={setCurrentPage} />
+    </div>
   );
 }
