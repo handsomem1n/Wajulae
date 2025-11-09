@@ -480,67 +480,62 @@ export default function App() {
     />
 
     <div className="relative py-24 lg:py-28">
-      {/* 뷰포트 전체 기준 패딩만 주고, 중앙 정렬은 아래에서 처리 */}
+      {/* 👉 바깥 여백 때문에 치우치는 걸 방지: 중앙 정렬은 한 단계 아래에서 처리 */}
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        {/* ▼▼ ‘타이틀+카드’ 묶음을 뷰포트 기준 진짜 중앙에 고정 ▼▼ */}
-        <div
-          className="
-            relative left-1/2 -translate-x-1/2
-            w-[1144px] max-w-full
-            flex flex-col lg:flex-row items-center justify-center gap-16
-          "
-        >
-          {/* 왼쪽: 타이틀(고정폭 560) */}
-          <div className="w-[560px] max-w-full text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
-              철산·광명·구로·가산
-              <br className="hidden sm:block" /> 생활수리 플랫폼
-            </h1>
-            <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
-              참고용 표준가 제공 / 과장 없는 사전 안내
-            </p>
-            <div className="mt-10 flex justify-center lg:justify-start">
-              <button
-                type="button"
-                onClick={() => setCurrentPage("pricing")}
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-              >
-                표준 견적 바로가기 <ArrowRight />
-              </button>
-            </div>
-          </div>
-
-          {/* 오른쪽: 카드(고정폭 520) */}
-          <div className="w-[520px] max-w-full">
-            <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
-              <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-              <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  { label: "전등 교체", icon: "💡" },
-                  { label: "콘센트/스위치", icon: "🔌" },
-                  { label: "수전/배관", icon: "🚿" },
-                  { label: "문/경첩/도어락", icon: "🚪" },
-                  { label: "타일/실리콘", icon: "🧱" },
-                  { label: "환풍기/후드", icon: "🌀" },
-                ].map((it) => (
-                  <div
-                    key={it.label}
-                    className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between"
-                  >
-                    <span className="text-2xl" aria-hidden>
-                      {it.icon}
-                    </span>
-                    <span className="font-semibold">{it.label}</span>
-                  </div>
-                ))}
+        {/* ✅ 여기서 화면 기준 ‘진짜 중앙’으로 고정 */}
+        <div className="w-full grid place-items-center">
+          {/* 총폭 1144 = 560 + 64(gap-16) + 520 */}
+          <div className="w-[1144px] max-w-full grid gap-16 lg:grid-cols-[560px_520px]">
+            {/* 왼쪽: 타이틀 (560px) */}
+            <div className="w-full text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
+                철산·광명·구로·가산
+                <br className="hidden sm:block" /> 생활수리 플랫폼
+              </h1>
+              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
+                참고용 표준가 제공 / 과장 없는 사전 안내
+              </p>
+              <div className="mt-10 flex justify-center lg:justify-start">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage("pricing")}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                >
+                  표준 견적 바로가기 <ArrowRight />
+                </button>
               </div>
-              <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
-                * 사진이 있으면 상담이 더 빨라요
+            </div>
+
+            {/* 오른쪽: 카드 (520px) */}
+            <div className="w-full">
+              <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
+                <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    { label: "전등 교체", icon: "💡" },
+                    { label: "콘센트/스위치", icon: "🔌" },
+                    { label: "수전/배관", icon: "🚿" },
+                    { label: "문/경첩/도어락", icon: "🚪" },
+                    { label: "타일/실리콘", icon: "🧱" },
+                    { label: "환풍기/후드", icon: "🌀" },
+                  ].map((it) => (
+                    <div
+                      key={it.label}
+                      className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between"
+                    >
+                      <span className="text-2xl" aria-hidden>{it.icon}</span>
+                      <span className="font-semibold">{it.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
+                  * 사진이 있으면 상담이 더 빨라요
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* ▲▲ 중앙 고정 묶음 끝 ▲▲ */}
+        {/* // 중앙 고정 끝 */}
       </div>
     </div>
   </section>
