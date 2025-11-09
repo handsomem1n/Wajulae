@@ -359,7 +359,7 @@ function SectionContact() {
                 <span className="text-sm font-medium">상세 설명</span>
                 <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
               </label>
-              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
+              <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-XL bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
                 접수하기 <ArrowRight />
               </button>
             </form>
@@ -446,7 +446,6 @@ export default function App() {
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            {/* 문구 항상 보이도록 (모바일에서도 표시) */}
             <span className="ml-2 text-sm font-normal text-neutral-500">
               표준견적 안내 / 생활수리 플랫폼
             </span>
@@ -476,31 +475,44 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* 히어로(와이드 확장) */}
-          <div className="relative w-full max-w-[140rem] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 py-24 lg:py-32 2xl:py-40 grid lg:grid-cols-2 gap-12 2xl:gap-16 items-center min-h-[80vh]">
+          {/* 히어로(와이드 확장 및 유동 폰트/폭) */}
+          <div
+            className="relative w-full max-w-[160rem] mx-auto
+                       px-6 sm:px-10 lg:px-16 2xl:px-32
+                       py-24 lg:py-32 2xl:py-48
+                       grid lg:grid-cols-2 gap-12 2xl:gap-20 items-center
+                       min-h-[84vh]"
+          >
             {/* 왼쪽: 타이틀/설명/CTA */}
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
+              <h1 className="font-extrabold tracking-tight leading-[1.05] text-[clamp(36px,4.2vw,88px)]">
                 철산·광명·구로·가산
-                <br className="hidden sm:block"/> 생활수리 플랫폼
+                <br className="hidden sm:block" /> 생활수리 플랫폼
               </h1>
-              <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">
                 참고용 표준가 제공 / 과장 없는 사전 안내
               </p>
               <div className="mt-10">
                 <button
                   type="button"
                   onClick={() => setCurrentPage("pricing")}
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]"
                 >
                   표준 견적 바로가기 <ArrowRight />
                 </button>
               </div>
             </div>
 
-            {/* 오른쪽: 카테고리 카드 */}
+            {/* 오른쪽: 카테고리 카드 (vw 기반 최대폭) */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full md:max-w-[540px] xl:max-w-[600px] 2xl:max-w-[680px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
+              <div
+                className="relative
+                           w-full sm:w-[min(92vw,560px)]
+                           lg:w-[min(50vw,760px)]
+                           2xl:w-[min(44vw,920px)]
+                           rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200
+                           p-6 2xl:p-8 select-none cursor-default"
+              >
                 <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
                 <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
                   {[
@@ -539,7 +551,6 @@ export default function App() {
                       type="button"
                       onClick={() => {
                         if (id === "about") {
-                          // 서비스 소개: 히어로로 이동 + 오버레이 닫기
                           setCurrentPage(null);
                           document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
                         } else {
