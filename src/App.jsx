@@ -235,7 +235,7 @@ function SectionPricing() {
   }, [q, items]);
 
   return (
-    <section id="pricing" className="py-16 bg-neutral-50">
+    <section id="pricing" className="py-16 bg-white">
       <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -472,65 +472,58 @@ export default function App() {
 
       {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
       {!isOverlayOpen && (
-        <section id="hero" className="relative overflow-visible">
-          {/* 배경 */}
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-
-          <div className="relative py-24 lg:py-32">
-            {/* ✅ 근본 수정: 좌표 이동(left-1/2/-translate-x-1/2) 제거, 표준 컨테이너 가운데 정렬 */}
-            <div className="max-w-[1144px] mx-auto px-4 sm:px-6 lg:px-8">
-              {/* 560 / 520 고정폭 2단 그리드 */}
-              <div className="grid items-center gap-16 lg:grid-cols-[560px_520px]">
-                {/* 왼쪽: 타이틀(최대 560) */}
-                <div className="max-w-[560px] text-left">
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
-                    철산·광명·구로·가산
-                    <br className="hidden sm:block" /> 생활수리 플랫폼
-                  </h1>
-                  <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
-                    참고용 표준가 제공 / 과장 없는 사전 안내
-                  </p>
-                  <div className="mt-10">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentPage("pricing")}
-                      className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-                    >
-                      표준 견적 바로가기 <ArrowRight />
-                    </button>
-                  </div>
-                </div>
-
-                {/* 오른쪽: 카드(최대 520) */}
-                <div className="max-w-[520px]">
-                  <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
-                    <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
-                    <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {[
-                        { label: "전등 교체", icon: "💡" },
-                        { label: "콘센트/스위치", icon: "🔌" },
-                        { label: "수전/배관", icon: "🚿" },
-                        { label: "문/경첩/도어락", icon: "🚪" },
-                        { label: "타일/실리콘", icon: "🧱" },
-                        { label: "환풍기/후드", icon: "🌀" },
-                      ].map((it) => (
-                        <div
-                          key={it.label}
-                          className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between text-left"
-                        >
-                          <span className="text-2xl" aria-hidden>{it.icon}</span>
-                          <span className="font-semibold">{it.label}</span>
-                        </div>
-                      ))}
+        <section id="hero" className="relative isolate bg-white">
+          <div className="relative">
+            <div className="min-h-[calc(100svh-120px)] grid grid-cols-[1fr_minmax(0,1144px)_1fr] items-center">
+              <div className="col-start-2 px-4 sm:px-6 lg:px-8">
+                <div className="grid items-center gap-16 lg:grid-cols-[560px_520px]">
+                  <div className="max-w-[560px] text-left">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                      철산·광명·구로·가산
+                      <br className="hidden sm:block" /> 생활수리 플랫폼
+                    </h1>
+                    <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
+                      참고용 표준가 제공 / 과장 없는 사전 안내
+                    </p>
+                    <div className="mt-10">
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage("pricing")}
+                        className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                      >
+                        표준 견적 바로가기 <ArrowRight />
+                      </button>
                     </div>
-                    <div className="mt-4 text-xs text-neutral-500 text-left">
-                      * 사진이 있으면 상담이 더 빨라요
+                  </div>
+                  <div className="max-w-[520px]">
+                    <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
+                      <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
+                      <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          { label: "전등 교체", icon: "💡" },
+                          { label: "콘센트/스위치", icon: "🔌" },
+                          { label: "수전/배관", icon: "🚿" },
+                          { label: "문/경첩/도어락", icon: "🚪" },
+                          { label: "타일/실리콘", icon: "🧱" },
+                          { label: "환풍기/후드", icon: "🌀" },
+                        ].map((it) => (
+                          <div
+                            key={it.label}
+                            className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between text-left"
+                          >
+                            <span className="text-2xl" aria-hidden>{it.icon}</span>
+                            <span className="font-semibold">{it.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 text-xs text-neutral-500 text-left">
+                        * 사진이 있으면 상담이 더 빨라요
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {/* /컨테이너 끝 */}
           </div>
         </section>
       )}
