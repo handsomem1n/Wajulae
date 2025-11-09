@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
+/* 네비게이션 */
 const NAV = [
   { id: "about",   label: "서비스 소개", type: "scroll" },
   { id: "pricing", label: "표준 견적",   type: "page"   },
@@ -40,14 +40,13 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
-/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
   </svg>
 );
 
-/* ===== 문서 섹션들 (약관/법고지/개인정보) — 생략 없이 유지 ===== */
+/* ===== 문서 섹션들 (약관/법고지/개인정보) ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -81,8 +80,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }) {
 
   if (!open) return null;
   return (
-    <div role="dialog" aria-modal="true"
-         className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
+    <div role="dialog" aria-modal="true" className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain">
       <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
       <div className="min-h-[100dvh] flex items-start justify-center p-4 sm:p-6">
         <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl border border-neutral-200">
@@ -200,7 +198,7 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 표준 견적(검색 + 이미지 지원) ===== */
+/* ===== 표준 견적 ===== */
 function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
@@ -229,14 +227,14 @@ function SectionPricing() {
   const filtered = useMemo(() => {
     const keyword = q.trim().toLowerCase();
     if (!keyword) return items;
-    return items.filter((c) => (c.t + " " + c.d).toLowerCase().includes(keyword));
+    return items.filter((c) =>
+      (c.t + " " + c.d).toLowerCase().includes(keyword)
+    );
   }, [q, items]);
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      {/* 바깥 컨테이너: 좌우 여백 + 중앙 정렬 고정폭 */}
-      <div className="mx-auto max-w-[96rem] px-4 sm:px-6 lg:px-8">
-        {/* 헤더 + 검색 */}
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
@@ -270,27 +268,13 @@ function SectionPricing() {
         </div>
 
         <div className="mt-4 text-sm text-neutral-500">
-          총 {filtered.length}건 {q ? `(검색어: “${q}”)` : ""}
+          총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
         </div>
 
-        {/* 카드 그리드: 언제나 '진짜 가운데' 정렬 */}
         {filtered.length > 0 ? (
-          <div
-            className="
-              mt-8
-              grid gap-5
-              sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
-              justify-center          /* 가로축 중앙 */
-              place-items-stretch     /* 카드 채우기 */
-              auto-rows-fr            /* 행 높이 균일화 */
-              mx-auto                 /* 컨테이너 자체도 중앙 */
-            "
-          >
+          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
             {filtered.map((c) => (
-              <div
-                key={c.t}
-                className="rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default flex flex-col"
-              >
+              <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
                 {c.img ? (
                   <img
                     src={c.img}
@@ -417,14 +401,12 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(null);
   const isOverlayOpen = !!currentPage;
 
-  // 오버레이 열릴 때 배경 스크롤 완전 잠금
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (isOverlayOpen) document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
   }, [isOverlayOpen]);
 
-  // 모달(약관)
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
 
@@ -440,24 +422,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
       <style>{`
-       html { scrollbar-gutter: stable; }
+        .gutter-stable { scrollbar-gutter: stable both-edges; }
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
-       /* ✅ 화면 정중앙 가이드라인 */
-  .__center_guide__ {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    /* 폭 대신 border-left를 써서 퍼지/버전 이슈 제거 */
-    left: 50%;
-    right: 50%;
-    margin-left: -1px;       /* 2px 선의 정중앙을 정확히 중앙에 */
-    border-left: 2px solid rgba(255,0,0,0.6);
-    z-index: 99999;
-    pointer-events: none;
-  }
+
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -496,72 +466,64 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
-{!isOverlayOpen && (
-  <section id="hero" className="relative overflow-visible">
-    {/* 배경 */}
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
-    />
+      {/* 히어로 */}
+      {!isOverlayOpen && (
+        <section id="hero" className="relative overflow-visible">
+          {/* 배경 */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-   <div className="relative py-24 lg:py-28">
-  <div className="
-    relative left-1/2 -translate-x-1/2
-    w-[1144px] max-w-full
-    px-4 sm:px-6 lg:px-8
-    flex flex-col lg:flex-row items-center justify-center gap-16
-  ">
+          {/* 중앙 고정 컨테이너 */}
+          <div className="relative py-24 lg:py-32">
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+              <div className="relative left-1/2 -translate-x-1/2 w-[1144px] max-w-full grid gap-16 lg:grid-cols-[560px_520px] place-items-center">
+                {/* 왼쪽: 타이틀 */}
+                <div className="w-full text-center lg:text-left">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                    철산·광명·구로·가산
+                    <br className="hidden sm:block" /> 생활수리 플랫폼
+                  </h1>
+                  <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
+                    참고용 표준가 제공 / 과장 없는 사전 안내
+                  </p>
+                  <div className="mt-10 flex justify-center lg:justify-start">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage("pricing")}
+                      className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                    >
+                      표준 견적 바로가기 <ArrowRight />
+                    </button>
+                  </div>
+                </div>
 
-    {/* 왼쪽: 타이틀 (고정폭 560px) */}
-    <div className="w-[560px] max-w-full text-center lg:text-left">
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
-        철산·광명·구로·가산
-        <br className="hidden sm:block" /> 생활수리 플랫폼
-      </h1>
-
-      <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
-        참고용 표준가 제공 / 과장 없는 사전 안내
-      </p>
-
-      <div className="mt-10 flex justify-center lg:justify-start">
-        <button
-          type="button"
-          onClick={() => setCurrentPage("pricing")}
-          className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-        >
-          표준 견적 바로가기 <ArrowRight />
-        </button>
-      </div>
-    </div>
-
-    {/* 오른쪽: 카드 (고정폭 520px) */}
-    <div className="w-[520px] max-w-full">
-      <div className="w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
-        <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-        <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {[
-            { label: "전등 교체", icon: "💡" },
-            { label: "콘센트/스위치", icon: "🔌" },
-            { label: "수전/배관", icon: "🚿" },
-            { label: "문/경첩/도어락", icon: "🚪" },
-            { label: "타일/실리콘", icon: "🧱" },
-            { label: "환풍기/후드", icon: "🌀" },
-          ].map((it) => (
-            <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between">
-              <span className="text-2xl" aria-hidden>{it.icon}</span>
-              <span className="font-semibold">{it.label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
-          * 사진이 있으면 상담이 더 빨라요
+                {/* 오른쪽: 카드 */}
+                <div className="w-full flex justify-center lg:justify-start">
+                  <div className="w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+                    <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                    <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {[
+                        {label:"전등 교체", icon:"💡"},
+                        {label:"콘센트/스위치", icon:"🔌"},
+                        {label:"수전/배관", icon:"🚿"},
+                        {label:"문/경첩/도어락", icon:"🚪"},
+                        {label:"타일/실리콘", icon:"🧱"},
+                        {label:"환풍기/후드", icon:"🌀"},
+                      ].map((it) => (
+                        <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between">
+                          <span className="text-2xl" aria-hidden>{it.icon}</span>
+                          <span className="font-semibold">{it.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
+                      * 사진이 있으면 상담이 더 빨라요
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-  </section>
+        </section>
       )}
 
       {/* 오버레이 페이지 */}
@@ -569,14 +531,12 @@ export default function App() {
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
-            {/* ▶ 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
                 </div>
-                {/* 오버레이 내 탭 */}
                 <nav className="flex items-center gap-1" aria-label="오버레이 탭">
                   {["pricing","faq","contact"].map((id) => (
                     <button
@@ -606,7 +566,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 푸터 — 오버레이 때는 안 보이게 */}
+      {/* 푸터 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
           <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -628,7 +588,7 @@ export default function App() {
       {/* 약관 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
-      {/* 모바일 Dock은 항상 노출 */}
+      {/* 모바일 Dock */}
       <MobileDock onOpen={setCurrentPage} />
     </div>
   );
