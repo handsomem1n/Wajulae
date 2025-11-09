@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+/** =========================================
+ *  간편 미리보기 스위치
+ *  null             → 일반 동작
+ *  "pricing" | "faq" | "contact" → 해당 오버레이 강제 오픈
+ *  ========================================= */
+const PREVIEW = null;
+
 /* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
 const NAV = [
   { id: "about",   label: "서비스 소개", type: "scroll" },
@@ -235,7 +242,8 @@ function SectionPricing() {
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 풀폭: max-w 제거, w-full 유지 */}
+      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
@@ -273,7 +281,7 @@ function SectionPricing() {
         </div>
 
         {filtered.length > 0 ? (
-          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
             {filtered.map((c) => (
               <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
                 {c.img ? (
@@ -308,7 +316,8 @@ function SectionPricing() {
 function SectionFAQ() {
   return (
     <section id="faq" className="py-16 bg-white">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 풀폭 */}
+      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -331,7 +340,8 @@ function SectionFAQ() {
 function SectionContact() {
   return (
     <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 풀폭 */}
+      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
@@ -399,7 +409,7 @@ function MobileDock({ onOpen }) {
 /* ===== 앱 루트 ===== */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
-  const [currentPage, setCurrentPage] = useState(null);
+  const [currentPage, setCurrentPage] = useState(PREVIEW); // 미리보기 반영
   const isOverlayOpen = !!currentPage;
 
   // 오버레이 열릴 때 배경 스크롤 완전 잠금
@@ -431,9 +441,9 @@ export default function App() {
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
 
-      {/* 헤더 */}
+      {/* 헤더 — 풀폭 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 h-16 flex items-center justify-between">
           <a
             href="#hero"
             className="flex items-center gap-2 font-semibold text-lg"
@@ -446,7 +456,6 @@ export default function App() {
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            {/* 문구 항상 보이도록 (모바일에서도 표시) */}
             <span className="ml-2 text-sm font-normal text-neutral-500">
               표준견적 안내 / 생활수리 플랫폼
             </span>
@@ -470,67 +479,70 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
+      {/* 히어로 — 오버레이가 열리면 렌더하지 않음 / 풀폭 */}
       {!isOverlayOpen && (
         <section id="hero" className="relative overflow-visible">
-          {/* 배경은 항상 화면 가득 */}
+          {/* 배경 풀폭 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* 히어로(와이드 확장) */}
-          <div className="relative w-full max-w-[140rem] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 py-24 lg:py-32 2xl:py-40 grid lg:grid-cols-2 gap-12 2xl:gap-16 items-center min-h-[80vh]">
-            {/* 왼쪽: 타이틀/설명/CTA */}
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
-                철산·광명·구로·가산
-                <br className="hidden sm:block"/> 생활수리 플랫폼
-              </h1>
-              <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
-                참고용 표준가 제공 / 과장 없는 사전 안내
-              </p>
-              <div className="mt-10">
-                <button
-                  type="button"
-                  onClick={() => setCurrentPage("pricing")}
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-                >
-                  표준 견적 바로가기 <ArrowRight />
-                </button>
-              </div>
-            </div>
-
-            {/* 오른쪽: 카테고리 카드 */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full md:max-w-[540px] xl:max-w-[600px] 2xl:max-w-[680px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
-                <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
-                  {[
-                    {label:"전등 교체", icon:"💡"},
-                    {label:"콘센트/스위치", icon:"🔌"},
-                    {label:"수전/배관", icon:"🚿"},
-                    {label:"문/경첩/도어락", icon:"🚪"},
-                    {label:"타일/실리콘", icon:"🧱"},
-                    {label:"환풍기/후드", icon:"🌀"},
-                  ].map((it) => (
-                    <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
-                      <span className="text-2xl 2xl:text-3xl" aria-hidden>{it.icon}</span>
-                      <span className="font-semibold 2xl:text-base">{it.label}</span>
-                    </div>
-                  ))}
+          {/* 컨텐츠 풀폭 */}
+          <div className="relative w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
+            <div className="grid grid-cols-12 gap-8 2xl:gap-12 items-center">
+              {/* 왼쪽: 타이틀 */}
+              <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
+                  철산·광명·구로·가산
+                  <br className="hidden sm:block"/> 생활수리 플랫폼
+                </h1>
+                <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700 max-w-none">
+                  참고용 표준가 제공 / 과장 없는 사전 안내
+                </p>
+                <div className="mt-10">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage("pricing")}
+                    className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                  >
+                    표준 견적 바로가기 <ArrowRight />
+                  </button>
                 </div>
-                <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+              </div>
+
+              {/* 오른쪽: 카드 */}
+              <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end">
+                <div className="relative w-full max-w-[760px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
+                  <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
+                    {[
+                      {label:"전등 교체", icon:"💡"},
+                      {label:"콘센트/스위치", icon:"🔌"},
+                      {label:"수전/배관", icon:"🚿"},
+                      {label:"문/경첩/도어락", icon:"🚪"},
+                      {label:"타일/실리콘", icon:"🧱"},
+                      {label:"환풍기/후드", icon:"🌀"},
+                    ].map((it) => (
+                      <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
+                        <span className="text-2xl 2xl:text-3xl" aria-hidden>{it.icon}</span>
+                        <span className="font-semibold 2xl:text-base">{it.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+                </div>
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* 오버레이 페이지 */}
+      {/* 오버레이 페이지 — 전부 풀폭 */}
       {isOverlayOpen && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
+            {/* 상단 오버레이 바 */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-              <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+              <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
@@ -555,7 +567,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            {/* 컨텐츠 풀폭 */}
+            <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-10">
               {currentPage === "pricing" && <SectionPricing />}
               {currentPage === "faq"     && <SectionFAQ />}
               {currentPage === "contact" && <SectionContact />}
@@ -564,10 +577,10 @@ export default function App() {
         </div>
       )}
 
-      {/* 푸터 — 오버레이 때는 안 보이게 */}
+      {/* 푸터 — 오버레이 때는 숨김 / 풀폭 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
-          <div className="max-w-[96rem] w-full mx-auto px-6 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
               <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
