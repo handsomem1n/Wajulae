@@ -488,40 +488,38 @@ export default function App() {
       </header>
 
       {/* 히어로 */}
-     {!isOverlayOpen && (
+    {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
-    {/* 풀폭 배경 */}
+    {/* 배경 */}
     <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-    {/* ▶ 가운데 정렬: 전용 컨테이너 + 2열(1:1) */}
-    <div className="relative container-hero py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
+    {/* ✅ 표준견적과 동일한 컨테이너 구조 적용 */}
+    <div className="container-x py-24 lg:py-32">
+      <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* 왼쪽: 타이틀 */}
+        {/* 왼쪽 텍스트 */}
         <div className="text-center lg:text-left">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
-            철산·광명·구로·가산
-            <br className="hidden sm:block" /> 생활수리 플랫폼
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight">
+            철산·광명·구로·가산 <br className="hidden sm:block"/> 생활수리 플랫폼
           </h1>
-          <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700">
+          <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
             참고용 표준가 제공 / 과장 없는 사전 안내
           </p>
-          <div className="mt-10">
-            <button
-              type="button"
-              onClick={() => setCurrentPage("pricing")}
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-            >
-              표준 견적 바로가기 <ArrowRight />
-            </button>
-          </div>
+
+          <button
+            type="button"
+            onClick={() => setCurrentPage("pricing")}
+            className="mt-10 inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95"
+          >
+            표준 견적 바로가기 <ArrowRight />
+          </button>
         </div>
 
-        {/* 오른쪽: 카드(항상 가운데) */}
-        <div className="flex justify-center">
-          <div className="w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
-            <h3 className="font-bold text-lg 2xl:text-xl text-center">어떤 도움이 필요하세요?</h3>
-            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
+        {/* 오른쪽 카드 */}
+        <div className="flex justify-center lg:justify-end">
+          <div className="w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none">
+            <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
               {[
                 { label: "전등 교체", icon: "💡" },
                 { label: "콘센트/스위치", icon: "🔌" },
@@ -529,24 +527,22 @@ export default function App() {
                 { label: "문/경첩/도어락", icon: "🚪" },
                 { label: "타일/실리콘", icon: "🧱" },
                 { label: "환풍기/후드", icon: "🌀" },
-              ].map((it) => (
+              ].map((item) => (
                 <div
-                  key={it.label}
-                  className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5
-                             text-left flex flex-col justify-between"
+                  key={item.label}
+                  className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between"
                 >
-                  <span className="text-2xl 2xl:text-3xl" aria-hidden>
-                    {it.icon}
-                  </span>
-                  <span className="font-semibold 2xl:text-base">{it.label}</span>
+                  <span className="text-2xl" aria-hidden>{item.icon}</span>
+                  <span className="font-semibold text-sm sm:text-base">{item.label}</span>
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center">
+            <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">
               * 사진이 있으면 상담이 더 빨라요
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
