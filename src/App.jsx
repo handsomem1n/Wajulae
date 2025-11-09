@@ -474,13 +474,22 @@ export default function App() {
 {!isOverlayOpen && (
   <section id="hero" className="relative overflow-visible">
     {/* 배경 */}
-    <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
+    />
 
     <div className="relative py-24 lg:py-28">
-      {/* ① 헤더와 같은 외곽 컨테이너(안전 여백) */}
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ② ‘타이틀+카드’ 묶음을 총폭 고정(= 560 + 64 + 520 = 1144px)해서 가운데 배치 */}
-        <div className="mx-auto max-w-[1144px] w-full flex flex-col lg:flex-row items-center justify-center gap-16">
+      {/* 뷰포트 전체 기준 패딩만 주고, 중앙 정렬은 아래에서 처리 */}
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        {/* ▼▼ ‘타이틀+카드’ 묶음을 뷰포트 기준 진짜 중앙에 고정 ▼▼ */}
+        <div
+          className="
+            relative left-1/2 -translate-x-1/2
+            w-[1144px] max-w-full
+            flex flex-col lg:flex-row items-center justify-center gap-16
+          "
+        >
           {/* 왼쪽: 타이틀(고정폭 560) */}
           <div className="w-[560px] max-w-full text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
@@ -514,8 +523,13 @@ export default function App() {
                   { label: "타일/실리콘", icon: "🧱" },
                   { label: "환풍기/후드", icon: "🌀" },
                 ].map((it) => (
-                  <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between">
-                    <span className="text-2xl" aria-hidden>{it.icon}</span>
+                  <div
+                    key={it.label}
+                    className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 flex flex-col justify-between"
+                  >
+                    <span className="text-2xl" aria-hidden>
+                      {it.icon}
+                    </span>
                     <span className="font-semibold">{it.label}</span>
                   </div>
                 ))}
@@ -526,7 +540,7 @@ export default function App() {
             </div>
           </div>
         </div>
-        {/* // 묶음 끝 */}
+        {/* ▲▲ 중앙 고정 묶음 끝 ▲▲ */}
       </div>
     </div>
   </section>
