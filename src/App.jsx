@@ -479,13 +479,19 @@ export default function App() {
       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white"
     />
 
-    {/* ▶ 오버레이와 동일한 컨테이너 규격: max-w-[96rem] + 좌우 패딩 */}
-    <div className="relative">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        {/* 2열 그리드: 좌 타이틀 / 우 카드. 넓은 화면에서도 중앙 정렬 유지 */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* 왼쪽: 타이틀(가독 폭 제한) */}
-          <div className="text-left max-w-3xl">
+    {/* ✅ 뷰포트 기준 ‘진짜 중앙’ 고정 래퍼 */}
+    <div className="relative py-24 lg:py-32">
+      <div
+        className="
+          relative left-1/2 -translate-x-1/2
+          w-[1144px] max-w-[calc(100%-32px)]
+          px-4
+        "
+      >
+        {/* 560 + 520 = 1080, 여백 64 = 총 1144 */}
+        <div className="grid grid-cols-[560px_520px] gap-x-8 items-center">
+          {/* 왼쪽: 타이틀(560px 고정) */}
+          <div className="text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
               철산·광명·구로·가산
               <br className="hidden sm:block" /> 생활수리 플랫폼
@@ -504,9 +510,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* 오른쪽: 카드(폭 제한 + 중앙 정렬) */}
-          <div className="justify-self-center lg:justify-self-end w-full">
-            <div className="w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+          {/* 오른쪽: 카드(520px 고정) */}
+          <div className="justify-self-start">
+            <div className="w-[520px] max-w-full rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
               <h3 className="font-bold text-lg text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
