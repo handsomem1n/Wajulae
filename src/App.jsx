@@ -593,7 +593,6 @@ export default function App() {
                 </div>
                 <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
               </div>
-              <KakaoChannelCard />
             </div>
           </div>
         </section>
