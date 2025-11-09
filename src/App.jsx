@@ -383,13 +383,52 @@ function SectionContact() {
 
 /* 모바일 Dock */
 function MobileDock({ onOpen }) {
+
+  const goHome = () => {
+    // 오버레이 닫기 + 서비스소개(#hero)로 스크롤
+    onOpen(null);
+    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="fixed bottom-3 left-0 right-0 z-[70] px-4 md:hidden">
       <div className="mx-auto max-w-sm rounded-2xl bg-white shadow-xl ring-1 ring-neutral-200 overflow-hidden">
-        <div className="grid grid-cols-3">
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("pricing")} type="button">표준 견적</button>
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50 border-x border-neutral-200" onClick={() => onOpen("faq")} type="button">FAQ</button>
-          <button className="py-3 text-sm font-semibold hover:bg-neutral-50" onClick={() => onOpen("contact")} type="button">문의</button>
+        {/* 기존 3칸 → 4칸으로 변경 */}
+        <div className="grid grid-cols-4">
+          
+          {/* ✅ 홈 버튼 추가 (맨 앞) */}
+          <button
+            className="py-3 text-sm font-semibold hover:bg-neutral-50"
+            onClick={goHome}
+            type="button"
+          >
+            홈
+          </button>
+
+          <button
+            className="py-3 text-sm font-semibold hover:bg-neutral-50 border-l border-neutral-200"
+            onClick={() => onOpen("pricing")}
+            type="button"
+          >
+            표준 견적
+          </button>
+
+          <button
+            className="py-3 text-sm font-semibold hover:bg-neutral-50 border-l border-neutral-200"
+            onClick={() => onOpen("faq")}
+            type="button"
+          >
+            FAQ
+          </button>
+
+          <button
+            className="py-3 text-sm font-semibold hover:bg-neutral-50 border-l border-neutral-200"
+            onClick={() => onOpen("contact")}
+            type="button"
+          >
+            문의
+          </button>
+
         </div>
       </div>
     </div>
