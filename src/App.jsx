@@ -1,13 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-/** =========================================
- *  간편 미리보기 스위치
- *  null             → 일반 동작
- *  "pricing" | "faq" | "contact" → 해당 오버레이 강제 오픈
- *  ========================================= */
+/** 미리보기 스위치: null | "pricing" | "faq" | "contact" */
 const PREVIEW = null;
 
-/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
+/* 네비게이션 */
 const NAV = [
   { id: "about",   label: "서비스 소개", type: "scroll" },
   { id: "pricing", label: "표준 견적",   type: "page"   },
@@ -53,7 +49,7 @@ const SearchIcon = () => (
   </svg>
 );
 
-/* ===== 문서 섹션들 (약관/법고지/개인정보) — 생략 없이 유지 ===== */
+/* ===== 문서 섹션들 ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
@@ -206,7 +202,7 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 표준 견적(검색 + 이미지 지원) ===== */
+/* ===== 표준 견적 ===== */
 function SectionPricing() {
   const items = [
     { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
@@ -242,8 +238,7 @@ function SectionPricing() {
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      {/* 풀폭: max-w 제거, w-full 유지 */}
-      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      <div className="container-x">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h2>
@@ -316,8 +311,7 @@ function SectionPricing() {
 function SectionFAQ() {
   return (
     <section id="faq" className="py-16 bg-white">
-      {/* 풀폭 */}
-      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      <div className="container-x">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -340,8 +334,7 @@ function SectionFAQ() {
 function SectionContact() {
   return (
     <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
-      {/* 풀폭 */}
-      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      <div className="container-x">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
@@ -409,17 +402,15 @@ function MobileDock({ onOpen }) {
 /* ===== 앱 루트 ===== */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
-  const [currentPage, setCurrentPage] = useState(PREVIEW); // 미리보기 반영
+  const [currentPage, setCurrentPage] = useState(PREVIEW);
   const isOverlayOpen = !!currentPage;
 
-  // 오버레이 열릴 때 배경 스크롤 완전 잠금
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (isOverlayOpen) document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
   }, [isOverlayOpen]);
 
-  // 모달(약관)
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
 
@@ -439,11 +430,20 @@ export default function App() {
       <style>{`
         .gutter-stable { scrollbar-gutter: stable both-edges; }
         * { -webkit-tap-highlight-color: transparent; }
+        /* 공통 컨테이너: 가운데 정렬 + 좌우 동일 공백 + 최대폭 */
+        .container-x {
+          width: 100%;
+          max-width: 1600px;       /* 필요 시 1440/1680 등으로 조절 */
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: clamp(16px, 3vw, 48px);
+          padding-right: clamp(16px, 3vw, 48px);
+        }
       `}</style>
 
-      {/* 헤더 — 풀폭 */}
+      {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-        <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 h-16 flex items-center justify-between">
+        <div className="container-x h-16 flex items-center justify-between">
           <a
             href="#hero"
             className="flex items-center gap-2 font-semibold text-lg"
@@ -479,22 +479,18 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 — 오버레이가 열리면 렌더하지 않음 / 풀폭 */}
+      {/* 히어로 */}
       {!isOverlayOpen && (
         <section id="hero" className="relative overflow-visible">
-          {/* 배경 풀폭 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-
-          {/* 컨텐츠 풀폭 */}
-          <div className="relative w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
+          <div className="relative container-x py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
             <div className="grid grid-cols-12 gap-8 2xl:gap-12 items-center">
-              {/* 왼쪽: 타이틀 */}
               <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
                   철산·광명·구로·가산
                   <br className="hidden sm:block"/> 생활수리 플랫폼
                 </h1>
-                <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700 max-w-none">
+                <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700">
                   참고용 표준가 제공 / 과장 없는 사전 안내
                 </p>
                 <div className="mt-10">
@@ -508,7 +504,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* 오른쪽: 카드 */}
               <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-[760px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
                   <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
@@ -535,14 +530,13 @@ export default function App() {
         </section>
       )}
 
-      {/* 오버레이 페이지 — 전부 풀폭 */}
+      {/* 오버레이(풀폭 + 가운데 정렬) */}
       {isOverlayOpen && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
-            {/* 상단 오버레이 바 */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-              <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 h-14 flex items-center justify-between">
+              <div className="container-x h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
@@ -567,8 +561,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* 컨텐츠 풀폭 */}
-            <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-10">
+            <div className="container-x py-10">
               {currentPage === "pricing" && <SectionPricing />}
               {currentPage === "faq"     && <SectionFAQ />}
               {currentPage === "contact" && <SectionContact />}
@@ -577,10 +570,10 @@ export default function App() {
         </div>
       )}
 
-      {/* 푸터 — 오버레이 때는 숨김 / 풀폭 */}
+      {/* 푸터 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
-          <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="container-x py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
               <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
@@ -596,10 +589,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 약관 모달 */}
       <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
-
-      {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
     </div>
   );
