@@ -507,7 +507,7 @@ export default function App() {
 
                 {/* 카카오톡 상담 버튼 (카카오 채널 링크로 교체하세요) */}
                 <a
-                  href="https://pf.kakao.com/_YOURCHANNELID/chat"
+                  href="https://pf.kakao.com/_xdmQxkn/chat"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)] lg:mt-3"
