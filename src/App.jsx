@@ -553,7 +553,7 @@ export default function App() {
         <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a
             href="#hero"
-            className="flex items-center gap-2 font-semibold text-lg"
+            className="flex items-center gap-1 font-semibold text-lg leading-none"
             aria-label="홈"
             onClick={(e) => {
               e.preventDefault();
@@ -563,7 +563,7 @@ export default function App() {
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            <span className="ml-2 text-sm font-normal text-neutral-500">
+            <span className="text-sm font-normal text-neutral-500">
               표준견적 안내 / 생활수리 플랫폼
             </span>
           </a>
