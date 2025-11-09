@@ -431,9 +431,19 @@ export default function App() {
        html { scrollbar-gutter: stable; }
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
-        <div
+       <div
   aria-hidden
-  className="fixed inset-y-0 left-1/2 w-[2px] bg-red-500/60 pointer-events-none z-[9999]"
+  style={{
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+    left: '50%',
+    width: '2px',
+    transform: 'translateX(-1px)', // 2px 선을 정확히 중앙에
+    background: 'rgba(255, 0, 0, 0.6)',
+    zIndex: 9999,
+    pointerEvents: 'none'
+  }}
 />
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
