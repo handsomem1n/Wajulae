@@ -492,12 +492,7 @@ export default function App() {
     />
 
     <div className="relative py-24 lg:py-28">
-      {/* 👉 바깥 여백 때문에 치우치는 걸 방지: 중앙 정렬은 한 단계 아래에서 처리 */}
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        {/* ✅ 여기서 화면 기준 ‘진짜 중앙’으로 고정 */}
-        <div className="w-full grid place-items-center">
-          {/* 총폭 1144 = 560 + 64(gap-16) + 520 */}
-          <div className="w-[1144px] max-w-full grid gap-16 lg:grid-cols-[560px_520px]">
+<div className="relative left-1/2 -translate-x-1/2 w-[1144px] max-w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-16">
             {/* 왼쪽: 타이틀 (560px) */}
             <div className="w-full text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
