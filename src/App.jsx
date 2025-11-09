@@ -60,7 +60,7 @@ function KakaoIcon() {
 
 function KakaoChannelCard() {
   return (
-    <div className="mt-4 rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
+    <div className="mt-6 rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
       {/* 상단 배너 */}
       <div className="px-5 py-3 flex items-center justify-between bg-[#FEE500]">
         <div className="flex items-center gap-2 text-neutral-900">
@@ -84,7 +84,6 @@ function KakaoChannelCard() {
 
       {/* 본문 */}
       <div className="p-5 grid grid-cols-[auto,1fr] gap-4 items-center">
-        {/* QR 이미지가 있으면 아래 div 대신 <img src="/images/kakao-qr.png" alt="카카오톡 채널 QR" className="w-24 h-24 rounded-xl object-cover" /> */}
         <div className="w-24 h-24 rounded-xl bg-neutral-200 grid place-items-center text-[10px] text-neutral-600 select-none">
           QR
         </div>
@@ -131,7 +130,7 @@ function SectionPricing() {
     { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
     { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/kitchen-faucet.jpg" },
     { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",           img: "/images/countertop.jpg" },
-    { t: "대리석 크랙 보수", p: "300,000원", d: "규격에 따라 변동",           img: "/images/countertop.jpg" },
+    { t: "대리석 크랙 보수",         p: "300,000원", d: "규격에 따라 변동",                      img: "/images/countertop.jpg" },
     { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동",             img: "/images/tiles.jpg" },
     { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동",             img: "/images/kitchen-hood.jpg" },
     { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동",      img: "/images/undercounter-sink.jpg" },
@@ -235,8 +234,8 @@ function SectionFAQ() {
           {[
             { q: "결제는 누구에게 하나요?", a: "고객이 지급하는 시공 대금은 기사에게 직접 지급됩니다. 회사는 고객으로부터 대금을 직접 수령하지 않습니다." },
             { q: "영수증/세금계산서는 누가 발행하나요?", a: "용역 대금 관련 영수증·세금계산서는 기사(사업자)가 발행합니다. 회사는 기사에게 청구되는 중개 수수료에 대해서만 세금계산서를 발행할 수 있습니다." },
-            { q: "하자보수 책임은 누구에게 있나요?", a: "시공의 주체는 기사이며, 품질·AS·하자 책임은 기사에게 있습니다. 회사는 중개자 지위에서 분쟁을 조정할 수 있습니다." },
-            { q: "취소/환불은 어떻게 이루어지나요?", a: "배정 전 취소는 전액 환불 권장이나, 구체적 기준은 기사와의 약정 및 법령에 따릅니다. 배정 후 취소·이미 제공된 용역의 환불/감액/하자보수는 고객-기사 간 약정에 따릅니다." },
+            { q: "하자보수 책임은 누구에게 있나요?", a: "시공의 주체는 기사이며, 품질·AS·하자 책임은 기사에게 있습니다. 회사는 중개자 지위에서 분쟁 조정을 안내할 수 있습니다." },
+            { q: "취소/환불은 어떻게 이루어지나요?", a: "배정 전 취소는 전액 환불을 권장하나, 구체적 기준은 기사와의 약정 및 법령에 따릅니다. 배정 후 취소·이미 제공된 용역의 환불/감액/하자보수는 고객-기사 간 약정에 따릅니다." },
             { q: "가격이 달라질 수 있는 이유는?", a: "현장 상태, 자재/부자재, 배선·배관·접근성, 난이도 등에 따라 달라질 수 있습니다. 표준 가이드는 참고용입니다." },
             { q: "기사는 검증된 분인가요?", a: "기본 신원/사업자 확인 절차를 거치며, 업종에 필요한 자격·면허·보험 유지 책임은 기사에게 있습니다." },
           ].map((f, i) => (
@@ -400,55 +399,54 @@ export default function App() {
       {!isOverlayOpen && (
         <section id="hero" className="relative overflow-visible">
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--primary)]/10 via-teal-50 to-white" />
+          <div className="relative w-full max-w-[160rem] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-32 py-24 lg:py-32 2xl:py-48">
+            {/* 상단 2컬럼 영역 */}
+            <div className="grid lg:grid-cols-2 gap-12 2xl:gap-20 items-center min-h-[60vh]">
+              <div className="text-center lg:text-left">
+                <h1 className="font-extrabold tracking-tight leading-[1.05] text-[clamp(36px,4.2vw,88px)]">
+                  서울·경기남부<br className="hidden sm:block" /> 생활수리 플랫폼
+                </h1>
+                <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+                  참고용 표준가 제공 / 과장 없는 사전 안내
+                </p>
+                <div className="mt-10">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage("pricing")}
+                    className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]"
+                  >
+                    표준 견적 바로가기 <ArrowRight />
+                  </button>
+                </div>
+              </div>
 
-          {/* 두 컬럼 그리드 */}
-          <div className="relative w-full max-w-[160rem] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-32 py-24 lg:py-32 2xl:py-48 grid lg:grid-cols-2 gap-12 2xl:gap-20 items-center min-h-[84vh]">
-            <div className="text-center lg:text-left">
-              <h1 className="font-extrabold tracking-tight leading-[1.05] text-[clamp(36px,4.2vw,88px)]">
-                서울·경기남부<br className="hidden sm:block" /> 생활수리 플랫폼
-              </h1>
-              <p className="mt-4 text-[clamp(15px,1.4vw,28px)] text-neutral-700 max-w-2xl mx-auto lg:mx-0">
-                참고용 표준가 제공 / 과장 없는 사전 안내
-              </p>
-              <div className="mt-10">
-                <button
-                  type="button"
-                  onClick={() => setCurrentPage("pricing")}
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none text-[clamp(14px,1.1vw,18px)]"
-                >
-                  표준 견적 바로가기 <ArrowRight />
-                </button>
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative w-full sm:w-[min(92vw,560px)] lg:w-[min(50vw,760px)] 2xl:w-[min(44vw,920px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
+                  <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
+                    {[
+                      {label:"전등 교체", icon:"💡"},
+                      {label:"콘센트/스위치", icon:"🔌"},
+                      {label:"수전/배관", icon:"🚿"},
+                      {label:"문/경첩/도어락", icon:"🚪"},
+                      {label:"타일/대리석/실리콘", icon:"🧱"},
+                      {label:"환풍기/후드/배수구", icon:"🌀"},
+                    ].map((it) => (
+                      <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
+                        <span className="text-2xl 2xl:text-3xl" aria-hidden="true">{it.icon}</span>
+                        <span className="font-semibold 2xl:text-base">{it.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">
+                    * 사진이 있으면 상담이 더 빨라요
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full sm:w-[min(92vw,560px)] lg:w-[min(50vw,760px)] 2xl:w-[min(44vw,920px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
-                <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
-                  {[
-                    {label:"전등 교체", icon:"💡"},
-                    {label:"콘센트/스위치", icon:"🔌"},
-                    {label:"수전/배관", icon:"🚿"},
-                    {label:"문/경첩/도어락", icon:"🚪"},
-                    {label:"타일/대리석/실리콘", icon:"🧱"},
-                    {label:"환풍기/후드/배수구", icon:"🌀"},
-                  ].map((it) => (
-                    <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
-                      <span className="text-2xl 2xl:text-3xl" aria-hidden="true">{it.icon}</span>
-                      <span className="font-semibold 2xl:text-base">{it.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">
-                  * 사진이 있으면 상담이 더 빨라요
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 히어로 바로 아래에 카카오톡 채널 카드 */}
-          <div className="relative w-full max-w-[96rem] mx-auto px-6 sm:px-6 lg:px-8 -mt-6 pb-10">
-            <div className="w-full max-w-[760px] mx-auto">
+            {/* ✅ 히어로 바로 아래: 카카오톡 채널 카드 */}
+            <div className="w-full max-w-[760px] mx-auto mt-10">
               <KakaoChannelCard />
             </div>
           </div>
@@ -509,18 +507,17 @@ export default function App() {
               <div>사업자등록번호: 000-00-00000</div>
             </div>
             <nav className="mt-3 flex items-center gap-3 text-sm">
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { /* 약관 모달 생략 */ }} type="button">
+                개인정보 처리방침
+              </button>
               <span className="text-neutral-300">·</span>
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" type="button">법적 고지</button>
               <span className="text-neutral-300">·</span>
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" type="button">이용약관</button>
             </nav>
           </div>
         </div>
       )}
-
-      {/* 약관 모달 */}
-      <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
       {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
