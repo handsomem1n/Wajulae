@@ -46,6 +46,84 @@ const SearchIcon = () => (
   </svg>
 );
 
+/* === Kakao 채널 카드 컴포넌트 === */
+function KakaoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
+      <path
+        d="M12 3C6.48 3 2 6.54 2 10.9c0 2.76 1.9 5.18 4.83 6.58l-.78 3.27a.6.6 0 0 0 .9.65l3.65-2.1c.46.06.93.09 1.4.09 5.52 0 10-3.55 10-7.9S17.52 3 12 3z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function KakaoChannelCard() {
+  return (
+    <div className="mt-4 rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
+      {/* 상단 배너 */}
+      <div className="px-5 py-3 flex items-center justify-between bg-[#FEE500]">
+        <div className="flex items-center gap-2 text-neutral-900">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 text-[#FEE500]">
+            <KakaoIcon />
+          </span>
+          <div className="leading-tight">
+            <div className="font-extrabold">카카오톡 채널 문의</div>
+            <div className="text-xs text-neutral-700">1:1 채팅으로 빠른 상담</div>
+          </div>
+        </div>
+        <a
+          href="https://pf.kakao.com/_xdmQxkn"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 text-white text-sm font-semibold hover:opacity-90"
+        >
+          채널 추가
+        </a>
+      </div>
+
+      {/* 본문 */}
+      <div className="p-5 grid grid-cols-[auto,1fr] gap-4 items-center">
+        {/* QR 이미지가 있으면 아래 div 대신 <img src="/images/kakao-qr.png" alt="카카오톡 채널 QR" className="w-24 h-24 rounded-xl object-cover" /> 로 교체 */}
+        <div className="w-24 h-24 rounded-xl bg-neutral-200 grid place-items-center text-[10px] text-neutral-600 select-none">
+          QR
+        </div>
+        <div>
+          <div className="text-sm text-neutral-700">
+            아래 버튼을 누르거나 QR을 스캔하면 상담창이 열립니다.
+            <br className="hidden sm:block" />
+            운영시간 외에는 접수 순서대로 답변드려요.
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {/* 1:1 상담 = /chat */}
+            <a
+              href="https://pf.kakao.com/_xdmQxkn/chat"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEE500] text-neutral-900 font-semibold hover:brightness-95"
+              aria-label="카카오톡 채널 1:1 상담"
+            >
+              1:1 상담하기
+            </a>
+            {/* 채널 추가 = 프로필 */}
+            <a
+              href="https://pf.kakao.com/_xdmQxkn"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90"
+              aria-label="카카오톡 채널 추가"
+            >
+              채널 추가
+            </a>
+          </div>
+          <div className="mt-2 text-xs text-neutral-500">채널 ID: 와줄래</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+/* === /Kakao 채널 카드 === */
+
 /* ===== 문서 섹션들 (약관/법고지/개인정보) ===== */
 function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
@@ -220,11 +298,11 @@ function SectionPricing() {
     { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
     { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/kitchen-faucet.jpg" },
     { t: "싱크대 상판 리모델링 교체", p: "1,200,000원", d: "자재·타공·길이에 따라 변동",           img: "/images/countertop.jpg" },
-    { t: "대리석 크랙 보수", p: "300,000원", d: "규격에 따라 변동",           img: "/images/countertop.jpg" },
+    { t: "대리석 크랙 보수",         p: "300,000원", d: "규격에 따라 변동",                       img: "/images/countertop.jpg" },
     { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동",             img: "/images/tiles.jpg" },
     { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동",             img: "/images/kitchen-hood.jpg" },
     { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동",      img: "/images/undercounter-sink.jpg" },
-    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동",          img: "/images/drain-basket.jpg" },
+    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동",           img: "/images/drain-basket.jpg" },
     { t: "화장실 환풍기 교체",       p: "100,000원", d: "전원·덕트 상태에 따라 변동",             img: "/images/bath-fan.jpg" },
     { t: "샤워 수전 교체",           p: "150,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/shower-faucet.jpg" },
     { t: "LED 등 교체",              p: "80,000원",  d: "규격·천장 타입에 따라 변동",             img: "/images/led-light.jpg" },
@@ -345,7 +423,7 @@ function SectionContact() {
     <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
       <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* ✅ 카카오톡 채널 카드 */}
+        {/* 카카오톡 채널 카드 (섹션 상단) */}
         <div className="w-full max-w-[760px] mx-auto mb-12">
           <KakaoChannelCard />
         </div>
@@ -353,21 +431,16 @@ function SectionContact() {
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
-            <p className="mt-2 text-neutral-600">
-              필수 정보만 빠르게 남겨 주세요. 상담원이 연락드립니다.
-            </p>
-
+            <p className="mt-2 text-neutral-600">필수 정보만 빠르게 남겨 주세요. 상담원이 연락드립니다.</p>
             <form className="mt-6 grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">이름</span>
                 <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="홍길동" />
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">연락처</span>
                 <input required type="tel" className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="010-0000-0000" />
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">요청 항목</span>
                 <select className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0">
@@ -378,23 +451,19 @@ function SectionContact() {
                   <option>기타</option>
                 </select>
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">지역</span>
                 <input required className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="예: 철산동 e편한세상 102동 101호" />
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">상세 설명</span>
                 <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
               </label>
-
               <button className="mt-2 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-95" type="button">
                 접수하기 <ArrowRight />
               </button>
             </form>
           </div>
-
           <div className="lg:pl-10">
             <div className="rounded-3xl ring-1 ring-neutral-200 p-6 bg-white">
               <h3 className="font-semibold">고객 약속</h3>
@@ -404,11 +473,8 @@ function SectionContact() {
                 <li className="flex items-start gap-2"><Check /><span>시공 품질 보증</span></li>
               </ul>
             </div>
-            <div className="mt-4 text-xs text-neutral-500">
-              © {new Date().getFullYear()} 와줄래
-            </div>
+            <div className="mt-4 text-xs text-neutral-500">© {new Date().getFullYear()} 와줄래</div>
           </div>
-
         </div>
       </div>
     </footer>
@@ -435,81 +501,7 @@ function MobileDock({ onOpen }) {
     </div>
   );
 }
-/* === Kakao 채널 카드 컴포넌트 === */
-function KakaoIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
-      <path
-        d="M12 3C6.48 3 2 6.54 2 10.9c0 2.76 1.9 5.18 4.83 6.58l-.78 3.27a.6.6 0 0 0 .9.65l3.65-2.1c.46.06.93.09 1.4.09 5.52 0 10-3.55 10-7.9S17.52 3 12 3z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
 
-function KakaoChannelCard() {
-  return (
-    <div className="mt-4 rounded-2xl ring-1 ring-neutral-200 bg-white overflow-hidden">
-      {/* 상단 배너 */}
-      <div className="px-5 py-3 flex items-center justify-between bg-[#FEE500]">
-        <div className="flex items-center gap-2 text-neutral-900">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 text-[#FEE500]">
-            <KakaoIcon />
-          </span>
-          <div className="leading-tight">
-            <div className="font-extrabold">카카오톡 채널 문의</div>
-            <div className="text-xs text-neutral-700">1:1 채팅으로 빠른 상담</div>
-          </div>
-        </div>
-        <a
-         href="https://pf.kakao.com/_xdmQxkn"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 text-white text-sm font-semibold hover:opacity-90"
-        >
-          채널 추가
-        </a>
-      </div>
-
-      {/* 본문 */}
-      <div className="p-5 grid grid-cols-[auto,1fr] gap-4 items-center">
-        {/* QR 이미지가 있으면 아래 div 대신 <img src="/images/kakao-qr.png" alt="카카오톡 채널 QR" className="w-24 h-24 rounded-xl object-cover" /> 로 교체 */}
-        <div className="w-24 h-24 rounded-xl bg-neutral-200 grid place-items-center text-[10px] text-neutral-600 select-none">
-          QR
-        </div>
-        <div>
-          <div className="text-sm text-neutral-700">
-            아래 버튼을 누르거나 QR을 스캔하면 상담창이 열립니다.{" "}
-            <br className="hidden sm:block" />
-            운영시간 외에는 접수 순서대로 답변드려요.
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <a
-              href="https://pf.kakao.com/_xdmQxkn/chat"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEE500] text-neutral-900 font-semibold hover:brightness-95"
-              aria-label="카카오톡 채널 1:1 상담"
-            >
-              1:1 상담하기
-            </a>
-            <a
-              href="https://pf.kakao.com/_xdmQxkn"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90"
-              aria-label="카카오톡 채널 추가"
-            >
-              채널 추가
-            </a>
-          </div>
-          <div className="mt-2 text-xs text-neutral-500">채널 ID: 와줄래 </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-/* === /Kakao 채널 카드 === */
 /* ===== 앱 루트 ===== */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
