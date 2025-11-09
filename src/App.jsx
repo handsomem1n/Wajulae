@@ -466,7 +466,7 @@ export default function App() {
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            <span className="text-sm font-normal text-neutral-500">표준견적 안내 / 생활수리 플랫폼</span>
+            <span className="text-sm font-normal text-neutral-500">생활수리 플랫폼</span>
           </a>
           <nav className="hidden md:flex items-center gap-1" aria-label="주요 섹션">
             {NAV.map((item) => (
