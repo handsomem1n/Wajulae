@@ -431,20 +431,19 @@ export default function App() {
        html { scrollbar-gutter: stable; }
         * { -webkit-tap-highlight-color: transparent; }
       `}</style>
-       <div
-  aria-hidden
-  style={{
-    position: 'fixed',
-    top: 0,
-    bottom: 0,
-    left: '50%',
-    width: '2px',
-    transform: 'translateX(-1px)', // 2px 선을 정확히 중앙에
-    background: 'rgba(255, 0, 0, 0.6)',
-    zIndex: 9999,
-    pointerEvents: 'none'
-  }}
-/>
+       /* ✅ 화면 정중앙 가이드라인 */
+  .__center_guide__ {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    /* 폭 대신 border-left를 써서 퍼지/버전 이슈 제거 */
+    left: 50%;
+    right: 50%;
+    margin-left: -1px;       /* 2px 선의 정중앙을 정확히 중앙에 */
+    border-left: 2px solid rgba(255,0,0,0.6);
+    z-index: 99999;
+    pointer-events: none;
+  }
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
