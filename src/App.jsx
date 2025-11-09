@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import PageHome from "./pages/PageHome";
+import PagePricing from "./pages/PagePricing";
+import PageFAQ from "./pages/PageFAQ";
+import PageContact from "./pages/PageContact";
 /* -----------------------------------------------------
    새 구조 요약
    - 라우팅 기반으로 "서비스 소개"를 독립 페이지로 분리
