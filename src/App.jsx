@@ -356,6 +356,14 @@ function SectionContact() {
                   <option>기타</option>
                 </select>
               </label>
+               <label className="flex flex-col gap-2">
+    <span className="text-sm font-medium">지역</span>
+    <input
+      required
+      className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0"
+      placeholder="예: 철산동"
+    />
+  </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium">상세 설명</span>
                 <textarea rows={4} className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0" placeholder="상태/사진 링크 등" />
