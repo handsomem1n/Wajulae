@@ -70,7 +70,7 @@ function SectionPricing() {
     { t: "현관문 경첩 교체",         p: "200,000원",  d: "도어 무게·힌지 규격에 따라 변동",      img: "/images/door-hinge2.jpg" },
     { t: "문 재부착 및 수리",        p: "50,000원",   d: "틀 뒤틀림·경첩 상태에 따라 변동",      img: "/images/door-repair.jpg" },
     { t: "문고리 교체",              p: "50,000원",   d: "백세트 규격·문두께에 따라 변동",       img: "/images/door-handle.jpg" },
->>>>>>> parent of 092ac10 (Update App.jsx)
+
   ];
 
   const [q, setQ] = useState("");
