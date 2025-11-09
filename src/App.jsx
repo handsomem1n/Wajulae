@@ -361,7 +361,7 @@ function SectionContact() {
     <input
       required
       className="px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 ring-offset-0"
-      placeholder="예: 철산동"
+      placeholder="예: 철산동 e편한세상 102동 101호"
     />
   </label>
               <label className="flex flex-col gap-2">
