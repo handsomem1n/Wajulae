@@ -462,7 +462,7 @@ function KakaoChannelCard() {
           </div>
         </div>
         <a
-          href="https://pf.kakao.com/_YOUR_CHANNEL_ID_"
+         href="https://pf.kakao.com/_xdmQxkn"
           target="_blank"
           rel="noreferrer noopener"
           className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 text-white text-sm font-semibold hover:opacity-90"
