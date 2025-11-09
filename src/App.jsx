@@ -205,7 +205,7 @@ function SectionPricing() {
   // ✅ 초보자도 넣기 쉽게: 각 항목에 img(이미지 경로)만 추가하면 자동 표시됩니다.
   // 예) public/images 아래에 파일을 넣고 "/images/plug.jpg" 처럼 경로만 넣으면 됩니다.
   const items = [
-    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/plug.jpg" },
+    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/test1.png" },
     { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
     { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동",             img: "/images/intercom.jpg" },
     { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
