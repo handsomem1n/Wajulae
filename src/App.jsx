@@ -478,7 +478,8 @@ export default function App() {
 
           {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
           <div className="relative max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32
-                grid lg:grid-cols-[520px_520px] gap-12 items-start justify-center">
+                grid lg:grid-cols-[520px_520px] gap-12 items-start justify-center
+                lg:w-fit">
             {/* 왼쪽: 타이틀 */}
             <div className="text-center">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
