@@ -228,7 +228,7 @@ function SectionPricing() {
 
   return (
     <main className="py-16 bg-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">표준 견적 가이드</h1>
@@ -277,7 +277,7 @@ function SectionPricing() {
 function SectionFAQ() {
   return (
     <main className="py-16 bg-white">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h1>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -301,7 +301,7 @@ function SectionFAQ() {
 function SectionContact() {
   return (
     <main className="py-16 bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h1>
@@ -357,7 +357,7 @@ function HomeIntro() {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
       {/* 콘텐츠 컨테이너는 다른 페이지와 동일하게 중앙 정렬 */}
-      <div className="relative max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
         {/* 왼쪽: 타이틀 */}
         <div className="text-center lg:text-left">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
@@ -431,7 +431,7 @@ function Shell() {
 
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 font-semibold text-lg" aria-label="홈">
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
@@ -459,7 +459,7 @@ function Shell() {
 
       {/* 푸터 */}
       <div className="border-t border-neutral-200 bg-white">
-        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-sm text-neutral-600">
             <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
             <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
