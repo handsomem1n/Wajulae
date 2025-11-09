@@ -430,6 +430,14 @@ export default function App() {
       <style>{`
         .gutter-stable { scrollbar-gutter: stable both-edges; }
         * { -webkit-tap-highlight-color: transparent; }
+         .container-hero{
+          width:100%;
+          max-width: 1200px;       /* 필요하면 1280/1320/1440 등으로 조절 */
+          margin-left:auto;
+          margin-right:auto;
+          padding-left: clamp(16px, 3vw, 48px);
+          padding-right: clamp(16px, 3vw, 48px);
+        }
         /* 공통 컨테이너: 가운데 정렬 + 좌우 동일 공백 + 최대폭 */
         .container-x {
           width: 100%;
@@ -480,54 +488,68 @@ export default function App() {
       </header>
 
       {/* 히어로 */}
-      {!isOverlayOpen && (
-        <section id="hero" className="relative overflow-visible">
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-          <div className="relative container-x py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
-            <div className="grid grid-cols-12 gap-8 2xl:gap-12 items-center">
-              <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
-                  철산·광명·구로·가산
-                  <br className="hidden sm:block"/> 생활수리 플랫폼
-                </h1>
-                <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700">
-                  참고용 표준가 제공 / 과장 없는 사전 안내
-                </p>
-                <div className="mt-10">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPage("pricing")}
-                    className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-                  >
-                    표준 견적 바로가기 <ArrowRight />
-                  </button>
-                </div>
-              </div>
+     {!isOverlayOpen && (
+  <section id="hero" className="relative overflow-visible">
+    {/* 풀폭 배경 */}
+    <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-              <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[760px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
-                  <h3 className="font-bold text-lg 2xl:text-xl text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
-                    {[
-                      {label:"전등 교체", icon:"💡"},
-                      {label:"콘센트/스위치", icon:"🔌"},
-                      {label:"수전/배관", icon:"🚿"},
-                      {label:"문/경첩/도어락", icon:"🚪"},
-                      {label:"타일/실리콘", icon:"🧱"},
-                      {label:"환풍기/후드", icon:"🌀"},
-                    ].map((it) => (
-                      <div key={it.label} className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5 text-left flex flex-col justify-between">
-                        <span className="text-2xl 2xl:text-3xl" aria-hidden>{it.icon}</span>
-                        <span className="font-semibold 2xl:text-base">{it.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+    {/* ▶ 가운데 정렬: 전용 컨테이너 + 2열(1:1) */}
+    <div className="relative container-hero py-24 lg:py-32 2xl:py-40 min-h-[80vh]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
+
+        {/* 왼쪽: 타이틀 */}
+        <div className="text-center lg:text-left">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.05]">
+            철산·광명·구로·가산
+            <br className="hidden sm:block" /> 생활수리 플랫폼
+          </h1>
+          <p className="mt-4 text-base sm:text-lg lg:text-xl 2xl:text-2xl text-neutral-700">
+            참고용 표준가 제공 / 과장 없는 사전 안내
+          </p>
+          <div className="mt-10">
+            <button
+              type="button"
+              onClick={() => setCurrentPage("pricing")}
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+            >
+              표준 견적 바로가기 <ArrowRight />
+            </button>
+          </div>
+        </div>
+
+        {/* 오른쪽: 카드(항상 가운데) */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-[520px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 2xl:p-8 select-none cursor-default">
+            <h3 className="font-bold text-lg 2xl:text-xl text-center">어떤 도움이 필요하세요?</h3>
+            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:gap-4">
+              {[
+                { label: "전등 교체", icon: "💡" },
+                { label: "콘센트/스위치", icon: "🔌" },
+                { label: "수전/배관", icon: "🚿" },
+                { label: "문/경첩/도어락", icon: "🚪" },
+                { label: "타일/실리콘", icon: "🧱" },
+                { label: "환풍기/후드", icon: "🌀" },
+              ].map((it) => (
+                <div
+                  key={it.label}
+                  className="h-28 2xl:h-32 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 2xl:p-5
+                             text-left flex flex-col justify-between"
+                >
+                  <span className="text-2xl 2xl:text-3xl" aria-hidden>
+                    {it.icon}
+                  </span>
+                  <span className="font-semibold 2xl:text-base">{it.label}</span>
                 </div>
-              </div>
+              ))}
+            </div>
+            <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center">
+              * 사진이 있으면 상담이 더 빨라요
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </section>
       )}
 
       {/* 오버레이(풀폭 + 가운데 정렬) */}
