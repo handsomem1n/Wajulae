@@ -476,25 +476,24 @@ export default function App() {
           {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-          {/* ▶ 정렬 개선: 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
+          {/* ▶ 와이드 화면 최적화: 풀블리드 + 가변 그리드 */}
           <div
-  className="
-      relative w-full
-    px-6 sm:px-10 lg:px-14
-    py-20 lg:py-28
-    grid
-    lg:grid-cols-[minmax(0,1fr)_minmax(420px,min(42vw,640px))]
-    gap-10 xl:gap-16 items-center
-    max-w-none
-  "
->
+            className="
+              relative w-full max-w-none
+              px-6 sm:px-10 lg:px-14
+              py-20 lg:py-28
+              grid
+              lg:grid-cols-[minmax(0,1fr)_minmax(420px,min(42vw,640px))]
+              gap-10 xl:gap-16 items-center
+            "
+          >
             {/* 왼쪽: 타이틀 */}
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+              <h1 className="max-w-[48ch] mx-auto lg:mx-0 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
                 철산·광명·구로·가산
                 <br className="hidden sm:block"/> 생활수리 플랫폼
               </h1>
-              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+              <p className="max-w-[60ch] mx-auto lg:mx-0 mt-4 text-base sm:text-lg lg:text-xl text-neutral-700">
                 참고용 표준가 제공 / 과장 없는 사전 안내
               </p>
               <div className="mt-10">
@@ -508,9 +507,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* 오른쪽: 카드 (가운데 정렬) */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+            {/* 오른쪽: 카드 (가운데 정렬 + 가변 폭) */}
+            <div className="justify-self-center lg:justify-self-end">
+              <div className="relative w-full max-w-[min(42vw,640px)] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
                 <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
                 <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[
