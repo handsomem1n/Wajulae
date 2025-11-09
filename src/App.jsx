@@ -467,7 +467,7 @@ function KakaoChannelCard() {
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             <a
-              href="http://pf.kakao.com/_xdmQxkn/chat"
+              href="https://pf.kakao.com/_xdmQxkn/chat"
               target="_blank"
               rel="noreferrer noopener"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEE500] text-neutral-900 font-semibold hover:brightness-95"
@@ -476,7 +476,7 @@ function KakaoChannelCard() {
               1:1 상담하기
             </a>
             <a
-              href="http://pf.kakao.com/_xdmQxkn"
+              href="https://pf.kakao.com/_xdmQxkn"
               target="_blank"
               rel="noreferrer noopener"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:opacity-90"
@@ -593,6 +593,7 @@ export default function App() {
                 </div>
                 <div className="mt-4 text-xs 2xl:text-sm text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
               </div>
+              <KakaoChannelCard />
             </div>
           </div>
         </section>
