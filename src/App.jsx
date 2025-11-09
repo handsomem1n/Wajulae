@@ -534,7 +534,7 @@ export default function App() {
             onClick={() => setCurrentPage("pricing")}
             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl border border-[var(--primary)] text-[var(--primary)] font-semibold hover:bg-[var(--primary)] hover:text-neutral-900 transition text-[clamp(14px,1.1vw,18px)]"
           >
-            표준 견적 바로가기
+           🧾 표준 견적 바로가기
           </button>
 
           {/* 💬 카카오톡 상담 버튼 */}
