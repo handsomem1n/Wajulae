@@ -476,10 +476,17 @@ export default function App() {
     <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
     <div className="relative py-24 lg:py-28">
-      {/* 헤더와 같은 폭 시스템 */}
+      {/* 헤더와 동일 그리드 폭 시스템 */}
       <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 2컬럼 그룹 자체를 고정 총폭 1044px로 정확히 가운데 */}
-        <div className="mx-auto max-w-[1044px] flex flex-col lg:flex-row items-center justify-center gap-16">
+        {/* 총폭 1044px 그룹을 정확히 가운데 */}
+        <div
+          className="
+            mx-auto max-w-[1044px]
+            flex flex-col lg:flex-row items-center justify-center gap-16
+            /* ↓↓↓ ‘보이는’ 치우침을 잡는 미세 보정 (큰 화면에서만) */
+            lg:translate-x-[12px]
+          "
+        >
           {/* 왼쪽 560 */}
           <div className="w-full max-w-[560px] text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
