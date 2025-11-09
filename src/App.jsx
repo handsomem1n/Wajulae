@@ -8,7 +8,7 @@ const NAV = [
   { id: "contact", label: "문의",        type: "page"   },
 ];
 
-function useScrollSpy(ids: string[]) {
+function useScrollSpy(ids) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
     const ob = new IntersectionObserver(
@@ -16,7 +16,7 @@ function useScrollSpy(ids: string[]) {
         const v = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (v[0]) setActive((v[0].target as HTMLElement).id);
+        if (v[0]) setActive(v[0].target.id);
       },
       { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
@@ -47,7 +47,7 @@ const SearchIcon = () => (
 );
 
 /* ===== 문서 섹션들 (약관/법고지/개인정보) ===== */
-function LegalModal({ open, onClose, activeTab, setActiveTab }: {open:boolean; onClose:() => void; activeTab: string; setActiveTab: (id:string)=>void;}) {
+function LegalModal({ open, onClose, activeTab, setActiveTab }) {
   useEffect(() => {
     if (open) {
       const prev = document.body.style.overflow;
@@ -57,12 +57,12 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }: {open:boolean; o
   }, [open]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && open) onClose(); };
+    const onKey = (e) => { if (e.key === "Escape" && open) onClose(); };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  const TabButton = ({ id, children }: {id:string; children: React.ReactNode}) => (
+  const TabButton = ({ id, children }) => (
     <button
       onClick={() => setActiveTab(id)}
       className={
@@ -103,7 +103,7 @@ function LegalModal({ open, onClose, activeTab, setActiveTab }: {open:boolean; o
   );
 }
 
-const TOS = ({ setActiveTab }: { setActiveTab: (id:string)=>void }) => (
+const TOS = ({ setActiveTab }) => (
   <article className="space-y-4">
     <h3 className="font-bold text-base">제1조 (목적)</h3>
     <p>본 약관은 주식회사 와줄래(이하 "회사")가 운영하는 생활수리·설치·점검 등 <strong>중개 플랫폼</strong>(이하 "플랫폼") 이용과 관련하여, 회사와 이용자(고객/기사) 간 권리·의무 및 책임 사항을 정함을 목적으로 합니다.</p>
@@ -292,7 +292,7 @@ function SectionPricing() {
                     alt={c.t}
                     loading="lazy"
                     className="aspect-[4/3] w-full object-cover rounded-xl mb-3"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 ) : (
                   <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
@@ -398,7 +398,7 @@ function SectionContact() {
 }
 
 /* 모바일 Dock */
-function MobileDock({ onOpen }: { onOpen: (page: string | null) => void }) {
+function MobileDock({ onOpen }) {
   const goHome = () => {
     onOpen(null);
     document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
@@ -421,7 +421,7 @@ function MobileDock({ onOpen }: { onOpen: (page: string | null) => void }) {
 /* ===== 앱 루트 ===== */
 export default function App() {
   const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(null);
   const isOverlayOpen = !!currentPage;
 
   useEffect(() => {
@@ -433,7 +433,7 @@ export default function App() {
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState("tos");
 
-  const handleNavClick = (item: typeof NAV[number]) => (e: React.MouseEvent) => {
+  const handleNavClick = (item) => (e) => {
     if (item.type === "scroll") {
       e.preventDefault();
       document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
