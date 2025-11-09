@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-/* 네비게이션: 이제 서비스 소개도 'page'로 동작하게 변경 */
+/* 네비게이션: 서비스 소개(#hero로 스크롤), 표준 견적/FAQ/문의는 오버레이 페이지 */
 const NAV = [
-  { id: "about",   label: "서비스 소개", type: "page"   },
+  { id: "about",   label: "서비스 소개", type: "scroll" },
   { id: "pricing", label: "표준 견적",   type: "page"   },
   { id: "faq",     label: "FAQ",        type: "page"   },
   { id: "contact", label: "문의",        type: "page"   },
@@ -40,6 +40,7 @@ const ArrowRight = () => (
     <path fill="currentColor" d="M12 4l1.41 1.41L8.83 10H20v2H8.83l4.58 4.59L12 18l-8-8z" />
   </svg>
 );
+/* 검색 아이콘 */
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5">
     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -381,61 +382,6 @@ function SectionContact() {
   );
 }
 
-/* ===== 서비스 소개(about)도 '페이지' 컴포넌트로 분리 ===== */
-function SectionAbout({ onGoPricing }) {
-  return (
-    <section id="about" className="relative overflow-visible">
-      {/* 배경은 풀블리드 */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-      {/* 콘텐츠 컨테이너는 다른 페이지와 동일 */}
-      <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
-        {/* 왼쪽: 타이틀 */}
-        <div className="text-center lg:text-left">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
-            철산·광명·구로·가산
-            <br className="hidden sm:block"/> 생활수리 플랫폼
-          </h1>
-          <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
-            참고용 표준가 제공 / 과장 없는 사전 안내
-          </p>
-          <div className="mt-10">
-            <button
-              type="button"
-              onClick={onGoPricing}
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-            >
-              표준 견적 바로가기 <ArrowRight />
-            </button>
-          </div>
-        </div>
-
-        {/* 오른쪽: 카드 */}
-        <div className="flex justify-center lg:justify-end">
-          <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
-            <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
-            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {[
-                {label:"전등 교체", icon:"💡"},
-                {label:"콘센트/스위치", icon:"🔌"},
-                {label:"수전/배관", icon:"🚿"},
-                {label:"문/경첩/도어락", icon:"🚪"},
-                {label:"타일/실리콘", icon:"🧱"},
-                {label:"환풍기/후드", icon:"🌀"},
-              ].map((it) => (
-                <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
-                  <span className="text-2xl" aria-hidden>{it.icon}</span>
-                  <span className="font-semibold">{it.label}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* 모바일 Dock */
 function MobileDock({ onOpen }) {
   return (
@@ -453,8 +399,8 @@ function MobileDock({ onOpen }) {
 
 /* ===== 앱 루트 ===== */
 export default function App() {
-  const active = useScrollSpy(["about", ...NAV.map((n) => n.id)]);
-  const [currentPage, setCurrentPage] = useState("about"); // ⬅ 최초 진입 시 '서비스 소개' 페이지가 바로 열림
+  const active = useScrollSpy(["hero", ...NAV.map((n) => n.id)]);
+  const [currentPage, setCurrentPage] = useState(null);
   const isOverlayOpen = !!currentPage;
 
   // 오버레이 열릴 때 배경 스크롤 완전 잠금
@@ -469,8 +415,14 @@ export default function App() {
   const [legalTab, setLegalTab] = useState("tos");
 
   const handleNavClick = (item) => (e) => {
-    e.preventDefault();
-    setCurrentPage(item.id); // 이제 전부 page 타입
+    if (item.type === "scroll") {
+      e.preventDefault();
+      document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+      setCurrentPage(null);
+    } else {
+      e.preventDefault();
+      setCurrentPage(item.id);
+    }
   };
 
   return (
@@ -484,17 +436,19 @@ export default function App() {
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
         <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a
-            href="#about"
+            href="#hero"
             className="flex items-center gap-2 font-semibold text-lg"
             aria-label="홈"
             onClick={(e) => {
               e.preventDefault();
-              setCurrentPage("about"); // 홈 클릭 시 서비스 소개 페이지
+              document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              setCurrentPage(null);
             }}
           >
             <span className="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-bold">W</span>
             <span>와줄래</span>
-            <span className="ml-2 text-sm font-normal text-neutral-500 hidden sm:inline">
+            {/* 문구 항상 보이도록 hidden 제거 */}
+            <span className="ml-2 text-sm font-normal text-neutral-500">
               표준견적 안내 / 생활수리 플랫폼
             </span>
           </a>
@@ -517,23 +471,75 @@ export default function App() {
         </div>
       </header>
 
-      {/* 히어로 섹션은 더 이상 별도로 렌더하지 않음 (항상 '페이지'로 표시) */}
+      {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
+      {!isOverlayOpen && (
+        <section id="hero" className="relative overflow-visible">
+          {/* 배경은 항상 화면 가득 */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
 
-      {/* 오버레이 페이지 (서비스 소개 포함) */}
+          {/* 오른쪽 카드가 가운데로 보이도록 래퍼/최대폭 조정 */}
+          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
+            {/* 왼쪽: 타이틀 */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                철산·광명·구로·가산
+                <br className="hidden sm:block"/> 생활수리 플랫폼
+              </h1>
+              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+                참고용 표준가 제공 / 과장 없는 사전 안내
+              </p>
+              <div className="mt-10">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage("pricing")}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                >
+                  표준 견적 바로가기 <ArrowRight />
+                </button>
+              </div>
+            </div>
+
+            {/* 오른쪽: 카드 (가운데 정렬) */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[480px] rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
+                <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    {label:"전등 교체", icon:"💡"},
+                    {label:"콘센트/스위치", icon:"🔌"},
+                    {label:"수전/배관", icon:"🚿"},
+                    {label:"문/경첩/도어락", icon:"🚪"},
+                    {label:"타일/실리콘", icon:"🧱"},
+                    {label:"환풍기/후드", icon:"🌀"},
+                  ].map((it) => (
+                    <div key={it.label} className="h-28 rounded-2xl ring-1 ring-neutral-200 bg-neutral-50 p-4 text-left flex flex-col justify-between">
+                      <span className="text-2xl" aria-hidden>{it.icon}</span>
+                      <span className="font-semibold">{it.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-neutral-500 text-center lg:text-left">* 사진이 있으면 상담이 더 빨라요</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 오버레이 페이지 */}
       {isOverlayOpen && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[60] flex items-stretch overflow-y-auto overscroll-contain">
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
-            {/* 상단 오버레이 바 + 탭 내비게이션 */}
+            {/* 상단 오버레이 바 + 탭 내비게이션(페이지 전환 가능) */}
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
               <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
-                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage("about")} type="button">← 메인(소개)</button>
+                  <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">빠른 이동</span>
                 </div>
-                {/* 오버레이 내 탭: about 포함 */}
+                {/* 오버레이 내 탭 */}
                 <nav className="flex items-center gap-1" aria-label="오버레이 탭">
-                  {["about","pricing","faq","contact"].map((id) => (
+                  {["pricing","faq","contact"].map((id) => (
                     <button
                       key={id}
                       type="button"
@@ -553,7 +559,6 @@ export default function App() {
             </div>
 
             <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-10">
-              {currentPage === "about"   && <SectionAbout onGoPricing={() => setCurrentPage("pricing")} />}
               {currentPage === "pricing" && <SectionPricing />}
               {currentPage === "faq"     && <SectionFAQ />}
               {currentPage === "contact" && <SectionContact />}
@@ -562,28 +567,27 @@ export default function App() {
         </div>
       )}
 
-      {/* 푸터 — 오버레이 표시 중에도 ‘소개’ 페이지 하단에서 자연스럽게 이어지도록 유지할 수 있지만
-          기존 로직을 따라 오버레이 외부 푸터는 숨김 유지 */}
+      {/* 푸터 — 오버레이 때는 안 보이게 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
-          <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="max-w-[96rem] w-full mx-auto px-6 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
               <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 김현성] </div>
             </div>
             <nav className="flex items-center gap-3 text-sm">
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { /* 오버레이 외부일 때만 동작 */ }} type="button">이용약관</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("tos"); setLegalOpen(true); }} type="button">이용약관</button>
               <span className="text-neutral-300">·</span>
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { /* */ }} type="button">법적 고지</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("legal"); setLegalOpen(true); }} type="button">법적 고지</button>
               <span className="text-neutral-300">·</span>
-              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { /* */ }} type="button">개인정보 처리방침</button>
+              <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
             </nav>
           </div>
         </div>
       )}
 
       {/* 약관 모달 */}
-      <LegalModal open={/* 오버레이 여부와 무관하게 노출 */ false} onClose={() => {}} activeTab={"tos"} setActiveTab={()=>{}} />
+      <LegalModal open={legalOpen} onClose={() => setLegalOpen(false)} activeTab={legalTab} setActiveTab={setLegalTab} />
 
       {/* 모바일 Dock은 항상 노출 */}
       <MobileDock onOpen={setCurrentPage} />
