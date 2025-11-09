@@ -200,29 +200,31 @@ const Privacy = () => (
   </article>
 );
 
-/* ===== 표준 견적(검색 추가: 우측 상단 검색창) ===== */
+/* ===== 표준 견적(검색 + 이미지 지원) ===== */
 function SectionPricing() {
+  // ✅ 초보자도 넣기 쉽게: 각 항목에 img(이미지 경로)만 추가하면 자동 표시됩니다.
+  // 예) public/images 아래에 파일을 넣고 "/images/plug.jpg" 처럼 경로만 넣으면 됩니다.
   const items = [
-    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동" },
-    { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동" },
-    { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동" },
-    { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동" },
-    { t: "싱크대 상판 리모델링 교체", p: "120,000원", d: "자재·타공·길이에 따라 변동" },
-    { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동" },
-    { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동" },
-    { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동" },
-    { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동" },
-    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동" },
-    { t: "화장실 환풍기 교체",       p: "100,000원", d: "전원·덕트 상태에 따라 변동" },
-    { t: "샤워 수전 교체",           p: "150,000원", d: "배관·벽체 상태에 따라 변동" },
-    { t: "LED 등 교체",              p: "80,000원",  d: "규격·천장 타입에 따라 변동" },
-    { t: "세면대 수전 교체",         p: "120,000원", d: "규격·배관 상태에 따라 변동" },
-    { t: "비상센서등 교체",          p: "100,000원", d: "전원·설치 위치에 따라 변동" },
-    { t: "폽업 교체",                p: "45,000원",  d: "규격·막힘 여부에 따라 변동" },
-    { t: "소변기 센서 교체",         p: "100,000원", d: "전원·배관 상태에 따라 변동" },
-    { t: "현관문 경첩 교체",         p: "200,000원", d: "도어 무게·힌지 규격에 따라 변동" },
-    { t: "문 재부착 및 수리",        p: "50,000원",  d: "틀 뒤틀림·경첩 상태에 따라 변동" },
-    { t: "문고리 교체",              p: "50,000원",  d: "백세트 규격·문두께에 따라 변동" },
+    { t: "콘센트 교체",              p: "60,000원",  d: "수량·배선 상태에 따라 변동",           img: "/images/plug.jpg" },
+    { t: "해바라기 수전 교체",        p: "450,000원", d: "부품·난이도에 따라 변동",             img: "/images/showerhead.jpg" },
+    { t: "인터폰 교체",              p: "400,000원", d: "기종·배선 상태에 따라 변동",             img: "/images/intercom.jpg" },
+    { t: "현관문 플로어 힌지 교체",  p: "150,000원", d: "도어 규격·부품에 따라 변동",             img: "/images/door-hinge.jpg" },
+    { t: "싱크대 상판 리모델링 교체", p: "120,000원", d: "자재·타공·길이에 따라 변동",             img: "/images/countertop.jpg" },
+    { t: "싱크대 수전 교체",         p: "100,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/kitchen-faucet.jpg" },
+    { t: "타일 한 박스 부분 교체",    p: "180,000원", d: "면적·자재 수급에 따라 변동",             img: "/images/tiles.jpg" },
+    { t: "주방후드 교체",            p: "500,000원", d: "덕트·전원 위치에 따라 변동",             img: "/images/kitchen-hood.jpg" },
+    { t: "언더카운트 세면대 부착",   p: "160,000원", d: "상판 재질·브라켓 유무에 따라 변동",      img: "/images/undercounter-sink.jpg" },
+    { t: "싱크대 배수통 부착",       p: "80,000원",  d: "사이즈·타공 유무에 따라 변동",          img: "/images/drain-basket.jpg" },
+    { t: "화장실 환풍기 교체",       p: "100,000원", d: "전원·덕트 상태에 따라 변동",             img: "/images/bath-fan.jpg" },
+    { t: "샤워 수전 교체",           p: "150,000원", d: "배관·벽체 상태에 따라 변동",             img: "/images/shower-faucet.jpg" },
+    { t: "LED 등 교체",              p: "80,000원",  d: "규격·천장 타입에 따라 변동",             img: "/images/led-light.jpg" },
+    { t: "세면대 수전 교체",         p: "120,000원", d: "규격·배관 상태에 따라 변동",             img: "/images/basin-faucet.jpg" },
+    { t: "비상센서등 교체",          p: "100,000원", d: "전원·설치 위치에 따라 변동",             img: "/images/emergency-light.jpg" },
+    { t: "폽업 교체",                p: "45,000원",  d: "규격·막힘 여부에 따라 변동",             img: "/images/pop-up.jpg" },
+    { t: "소변기 센서 교체",         p: "100,000원", d: "전원·배관 상태에 따라 변동",             img: "/images/urinal-sensor.jpg" },
+    { t: "현관문 경첩 교체",         p: "200,000원", d: "도어 무게·힌지 규격에 따라 변동",        img: "/images/door-hinge2.jpg" },
+    { t: "문 재부착 및 수리",        p: "50,000원",  d: "틀 뒤틀림·경첩 상태에 따라 변동",        img: "/images/door-repair.jpg" },
+    { t: "문고리 교체",              p: "50,000원",  d: "백세트 규격·문두께에 따라 변동",         img: "/images/door-handle.jpg" },
   ];
 
   const [q, setQ] = useState("");
@@ -236,7 +238,7 @@ function SectionPricing() {
 
   return (
     <section id="pricing" className="py-16 bg-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">{/* 1536px 컨테이너로 넓게 */}
         {/* 제목/설명 + (우측)검색 */}
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -251,8 +253,8 @@ function SectionPricing() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder=""
-                className="w-full sm:w-80 px-4 py-3 pr-24 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
+                placeholder="이미지/항목 검색"
+                className="w-full sm:w-80 pl-11 pr-24 py-3 rounded-xl border border-neutral-300 bg-white focus:outline-none focus:ring-2 ring-offset-0"
                 type="search"
               />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
@@ -274,15 +276,25 @@ function SectionPricing() {
 
         {/* 결과 개수 */}
         <div className="mt-4 text-sm text-neutral-500">
-          총 {filtered.length}건 {q ? `(검색어: “${q}”)` : ""}
+          총 {filtered.length}건 {q ? `(검색어: “${q}` + `”)` : ""}
         </div>
 
         {/* 카드 그리드 */}
         {filtered.length > 0 ? (
-          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
             {filtered.map((c) => (
               <div key={c.t} className="text-left rounded-2xl bg-white ring-1 ring-neutral-200 p-4 select-none cursor-default">
-                <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
+                {c.img ? (
+                  <img
+                    src={c.img}
+                    alt={c.t}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover rounded-xl mb-3"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                ) : (
+                  <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-neutral-200 to-neutral-100 mb-3" />
+                )}
                 <p className="font-semibold">{c.t}</p>
                 <p className="mt-1 text-lg font-extrabold text-neutral-900">{c.p}</p>
                 <p className="text-neutral-500 text-sm mt-1">{c.d}</p>
@@ -304,7 +316,7 @@ function SectionPricing() {
 function SectionFAQ() {
   return (
     <section id="faq" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -327,7 +339,7 @@ function SectionFAQ() {
 function SectionContact() {
   return (
     <footer id="contact" className="py-16 bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">간편 문의</h2>
@@ -429,7 +441,7 @@ export default function App() {
 
       {/* 헤더 */}
       <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a
             href="#hero"
             className="flex items-center gap-2 font-semibold text-lg"
@@ -465,21 +477,31 @@ export default function App() {
       {/* 히어로 — 오버레이가 열리면 아예 렌더하지 않음 */}
       {!isOverlayOpen && (
         <section id="hero" className="relative overflow-visible">
+          {/* 배경은 항상 화면 가득 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--primary)]/10 via-teal-50 to-white" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-10 items-center">
+
+          {/* ✅ Windows(넓은 화면)에서 작게/왼쪽 치우침 개선: 더 넓은 컨테이너 + 가운데 정렬 + 여백 확대 */}
+          <div className="relative max-w-[96rem] mx-auto px-6 sm:px-10 lg:px-14 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center justify-center min-h-[70vh]">
             <div className="text-center lg:text-left">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">철산·광명·구로·가산 생활수리 플랫폼</h1>
-              <p className="mt-3 text-neutral-600 max-w-lg"> 참고용 표준가 제공/과장 없는 사전 안내 </p>
-              <button
-                type="button"
-                onClick={() => setCurrentPage("pricing")}
-                className="mt-8 inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
-              >
-                표준 견적 바로가기 <ArrowRight />
-              </button>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                철산·광명·구로·가산
+                <br className="hidden sm:block"/> 생활수리 플랫폼
+              </h1>
+              <p className="mt-4 text-base sm:text-lg lg:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0">
+                참고용 표준가 제공 / 과장 없는 사전 안내
+              </p>
+              <div className="mt-10">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage("pricing")}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-[var(--primary)] text-neutral-900 font-semibold shadow-lg hover:brightness-95 focus:outline-none"
+                >
+                  표준 견적 바로가기 <ArrowRight />
+                </button>
+              </div>
             </div>
 
-            <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-5 select-none cursor-default">
+            <div className="relative rounded-3xl bg-white shadow-2xl ring-1 ring-neutral-200 p-6 select-none cursor-default">
               <h3 className="font-bold text-lg text-center lg:text-left">어떤 도움이 필요하세요?</h3>
               <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
@@ -508,14 +530,14 @@ export default function App() {
           <div className="absolute inset-0 bg-white" />
           <div className="relative w-full min-h-[100dvh]">
             <div className="sticky top-0 z-[61] bg-white/90 border-b border-neutral-200 backdrop-blur">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+              <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
                 <div className="flex items-center gap-2 font-semibold">
                   <button className="px-3 py-1 rounded-full ring-1 ring-neutral-300 hover:ring-neutral-400" onClick={() => setCurrentPage(null)} type="button">← 메인으로</button>
                   <span className="text-neutral-500 text-sm">{NAV.find((n) => n.id === currentPage)?.label}</span>
                 </div>
               </div>
             </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-10">
               {currentPage === "pricing" && <SectionPricing />}
               {currentPage === "faq"     && <SectionFAQ />}
               {currentPage === "contact" && <SectionContact />}
@@ -527,7 +549,7 @@ export default function App() {
       {/* 푸터 — 오버레이 때는 안 보이게 */}
       {!isOverlayOpen && (
         <div className="border-t border-neutral-200 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="text-sm text-neutral-600">
               <strong>와줄래</strong> <span className="text-neutral-400">|</span> <span className="text-neutral-500">사업자등록번호: [000-00-00000] · 통신판매업신고: []</span>
               <div className="text-xs text-neutral-400">주소: [경기도 광명시 철산동] · 대표: [안정근, 한승민, 김현성] </div>
