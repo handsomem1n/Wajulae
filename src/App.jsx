@@ -625,8 +625,8 @@ export default function App() {
                 <strong className="text-neutral-900">와줄래</strong> <span className="text-neutral-400">|</span>
               </div>
               <div>대표: 안정근&김현성</div>
-              <div>주소: 경기도 광명시 철산동</div>
-              <div>사업자등록번호: 000-00-00000</div>
+              <div>주소: 경기도 안산시 상록구 광덕산1로 39-12 </div>
+              <div>사업자등록번호: 338-46-01315</div>
             </div>
             <nav className="mt-3 flex items-center gap-3 text-sm">
               <button className="text-neutral-700 hover:text-[var(--primary)]" onClick={() => { setLegalTab("privacy"); setLegalOpen(true); }} type="button">개인정보 처리방침</button>
