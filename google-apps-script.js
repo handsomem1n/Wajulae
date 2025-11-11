@@ -115,12 +115,19 @@ ${additionalRequest ? '💬 추가 요청: ' + additionalRequest : ''}
 }
 
 // ========================================
-// 2. API: 요청 정보 조회 (GET)
+// 2. API: 요청 정보 조회 및 수락 처리 (GET)
 // ========================================
 function doGet(e) {
   try {
     const requestId = e.parameter.requestId;
+    const action = e.parameter.action;
     
+    // 작업 수락 처리
+    if (action === "accept") {
+      return handleAcceptRequest(e);
+    }
+    
+    // 요청 정보 조회
     if (!requestId) {
       return createJsonResponse({
         error: "요청 ID가 필요합니다"
@@ -179,9 +186,9 @@ function doGet(e) {
 }
 
 // ========================================
-// 3. API: 작업 수락 처리 (POST)
+// 3. API: 작업 수락 처리 (GET으로 변경)
 // ========================================
-function doPost(e) {
+function handleAcceptRequest(e) {
   const lock = LockService.getScriptLock();
   
   try {
@@ -193,10 +200,10 @@ function doPost(e) {
       });
     }
     
-    const params = JSON.parse(e.postData.contents);
-    const requestId = params.requestId;
-    const engineerName = params.engineerName;
-    const engineerEmail = params.engineerEmail;
+    // GET 파라미터로 받기
+    const requestId = e.parameter.requestId;
+    const engineerName = e.parameter.engineerName;
+    const engineerEmail = e.parameter.engineerEmail;
     
     if (!requestId || !engineerName) {
       return createJsonResponse({

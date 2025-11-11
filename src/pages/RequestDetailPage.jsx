@@ -53,17 +53,15 @@ export default function RequestDetailPage() {
     setAccepting(true);
     
     try {
-      const response = await fetch(WEBAPP_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          requestId: requestId,
-          engineerName: engineerName.trim(),
-          engineerEmail: engineerEmail.trim()
-        })
+      // GET 요청으로 변경 (CORS preflight 회피)
+      const params = new URLSearchParams({
+        action: "accept",
+        requestId: requestId,
+        engineerName: engineerName.trim(),
+        engineerEmail: engineerEmail.trim()
       });
+      
+      const response = await fetch(`${WEBAPP_URL}?${params.toString()}`);
       
       const data = await response.json();
       
