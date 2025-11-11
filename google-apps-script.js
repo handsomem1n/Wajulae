@@ -37,9 +37,13 @@ function onFormSubmit(e) {
   const symptom = sheet.getRange(row, 8).getValue();           // H열: 자세한 증상
   const addr = sheet.getRange(row, 9).getValue();              // I열: 대략적인 주소
   const detailAddr = sheet.getRange(row, 10).getValue();       // J열: 세부 주소
-  const date = sheet.getRange(row, 11).getValue();             // K열: 작업 희망 날짜
-  const time = sheet.getRange(row, 12).getValue();             // L열: 원하는 작업 시간
+  const dateRaw = sheet.getRange(row, 11).getValue();          // K열: 작업 희망 날짜
+  const timeRaw = sheet.getRange(row, 12).getValue();          // L열: 원하는 작업 시간
   const additionalRequest = sheet.getRange(row, 13).getValue(); // M열: 추가 요청 사항
+  
+  // 날짜/시간 포맷팅
+  const date = dateRaw ? Utilities.formatDate(new Date(dateRaw), "Asia/Seoul", "yyyy년 MM월 dd일") : dateRaw;
+  const time = timeRaw ? Utilities.formatDate(new Date(timeRaw), "Asia/Seoul", "HH:mm") : timeRaw;
 
   // 매칭 상태 초기화 (N, O, P열)
   sheet.getRange(row, 14).setValue("대기중");  // N열: 매칭 상태
@@ -61,7 +65,8 @@ function onFormSubmit(e) {
 🏠 거주 형태: ${residenceType}
 🛠 작업 내용: ${workType}
 📝 증상: ${symptom}
-📅 희망 날짜: ${date} ${time}
+📅 희망 날짜: ${date}
+⏰ 희망 시간: ${time}
 📍 지역: ${addr}
 📸 사진: ${photo || '없음'}
 ${additionalRequest ? '💬 추가 요청: ' + additionalRequest : ''}
