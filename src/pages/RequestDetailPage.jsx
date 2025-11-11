@@ -11,7 +11,7 @@ export default function RequestDetailPage() {
   const [result, setResult] = useState(null);
   
   // ⚠️ 배포 후 실제 Google Apps Script WebApp URL로 변경 필요
-  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbww5XHXql1NCYTVIA9C0mtKCU7eGnILlUnuugvruESSVlu61exdJNUlCcuE6BjsEThA/exec";
+  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzDCyw0a4Vj_Zz1J9bZMqdnwIXcAD8yeK8038lJNgTYuWRPJkw47ufbz3vFa8qku0kG/exec";
    
   // 작업 정보 로드
   useEffect(() => {
@@ -61,9 +61,21 @@ export default function RequestDetailPage() {
         engineerEmail: engineerEmail.trim()
       });
       
-      const response = await fetch(`${WEBAPP_URL}?${params.toString()}`);
+      const response = await fetch(`${WEBAPP_URL}?${params.toString()}`, {
+        method: "GET",
+        redirect: "follow",  // 리디렉션 자동 추적
+        mode: "cors"
+      });
+      
+      console.log("응답 상태:", response.status, response.statusText);
+      console.log("응답 URL:", response.url);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
       
       const data = await response.json();
+      console.log("응답 데이터:", data);
       
       if (data.success) {
         setResult({
@@ -80,7 +92,7 @@ export default function RequestDetailPage() {
       }
     } catch (error) {
       console.error("수락 처리 오류:", error);
-      alert("처리 중 오류가 발생했습니다");
+      alert(`처리 중 오류가 발생했습니다: ${error.message}`);
     } finally {
       setAccepting(false);
     }
