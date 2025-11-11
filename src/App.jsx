@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import PricingPage from "./pages/PricingPage";
 import FAQPage from "./pages/FAQPage";
 import ContactPage from "./pages/ContactPage";
+import RequestDetailPage from "./pages/RequestDetailPage";
 
 export default function App() {
   const [legalOpen, setLegalOpen] = useState(false);
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/request/:requestId" element={<RequestDetailPage />} />
           </Routes>
         </main>
 
