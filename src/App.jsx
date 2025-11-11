@@ -15,8 +15,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
-        {/* 헤더 */}
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-neutral-50 text-neutral-900 [--primary:#00c7ae]">
+      {/* 헤더 */}
         <Header />
 
         {/* 메인 콘텐츠 - 라우팅 */}
