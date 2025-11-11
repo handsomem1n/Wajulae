@@ -11,7 +11,7 @@ export default function RequestDetailPage() {
   const [result, setResult] = useState(null);
   
   // ⚠️ 배포 후 실제 Google Apps Script WebApp URL로 변경 필요
-  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyJyTJaXI4gSrrUdqinVIsIjG1om_AGykGk-L6wHTRn36SgIUMmLy9i42a8lDWZ_1mT/exec";
+  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbygepuFV9Mx8I-ciJUqDsWSOQhPXDgDvFMJadkgapbHkEOhTttjjX73h_PWA2aWthdS/exec";
   
   // 작업 정보 로드
   useEffect(() => {

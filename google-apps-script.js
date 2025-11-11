@@ -81,7 +81,15 @@ ${additionalRequest ? '💬 추가 요청: ' + additionalRequest : ''}
 
   // 기사 이메일 리스트 불러오기
   const engineerSheet = e.source.getSheetByName(ENGINEER_SHEET);
-  const data = engineerSheet.getRange(2, 2, engineerSheet.getLastRow() - 1, 1).getValues();
+  const lastRow = engineerSheet.getLastRow();
+  
+  // 기사목록이 비어있으면 종료
+  if (lastRow < 2) {
+    Logger.log("⚠️ 기사목록이 비어있습니다. 알림을 보낼 수 없습니다.");
+    return;
+  }
+  
+  const data = engineerSheet.getRange(2, 2, lastRow - 1, 1).getValues();
   const emailList = data.flat().filter(email => email);
 
   // 이메일 발송
