@@ -12,7 +12,7 @@ export default function RequestDetailPage() {
   
   // ⚠️ 배포 후 실제 Google Apps Script WebApp URL로 변경 필요
   const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbygepuFV9Mx8I-ciJUqDsWSOQhPXDgDvFMJadkgapbHkEOhTttjjX73h_PWA2aWthdS/exec";
-  
+   
   // 작업 정보 로드
   useEffect(() => {
     const fetchRequest = async () => {
