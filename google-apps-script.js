@@ -355,7 +355,7 @@ ${info.customerName}님, 안녕하세요!
 감사합니다.
 와줄래 드림
 ━━━━━━━━━━━━━━━━━━━━━━
-`;
+`; 
     
     try {
       MailApp.sendEmail({
