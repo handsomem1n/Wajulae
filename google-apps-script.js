@@ -104,6 +104,12 @@ ${additionalRequest ? '💬 추가 요청: ' + additionalRequest : ''}
 // ========================================
 // 2. API: 요청 정보 조회 (GET)
 // ========================================
+
+// OPTIONS 요청 처리 (CORS preflight)
+function doOptions(e) {
+  return createJsonResponse({});
+}
+
 function doGet(e) {
   try {
     const requestId = e.parameter.requestId;
@@ -277,7 +283,10 @@ function doPost(e) {
 function createJsonResponse(data) {
   return ContentService
     .createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader('Access-Control-Allow-Origin', '*')
+    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 // 매칭 완료 알림 발송
