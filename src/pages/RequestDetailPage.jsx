@@ -199,6 +199,14 @@ export default function RequestDetailPage() {
               <p className="text-xl font-bold text-[var(--primary)]">{request.workType}</p>
             </div>
             
+            {/* 자세한 증상 */}
+            {request.symptom && (
+              <div className="pb-5 border-b border-neutral-200">
+                <label className="block text-sm font-semibold text-neutral-500 mb-1">📝 자세한 증상</label>
+                <p className="text-lg whitespace-pre-wrap">{request.symptom}</p>
+              </div>
+            )}
+            
             {/* 희망 일정 */}
             <div className="pb-5 border-b border-neutral-200">
               <label className="block text-sm font-semibold text-neutral-500 mb-1">📅 희망 일정</label>
@@ -209,12 +217,25 @@ export default function RequestDetailPage() {
             <div className="pb-5 border-b border-neutral-200">
               <label className="block text-sm font-semibold text-neutral-500 mb-1">📍 주소</label>
               <p className="text-lg">{request.address}</p>
-              {request.status === "매칭완료" && request.detailAddress && (
+              {request.residenceType && (
                 <p className="text-sm text-neutral-600 mt-1">
-                  세부 주소: {request.detailAddress}
+                  거주 형태: {request.residenceType}
+                </p>
+              )}
+              {request.status === "매칭완료" && request.detailAddress && (
+                <p className="text-sm font-semibold text-[var(--primary)] mt-2 p-3 bg-[var(--primary)]/10 rounded-xl">
+                  🏠 세부 주소: {request.detailAddress}
                 </p>
               )}
             </div>
+            
+            {/* 추가 요청 사항 */}
+            {request.additionalRequest && (
+              <div className="pb-5 border-b border-neutral-200">
+                <label className="block text-sm font-semibold text-neutral-500 mb-1">💬 추가 요청 사항</label>
+                <p className="text-lg whitespace-pre-wrap">{request.additionalRequest}</p>
+              </div>
+            )}
             
             {/* 첨부 이미지 */}
             {request.imageUrl && (

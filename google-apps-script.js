@@ -28,20 +28,25 @@ function onFormSubmit(e) {
   const requestId = generateRequestId();
   sheet.getRange(row, 1).setValue(requestId);
 
-  // 요청 데이터 추출
-  const request = sheet.getRange(row, 5).getValue();     // 작업 형태
-  const date = sheet.getRange(row, 10).getValue();       // 희망날짜
-  const time = sheet.getRange(row, 11).getValue();       // 희망시간
-  const addr = sheet.getRange(row, 8).getValue();        // 주소
-  const photo = sheet.getRange(row, 6).getValue();       // 사진 링크
-  const detailAddr = sheet.getRange(row, 9).getValue();  // 세부 주소
+  // 요청 데이터 추출 (실제 시트 구조에 맞춤)
+  const customerName = sheet.getRange(row, 3).getValue();      // C열: 이름
+  const phone = sheet.getRange(row, 4).getValue();             // D열: 연락처
+  const residenceType = sheet.getRange(row, 5).getValue();     // E열: 거주 형태
+  const workType = sheet.getRange(row, 6).getValue();          // F열: 작업 형태
+  const photo = sheet.getRange(row, 7).getValue();             // G열: 사진/동영상
+  const symptom = sheet.getRange(row, 8).getValue();           // H열: 자세한 증상
+  const addr = sheet.getRange(row, 9).getValue();              // I열: 대략적인 주소
+  const detailAddr = sheet.getRange(row, 10).getValue();       // J열: 세부 주소
+  const date = sheet.getRange(row, 11).getValue();             // K열: 작업 희망 날짜
+  const time = sheet.getRange(row, 12).getValue();             // L열: 원하는 작업 시간
+  const additionalRequest = sheet.getRange(row, 13).getValue(); // M열: 추가 요청 사항
 
-  // 매칭 상태 초기화 (열 번호는 실제 시트에 맞게 조정)
-  sheet.getRange(row, 12).setValue("대기중");  // 매칭 상태
-  // 매칭된 기사, 매칭 시각은 비워둠
+  // 매칭 상태 초기화 (N, O, P열)
+  sheet.getRange(row, 14).setValue("대기중");  // N열: 매칭 상태
+  // O열: 매칭된 기사 (비워둠)
+  // P열: 매칭 시각 (비워둠)
 
-  // React 웹앱 URL (배포 후 수정)
-  const webappUrl = ScriptApp.getService().getUrl();
+  // React 웹앱 URL
   const matchUrl = `https://www.wajulae.co.kr/request/${requestId}`;
 
   // 이메일 본문 구성
@@ -51,10 +56,15 @@ function onFormSubmit(e) {
 ━━━━━━━━━━━━━━━━━━━━━━
 
 📋 요청 ID: ${requestId}
-🛠 작업 내용: ${request}
+👤 고객명: ${customerName}
+📞 연락처: ${phone}
+🏠 거주 형태: ${residenceType}
+🛠 작업 내용: ${workType}
+📝 증상: ${symptom}
 📅 희망 날짜: ${date} ${time}
 📍 지역: ${addr}
 📸 사진: ${photo || '없음'}
+${additionalRequest ? '💬 추가 요청: ' + additionalRequest : ''}
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,6 +75,7 @@ function onFormSubmit(e) {
 
 ━━━━━━━━━━━━━━━━━━━━━━
 ※ 이미 다른 기사님이 수락한 경우 마감 표시됩니다.
+※ 수락하시면 고객 세부 주소와 연락처가 공개됩니다.
 ━━━━━━━━━━━━━━━━━━━━━━
 `;
 
@@ -78,7 +89,7 @@ function onFormSubmit(e) {
     try {
       MailApp.sendEmail({
         to: emailList[i],
-        subject: `[와줄래] 신규 요청 도착 (${request})`,
+        subject: `[와줄래] 신규 요청 도착 (${workType})`,
         body: emailBody
       });
       Logger.log(`이메일 발송 성공: ${emailList[i]}`);
@@ -124,21 +135,24 @@ function doGet(e) {
       });
     }
     
-    // 데이터 구조 (실제 열 번호에 맞게 조정 필요)
+    // 데이터 구조 (실제 시트 열에 맞춤)
     const response = {
       requestId: requestRow[0],           // A열: 요청ID
       timestamp: requestRow[1],           // B열: 타임스탬프
       customerName: requestRow[2],        // C열: 이름
       phone: requestRow[3],               // D열: 연락처
-      workType: requestRow[4],            // E열: 작업 형태
-      imageUrl: requestRow[5],            // F열: 사진
-      address: requestRow[7],             // H열: 주소
-      detailAddress: requestRow[8],       // I열: 세부주소
-      preferredDate: requestRow[9],       // J열: 희망날짜
-      preferredTime: requestRow[10],      // K열: 희망시간
-      status: requestRow[11] || "대기중", // L열: 매칭상태
-      matchedEngineer: requestRow[12],    // M열: 매칭된 기사
-      matchedTime: requestRow[13]         // N열: 매칭 시각
+      residenceType: requestRow[4],       // E열: 거주 형태
+      workType: requestRow[5],            // F열: 작업 형태
+      imageUrl: requestRow[6],            // G열: 사진/동영상
+      symptom: requestRow[7],             // H열: 자세한 증상
+      address: requestRow[8],             // I열: 대략적인 주소
+      detailAddress: requestRow[9],       // J열: 세부 주소
+      preferredDate: requestRow[10],      // K열: 작업 희망 날짜
+      preferredTime: requestRow[11],      // L열: 원하는 작업 시간
+      additionalRequest: requestRow[12],  // M열: 추가 요청 사항
+      status: requestRow[13] || "대기중", // N열: 매칭 상태
+      matchedEngineer: requestRow[14],    // O열: 매칭된 기사
+      matchedTime: requestRow[15]         // P열: 매칭 시각
     };
     
     return createJsonResponse(response);
@@ -198,9 +212,9 @@ function doPost(e) {
     }
     
     // 이미 매칭되었는지 확인
-    const currentStatus = sheet.getRange(rowIndex, 12).getValue();
+    const currentStatus = sheet.getRange(rowIndex, 14).getValue();  // N열: 매칭 상태
     if (currentStatus === "매칭완료") {
-      const matchedEngineer = sheet.getRange(rowIndex, 13).getValue();
+      const matchedEngineer = sheet.getRange(rowIndex, 15).getValue();  // O열: 매칭된 기사
       return createJsonResponse({
         success: false,
         message: `이미 ${matchedEngineer}님께 배정되었습니다`
@@ -209,17 +223,18 @@ function doPost(e) {
     
     // 매칭 처리
     const matchTime = new Date();
-    sheet.getRange(rowIndex, 12).setValue("매칭완료");     // L열: 매칭상태
-    sheet.getRange(rowIndex, 13).setValue(engineerName);   // M열: 매칭된 기사
-    sheet.getRange(rowIndex, 14).setValue(matchTime);      // N열: 매칭 시각
+    sheet.getRange(rowIndex, 14).setValue("매칭완료");     // N열: 매칭 상태
+    sheet.getRange(rowIndex, 15).setValue(engineerName);   // O열: 매칭된 기사
+    sheet.getRange(rowIndex, 16).setValue(matchTime);      // P열: 매칭 시각
     
     // 고객 정보 가져오기
-    const customerName = data[rowIndex - 1][2];
-    const customerPhone = data[rowIndex - 1][3];
-    const customerEmail = data[rowIndex - 1][4];
-    const workType = data[rowIndex - 1][4];
-    const address = data[rowIndex - 1][7];
-    const detailAddress = data[rowIndex - 1][8];
+    const customerName = data[rowIndex - 1][2];         // C열: 이름
+    const customerPhone = data[rowIndex - 1][3];        // D열: 연락처
+    const customerEmail = "";  // 이메일이 없으면 빈 값
+    const workType = data[rowIndex - 1][5];             // F열: 작업 형태
+    const symptom = data[rowIndex - 1][7];              // H열: 자세한 증상
+    const address = data[rowIndex - 1][8];              // I열: 대략적인 주소
+    const detailAddress = data[rowIndex - 1][9];        // J열: 세부 주소
     
     // 알림 발송
     sendMatchingNotifications({
@@ -230,6 +245,7 @@ function doPost(e) {
       customerPhone,
       customerEmail,
       workType,
+      symptom,
       address,
       detailAddress
     });
@@ -277,6 +293,7 @@ ${info.engineerName}님, 작업이 배정되었습니다!
 
 📋 요청 ID: ${info.requestId}
 🛠 작업 내용: ${info.workType}
+📝 증상: ${info.symptom}
 📍 주소: ${info.address}
 🏠 세부 주소: ${info.detailAddress}
 
@@ -335,4 +352,3 @@ ${info.customerName}님, 안녕하세요!
     }
   }
 }
-
