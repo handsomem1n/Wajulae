@@ -11,7 +11,7 @@ export default function MobileDock() {
         <div className="grid grid-cols-4">
           <Link
             to="/"
-            className={`py-3 text-sm font-semibold ${
+            className={`py-3 text-xs sm:text-sm font-semibold text-center ${
               isActive("/") ? "bg-[var(--primary)] text-white" : "hover:bg-neutral-50"
             }`}
           >
@@ -19,7 +19,7 @@ export default function MobileDock() {
           </Link>
           <Link
             to="/pricing"
-            className={`py-3 text-sm font-semibold border-l border-neutral-200 ${
+            className={`py-3 text-xs sm:text-sm font-semibold text-center border-l border-neutral-200 ${
               isActive("/pricing") ? "bg-[var(--primary)] text-white" : "hover:bg-neutral-50"
             }`}
           >
@@ -27,7 +27,7 @@ export default function MobileDock() {
           </Link>
           <Link
             to="/faq"
-            className={`py-3 text-sm font-semibold border-l border-neutral-200 ${
+            className={`py-3 text-xs sm:text-sm font-semibold text-center border-l border-neutral-200 ${
               isActive("/faq") ? "bg-[var(--primary)] text-white" : "hover:bg-neutral-50"
             }`}
           >
@@ -35,7 +35,7 @@ export default function MobileDock() {
           </Link>
           <Link
             to="/contact"
-            className={`py-3 text-sm font-semibold border-l border-neutral-200 ${
+            className={`py-3 text-xs sm:text-sm font-semibold text-center border-l border-neutral-200 ${
               isActive("/contact") ? "bg-[var(--primary)] text-white" : "hover:bg-neutral-50"
             }`}
           >
