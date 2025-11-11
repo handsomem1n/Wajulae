@@ -43,8 +43,8 @@ function onFormSubmit(e) {
 
   // 매칭 상태 초기화 (N, O, P열)
   sheet.getRange(row, 14).setValue("대기중");  // N열: 매칭 상태
-  // O열: 매칭된 기사 (비워둠)
-  // P열: 매칭 시각 (비워둠)
+  // O열: 매칭 시각 (비워둠)
+  // P열: 매칭된 기사 (비워둠)
 
   // React 웹앱 URL
   const matchUrl = `https://www.wajulae.co.kr/request/${requestId}`;
@@ -151,8 +151,8 @@ function doGet(e) {
       preferredTime: requestRow[11],      // L열: 원하는 작업 시간
       additionalRequest: requestRow[12],  // M열: 추가 요청 사항
       status: requestRow[13] || "대기중", // N열: 매칭 상태
-      matchedEngineer: requestRow[14],    // O열: 매칭된 기사
-      matchedTime: requestRow[15]         // P열: 매칭 시각
+      matchedTime: requestRow[14],        // O열: 매칭 시각
+      matchedEngineer: requestRow[15]     // P열: 매칭된 기사
     };
     
     return createJsonResponse(response);
@@ -214,7 +214,7 @@ function doPost(e) {
     // 이미 매칭되었는지 확인
     const currentStatus = sheet.getRange(rowIndex, 14).getValue();  // N열: 매칭 상태
     if (currentStatus === "매칭완료") {
-      const matchedEngineer = sheet.getRange(rowIndex, 15).getValue();  // O열: 매칭된 기사
+      const matchedEngineer = sheet.getRange(rowIndex, 16).getValue();  // P열: 매칭된 기사
       return createJsonResponse({
         success: false,
         message: `이미 ${matchedEngineer}님께 배정되었습니다`
@@ -224,8 +224,8 @@ function doPost(e) {
     // 매칭 처리
     const matchTime = new Date();
     sheet.getRange(rowIndex, 14).setValue("매칭완료");     // N열: 매칭 상태
-    sheet.getRange(rowIndex, 15).setValue(engineerName);   // O열: 매칭된 기사
-    sheet.getRange(rowIndex, 16).setValue(matchTime);      // P열: 매칭 시각
+    sheet.getRange(rowIndex, 15).setValue(matchTime);      // O열: 매칭 시각
+    sheet.getRange(rowIndex, 16).setValue(engineerName);   // P열: 매칭된 기사
     
     // 고객 정보 가져오기
     const customerName = data[rowIndex - 1][2];         // C열: 이름
